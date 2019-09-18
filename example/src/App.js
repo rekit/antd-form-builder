@@ -4,6 +4,7 @@ import Basic from './examples/Basic'
 import DynamicFields from './examples/DynamicFields'
 import AsyncDataSource from './examples/AsyncDataSource'
 import MultipleColumns from './examples/MultipleColumns'
+import ComplexLayout from './examples/ComplexLayout'
 import './App.css'
 
 const examples = {
@@ -11,15 +12,15 @@ const examples = {
   'dynamic-fields': { name: 'Dynamic Fields', component: DynamicFields },
   'async-data-source': { name: 'Async Data Source', component: AsyncDataSource },
   'multiple-columns': { name: 'Multiple Columns', component: MultipleColumns },
-  'complex-layout': { name: 'Complex Layout' },
-  'multiple-form-builders': { name: 'Multiple Form Builders' },
-  'single-element': { name: 'Single Element' },
-  validation: { name: 'Validation' },
-  modal: { name: 'Form in Modal' },
-  coordinated: { name: 'Coordinated Controls' },
-  custom: { name: 'Custom Component' },
-  mixed: { name: 'Mixed' },
-  wizard: { name: 'Wizard' },
+  'complex-layout': { name: 'Complex Layout', component: ComplexLayout },
+  'multiple-form-builders': { name: 'Multiple Form Builders', component: ComplexLayout },
+  'single-element': { name: 'Single Element', component: ComplexLayout },
+  validation: { name: 'Validation', component: ComplexLayout },
+  modal: { name: 'Form in Modal', component: ComplexLayout },
+  coordinated: { name: 'Coordinated Controls', component: ComplexLayout },
+  custom: { name: 'Custom Component', component: ComplexLayout },
+  mixed: { name: 'Mixed', component: ComplexLayout },
+  wizard: { name: 'Wizard', component: ComplexLayout },
 }
 
 export default () => {

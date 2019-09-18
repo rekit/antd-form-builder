@@ -3,7 +3,7 @@ import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default Form.create()(({ form }) => {
-  const [columns, setColumns] = useState(1)
+  const [columns, setColumns] = useState(2)
   const handleSubmit = useCallback(
     evt => {
       evt.preventDefault()
@@ -35,7 +35,7 @@ export default Form.create()(({ form }) => {
   return (
     <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '1000px' }}>
       <FormBuilder form={form} meta={meta} />
-      <Form.Item wrapperCol={{ span: 16, offset: 8 }} className="form-footer">
+      <Form.Item className="form-footer">
         <Button htmlType="submit" type="primary">
           Submit
         </Button>

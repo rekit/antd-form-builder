@@ -103,7 +103,7 @@ class FormBuilder extends Component {
       ...element.formItemProps,
     }
 
-    if (element.colSpan) {
+    if (element.colSpan && formItemProps.labelCol) {
       const labelCol = formItemProps.labelCol.span / element.colSpan
 
       Object.assign(formItemProps, {
