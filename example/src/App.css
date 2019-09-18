@@ -52,3 +52,11 @@
 .app .example-container .ant-form {
   width: 600px;
 }
+
+.example-description {
+  padding: 10px;
+  background-color: #f3f3f3;
+  color: #777;
+  line-height: 150%;
+  margin: 20px 0;
+}

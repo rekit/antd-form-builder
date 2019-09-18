@@ -11,17 +11,15 @@ export default Form.create()(({ form }) => {
     [form],
   )
 
-  const meta = {
-    elements: [
-      {
-        key: 'favoriteFruit',
-        label: 'Favorite Fruit',
-        widget: 'radio-group',
-        options: ['Apple', 'Orange', 'Other'],
-        initialValue: 'Apple',
-      },
-    ],
-  }
+  const meta = [
+    {
+      key: 'favoriteFruit',
+      label: 'Favorite Fruit',
+      widget: 'radio-group',
+      options: ['Apple', 'Orange', 'Other'],
+      initialValue: 'Apple',
+    },
+  ]
 
   // Push other input if choose others
   if (form.getFieldValue('favoriteFruit') === 'Other') {

@@ -13,7 +13,7 @@ export default Form.create()(({ form }) => {
   )
   const meta = {
     columns,
-    elements: [
+    fields: [
       {
         key: 'columns',
         label: 'Columns',
@@ -21,7 +21,7 @@ export default Form.create()(({ form }) => {
         buttonGroup: true,
         widgetProps: { buttonStyle: 'solid', onChange: evt => setColumns(evt.target.value) },
         options: [1, 2, 3, 4],
-        initialValue: 1,
+        initialValue: 2,
       },
       { key: 'input', label: 'Input', required: true, tooltip: 'This is the name.' },
       { key: 'checkbox', label: 'Checkbox', widget: 'checkbox', initialValue: true },

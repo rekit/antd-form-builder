@@ -14,7 +14,7 @@ export default Form.create()(({ form }) => {
     columns: 4,
     formItemLayout: {}, // Must set this for inline layout
     colon: true,
-    elements: [
+    fields: [
       {
         key: 'label1',
         colSpan: 4,

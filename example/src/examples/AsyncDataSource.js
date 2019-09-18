@@ -9,7 +9,7 @@ const MOCK_DATA = {
 }
 
 // Mock fetch
-const fetchProvinces = country => {
+const fetchCities = country => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (MOCK_DATA[country]) resolve(MOCK_DATA[country])
@@ -27,44 +27,42 @@ export default Form.create()(({ form }) => {
     [form],
   )
 
-  const [provinces, setProvinces] = useState({})
+  const [cities, setCities] = useState({})
   const country = form.getFieldValue('country')
   useEffect(() => {
-    if (country && !provinces[country]) {
-      fetchProvinces(country).then(arr => {
-        setProvinces(p => ({ ...p, [country]: arr }))
+    if (country && !cities[country]) {
+      fetchCities(country).then(arr => {
+        setCities(p => ({ ...p, [country]: arr }))
       })
     }
-  }, [country, setProvinces, provinces])
+  }, [country, setCities, cities])
 
-  // If country selected but no provinces in store, then it's loading
-  const loading = country && !provinces[country]
-  const meta = {
-    elements: [
-      {
-        key: 'country',
-        label: 'Country',
-        widget: 'select',
-        options: ['China', 'USA', 'France'],
-        placeholder: 'Select country...',
-        widgetProps: {
-          onChange: () => {
-            // Clear province value when country is changed
-            form.setFieldsValue({ province: undefined })
-          },
+  // If country selected but no cities in store, then it's loading
+  const loading = country && !cities[country]
+  const meta = [
+    {
+      key: 'country',
+      label: 'Country',
+      widget: 'select',
+      options: ['China', 'USA', 'France'],
+      placeholder: 'Select country...',
+      widgetProps: {
+        onChange: () => {
+          // Clear city value when country is changed
+          form.setFieldsValue({ city: undefined })
         },
       },
-      {
-        key: 'province',
-        label: 'Province',
-        widget: 'select',
-        options: country ? provinces[country] || [] : [],
-        placeholder: loading ? 'Loading...' : 'Select province...',
-        widgetProps: { loading },
-        disabled: loading || !country,
-      },
-    ],
-  }
+    },
+    {
+      key: 'city',
+      label: 'City',
+      widget: 'select',
+      options: country ? cities[country] || [] : [],
+      placeholder: loading ? 'Loading...' : 'Select city...',
+      widgetProps: { loading },
+      disabled: loading || !country,
+    },
+  ]
 
   return (
     <Form onSubmit={handleSubmit}>

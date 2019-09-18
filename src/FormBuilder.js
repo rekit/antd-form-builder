@@ -20,25 +20,25 @@ function getWidget(widget) {
   return widget
 }
 
-function convertElement(element) {
-  const widget = getWidget(element.widget)
+function convertMeta(field) {
+  const widget = getWidget(field.widget)
   const item = _.find(
     Object.values(widgetMap),
     entry => entry.widget === widget && entry.metaConvertor,
   )
   if (item) {
-    const newElement = item.metaConvertor(element)
-    if (!newElement) {
-      throw new Error(`metaConvertor of '${String(element.widget)}' must return a new element`)
+    const newField = item.metaConvertor(field)
+    if (!newField) {
+      throw new Error(`metaConvertor of '${String(field.widget)}' must return a new field`)
     }
-    return newElement
+    return newField
   }
-  return element
+  return field
 }
 
 class FormBuilder extends Component {
   static propTypes = {
-    meta: PropTypes.object.isRequired,
+    meta: PropTypes.any.isRequired,
     values: PropTypes.object,
     form: PropTypes.object,
     disabled: PropTypes.bool,
@@ -53,31 +53,37 @@ class FormBuilder extends Component {
   }
 
   getMeta() {
-    // To support single element form builder
+    // To support single field form builder
     const { meta } = this.props
-    return meta.elements ? meta : { elements: [meta] }
+    if (_.isArray(meta)) {
+      return { fields: meta }
+    } else if (meta.elements) {
+      // Compatible with old version of form builder.
+      return { ...meta, fields: meta.elements }
+    } else if (!meta.fields) {
+      return { fields: [meta] }
+    }
+    return meta
   }
 
-  renderElement = element => {
+  renderField = field => {
     const meta = this.getMeta()
-    element = convertElement(element)
+    field = convertMeta(field)
     // Handle form item props
-    const label = element.tooltip ? (
+    const label = field.tooltip ? (
       <span>
-        {element.label}
-        <Tooltip title={element.tooltip}>
+        {field.label}
+        <Tooltip title={field.tooltip}>
           {' '}
           <Icon type="question-circle-o" />
         </Tooltip>
       </span>
     ) : (
-      element.label
+      field.label
     )
 
     let formItemLayout =
-      element.formItemLayout ||
-      meta.formItemLayout ||
-      (element.label ? defaultFormItemLayout : null)
+      field.formItemLayout || meta.formItemLayout || (field.label ? defaultFormItemLayout : null)
     if (_.isArray(formItemLayout)) {
       formItemLayout = {
         labelCol: { span: formItemLayout[0] },
@@ -86,12 +92,12 @@ class FormBuilder extends Component {
     }
 
     const formItemProps = {
-      key: element.key,
+      key: field.key,
       colon: meta.colon,
       ...formItemLayout,
       label,
-      className: element.readonly ? 'antd-form-builder-item-readonly' : null,
-      ..._.pick(element, [
+      className: field.readonly ? 'antd-form-builder-item-readonly' : null,
+      ..._.pick(field, [
         'help',
         'extra',
         'labelCol',
@@ -100,11 +106,11 @@ class FormBuilder extends Component {
         'validateStatus',
         'hasFeedback',
       ]),
-      ...element.formItemProps,
+      ...field.formItemProps,
     }
 
-    if (element.colSpan && formItemProps.labelCol) {
-      const labelCol = formItemProps.labelCol.span / element.colSpan
+    if (field.colSpan && formItemProps.labelCol) {
+      const labelCol = formItemProps.labelCol.span / field.colSpan
 
       Object.assign(formItemProps, {
         labelCol: { span: labelCol },
@@ -112,42 +118,40 @@ class FormBuilder extends Component {
       })
     }
 
-    if (element.render) {
-      return element.render.call(this, {
+    if (field.render) {
+      return field.render.call(this, {
         formItemProps,
-        element,
+        field,
         ..._.pick(this.props, ['form', 'disabled', 'viewMode', 'values']),
       })
     }
 
-    const ElementWidget = getWidget(element.widget) || Input
+    const FieldWidget = getWidget(field.widget) || Input
     let initialValue
-    if (_.has(element, 'initialValue')) {
-      initialValue = element.initialValue
-    } else if (element.getInitialValue) {
-      initialValue = element.getInitialValue(element, this.props.values, this.props.form)
+    if (_.has(field, 'initialValue')) {
+      initialValue = field.initialValue
+    } else if (field.getInitialValue) {
+      initialValue = field.getInitialValue(field, this.props.values, this.props.form)
     } else {
-      initialValue = _.get(this.props.values, element.key) || undefined
+      initialValue = _.get(this.props.values, field.key) || undefined
     }
 
-    if (this.props.viewMode || element.readOnly) {
+    if (this.props.viewMode || field.readOnly) {
       let viewEle = null
-      if (element.viewWidget) {
+      if (field.viewWidget) {
         const ViewWidget =
-          typeof element.viewWidget === 'string'
-            ? getWidget(element.viewWidget)
-            : element.viewWidget
-        viewEle = <ViewWidget value={initialValue} {...element.viewWidgetProps} element={element} />
-      } else if (element.link) {
-        const href = typeof element.link === 'string' ? element.link : initialValue
+          typeof field.viewWidget === 'string' ? getWidget(field.viewWidget) : field.viewWidget
+        viewEle = <ViewWidget value={initialValue} {...field.viewWidgetProps} field={field} />
+      } else if (field.link) {
+        const href = typeof field.link === 'string' ? field.link : initialValue
         viewEle = (
-          <a href={href} target={element.linkTarget || '_self'}>
+          <a href={href} target={field.linkTarget || '_self'}>
             {initialValue}
           </a>
         )
-      } else if (element.options) {
+      } else if (field.options) {
         // a little hacky here, if a field is select/options like, auto use label for value
-        const found = _.find(element.options, opt => opt[0] === initialValue)
+        const found = _.find(field.options, opt => opt[0] === initialValue)
         if (found) {
           initialValue = found[1]
         }
@@ -165,17 +169,17 @@ class FormBuilder extends Component {
     }
 
     // Handle field props
-    const rules = [...(element.rules || [])]
-    if (element.required) {
+    const rules = [...(field.rules || [])]
+    if (field.required) {
       rules.unshift({
         required: true,
-        message: element.message || `${element.label || element.key} is required.`, // default to English, if needs localization, define it in fieldProps.rules.
+        message: field.message || `${field.label || field.key} is required.`, // default to English, if needs localization, define it in fieldProps.rules.
       })
     }
     const fieldProps = {
       validateFirst: true,
       initialValue,
-      ..._.pick(element, [
+      ..._.pick(field, [
         'getValueFromEvent',
         'normalize',
         'trigger',
@@ -184,32 +188,32 @@ class FormBuilder extends Component {
         'validateFirst',
       ]),
       rules,
-      ...element.fieldProps,
+      ...field.fieldProps,
     }
 
     // Handle widget props
-    const wp = element.widgetProps || {}
+    const wp = field.widgetProps || {}
     const widgetProps = {
-      ..._.pick(element, ['placeholder', 'type', 'className', 'class']),
-      disabled: element.disabled || this.props.disabled,
+      ..._.pick(field, ['placeholder', 'type', 'className', 'class']),
+      disabled: field.disabled || this.props.disabled,
       ...wp,
     }
     const { getFieldDecorator } = this.props.form
 
     return (
       <FormItem {...formItemProps}>
-        {getFieldDecorator(element.id || element.key, fieldProps)(
-          <ElementWidget {...widgetProps}>{element.children || null}</ElementWidget>,
+        {getFieldDecorator(field.id || field.key, fieldProps)(
+          <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>,
         )}
       </FormItem>
     )
   }
 
-  renderLayout(elements, rawElements) {
+  renderLayout(fields, rawFields) {
     // Layout the form in columns
     const columns = this.props.meta.columns || 1
     if (columns === 1) {
-      return elements
+      return fields
     }
     const rowClassName = `antd-form-builder-row ${
       this.props.viewMode ? 'antd-form-builder-row-view-mode' : ''
@@ -220,19 +224,19 @@ class FormBuilder extends Component {
     // for each column , how many grid cols
     const colspan = 24 / columns
     // eslint-disable-next-line
-    for (let i = 0; i < elements.length; ) {
+    for (let i = 0; i < fields.length; ) {
       const cols = []
-      let eleSpan = rawElements[i].colSpan || 1
+      let eleSpan = rawFields[i].colSpan || 1
 
       for (
         let j = 0;
-        (j + eleSpan <= columns || cols.length === 0) && i < elements.length;
+        (j + eleSpan <= columns || cols.length === 0) && i < fields.length;
         j += eleSpan
       ) {
-        eleSpan = rawElements[i].colSpan || 1
+        eleSpan = rawFields[i].colSpan || 1
         cols.push(
           <Col key={j} span={Math.min(24, colspan * eleSpan)}>
-            {elements[i]}
+            {fields[i]}
           </Col>,
         )
         i += 1
@@ -250,7 +254,7 @@ class FormBuilder extends Component {
     const meta = this.getMeta()
     return (
       <div className="antd-form-builder">
-        {this.renderLayout(meta.elements.map(this.renderElement), meta.elements)}
+        {this.renderLayout(meta.fields.map(this.renderField), meta.fields)}
       </div>
     )
   }
