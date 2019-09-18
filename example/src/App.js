@@ -3,13 +3,14 @@ import useHash from './useHash'
 import Basic from './examples/Basic'
 import DynamicFields from './examples/DynamicFields'
 import AsyncDataSource from './examples/AsyncDataSource'
+import MultipleColumns from './examples/MultipleColumns'
 import './App.css'
 
 const examples = {
   basic: { name: 'Basic', component: Basic },
   'dynamic-fields': { name: 'Dynamic Fields', component: DynamicFields },
   'async-data-source': { name: 'Async Data Source', component: AsyncDataSource },
-  'multiple-columns': { name: 'Multiple Columns' },
+  'multiple-columns': { name: 'Multiple Columns', component: MultipleColumns },
   'complex-layout': { name: 'Complex Layout' },
   'multiple-form-builders': { name: 'Multiple Form Builders' },
   'single-element': { name: 'Single Element' },
