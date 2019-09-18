@@ -1,0 +1,54 @@
+.app {
+  padding-left: 240px;
+  box-sizing: border-box;
+}
+
+.app .sider {
+  position: fixed;
+  width: 240px;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background-color: #f7f7f7;
+}
+
+.app .sider h1 {
+  font-size: 20px;
+  background-color: #f0f0f0;
+  line-height: 50px;
+  padding-left: 28px;
+}
+.app .sider ul, .app .sider li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.app .sider li {
+  line-height: 300%;
+}
+
+.app .sider li a {
+  display: block;
+  padding-left: 28px;
+}
+
+.app .sider li a.active {
+  color: #f90;
+
+}
+
+.app .example-container {
+  padding: 40px;
+
+}
+
+.app .example-container h1 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.app .example-container .ant-form {
+  width: 600px;
+}
