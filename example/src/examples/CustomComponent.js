@@ -7,7 +7,12 @@ const MOCK_USERNAMES = {
   bood: true,
   kevin: true,
 }
-
+// Here define a custom component just for layout
+const WeightWithUnit = props => (
+  <div>
+    <InputNumber {...props} /> kg
+  </div>
+)
 export default Form.create()(({ form }) => {
   const handleSubmit = useCallback(
     evt => {
@@ -24,12 +29,11 @@ export default Form.create()(({ form }) => {
     {
       key: 'weight',
       label: 'Weight',
+      // Set forwardRef to true if use functional component as field widget
+      // to remove warnings
+      forwardRef: true,
       // Here define a custom component just for layout
-      widget: props => (
-        <div>
-          <InputNumber {...props} /> kg
-        </div>
-      ),
+      widget: WeightWithUnit,
     },
     {
       key: 'gender',

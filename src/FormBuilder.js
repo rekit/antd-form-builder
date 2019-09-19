@@ -1,5 +1,5 @@
 /* eslint react/no-multi-comp: 0 */
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Col, Form, Icon, Row, Tooltip, Input } from 'antd'
@@ -7,6 +7,16 @@ import { Col, Form, Icon, Row, Tooltip, Input } from 'antd'
 const FormItem = Form.Item
 const widgetMap = {}
 const defaultFormItemLayout = [8, 16]
+
+const getWrappedComponentWithForwardRef = _.memoize(Comp =>
+  forwardRef((props, ref) => {
+    return (
+      <span ref={ref}>
+        <Comp {...props} />
+      </span>
+    )
+  }),
+)
 
 function getWidget(widget) {
   if (typeof widget === 'string') {
@@ -127,7 +137,6 @@ class FormBuilder extends Component {
       })
     }
 
-    const FieldWidget = getWidget(field.widget) || Input
     let initialValue
     if (_.has(field, 'initialValue')) {
       initialValue = field.initialValue
@@ -201,7 +210,11 @@ class FormBuilder extends Component {
       ...wp,
     }
     const { getFieldDecorator } = this.props.form
+    let FieldWidget = getWidget(field.widget) || Input
 
+    if (field.forwardRef) {
+      FieldWidget = getWrappedComponentWithForwardRef(FieldWidget)
+    }
     return (
       <FormItem {...formItemProps}>
         {getFieldDecorator(field.id || field.key, fieldProps)(
