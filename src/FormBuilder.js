@@ -215,6 +215,11 @@ class FormBuilder extends Component {
     if (field.forwardRef) {
       FieldWidget = getWrappedComponentWithForwardRef(FieldWidget)
     }
+    if (field.noFormItem) {
+      return getFieldDecorator(field.id || field.key, fieldProps)(
+        <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>,
+      )
+    }
     return (
       <FormItem {...formItemProps}>
         {getFieldDecorator(field.id || field.key, fieldProps)(
