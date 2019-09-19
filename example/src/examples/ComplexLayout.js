@@ -40,7 +40,7 @@ export default Form.create()(({ form }) => {
         render() {
           return (
             <h1 style={{ color: 'darkcyan' }}>
-              Bed & Bath
+              Bed &amp; Bath
               <span style={{ color: '#555', fontSize: '14px', marginLeft: '15px' }}>
                 WHAT IS YOUR HOME LIKE?
               </span>

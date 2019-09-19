@@ -12,7 +12,12 @@ export class App extends Component {
     const meta = {
       columns: 1,
       fields: [
-        { key: 'input', label: 'Input', required: true, tooltip: 'This is the name.' },
+        {
+          key: 'input',
+          label: 'Input',
+          required: true,
+          tooltip: 'This is the tooltip.',
+        },
         { key: 'checkbox', label: 'Checkbox', widget: 'checkbox', initialValue: true },
         { key: 'switch', label: 'Switch', widget: 'switch', initialValue: true },
         { key: 'select', label: 'Select', widget: 'select', options },

@@ -110,7 +110,7 @@ class FormBuilder extends Component {
     }
 
     if (field.colSpan && formItemProps.labelCol) {
-      const labelCol = formItemProps.labelCol.span / field.colSpan
+      const labelCol = Math.round(formItemProps.labelCol.span / field.colSpan)
 
       Object.assign(formItemProps, {
         labelCol: { span: labelCol },
@@ -183,6 +183,7 @@ class FormBuilder extends Component {
         'getValueFromEvent',
         'normalize',
         'trigger',
+        'preserve',
         'valuePropName',
         'validateTrigger',
         'validateFirst',
@@ -227,21 +228,22 @@ class FormBuilder extends Component {
     // eslint-disable-next-line
     for (let i = 0; i < elements.length; ) {
       const cols = []
-      let fieldSpan = fields[i].colSpan || 1
-
+      // let fieldSpan = fields[i].colSpan || 1
+      console.log('new row')
       for (
         let j = 0;
-        (j + fieldSpan <= columns || cols.length === 0) && // total col span is less than columns
-        i < elements.length && // elements
-        (!['left', 'both'].includes(fields[i].clear) || cols.length === 0); // field doesn't need to start a new row
-        j += fieldSpan
+        (j < columns || j === 0) && // total col span is less than columns
+        i < elements.length && // element exist
+        (!['left', 'both'].includes(fields[i].clear) || j === 0); // field doesn't need to start a new row
+
       ) {
-        fieldSpan = fields[i].colSpan || 1
+        const fieldSpan = fields[i].colSpan || 1
         cols.push(
           <Col key={j} span={Math.min(24, spanUnit * fieldSpan)}>
             {elements[i]}
           </Col>,
         )
+        j += fieldSpan
         if (['both', 'right'].includes(fields[i].clear)) {
           i += 1
           break
