@@ -53,7 +53,7 @@ export default Form.create()(({ form }) => {
         <legend>Contact Infomation</legend>
         <FormBuilder form={form} meta={meta3} />
       </fieldset>
-      <Form.Item className="form-footer">
+      <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 8 }}>
         <Button htmlType="submit" type="primary">
           Submit
         </Button>

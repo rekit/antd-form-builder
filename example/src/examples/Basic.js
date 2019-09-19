@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'antd'
+import { Form, Button, Icon } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export class App extends Component {
@@ -19,6 +19,7 @@ export class App extends Component {
           tooltip: 'This is the tooltip.',
         },
         { key: 'checkbox', label: 'Checkbox', widget: 'checkbox', initialValue: true },
+        { key: 'statis', label: 'Status', viewWidget: () => <Icon type="star" />, readOnly: true },
         { key: 'switch', label: 'Switch', widget: 'switch', initialValue: true },
         { key: 'select', label: 'Select', widget: 'select', options },
         { key: 'checkbox-group', label: 'Checkbox Group', widget: 'checkbox-group', options },

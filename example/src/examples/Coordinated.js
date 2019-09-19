@@ -2,32 +2,40 @@ import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
+const MOCK_USERNAMES = {
+  nate: true,
+  bood: true,
+  kevin: true,
+}
+
 export default Form.create()(({ form }) => {
   const handleSubmit = useCallback(
     evt => {
       evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
+      form.validateFields((err, values) => {
+        if (err) return
+        console.log('Submit: ', form.getFieldsValue())
+      })
     },
     [form],
   )
 
   const meta = [
     {
-      key: 'favoriteFruit',
-      label: 'Favorite Fruit',
+      key: 'gender',
+      label: 'Gender',
       widget: 'radio-group',
-      options: ['Apple', 'Orange', 'Other'],
-      initialValue: 'Apple',
+      options: ['Male', 'Female'],
+      onChange: evt => {
+        if (evt.target.value === 'Male') {
+          form.setFieldsValue({ note: 'Hi, man!' })
+        } else {
+          form.setFieldsValue({ note: 'Hi, lady!' })
+        }
+      },
     },
+    { key: 'note', label: 'Note' },
   ]
-
-  // Push other input if choose others
-  if (form.getFieldValue('favoriteFruit') === 'Other') {
-    meta.push({
-      key: 'otherFruit',
-      label: 'Other',
-    })
-  }
 
   return (
     <Form onSubmit={handleSubmit}>

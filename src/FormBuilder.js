@@ -103,6 +103,7 @@ class FormBuilder extends Component {
         'labelCol',
         'wrapperCol',
         'colon',
+        'htmlFor',
         'validateStatus',
         'hasFeedback',
       ]),
@@ -195,8 +196,8 @@ class FormBuilder extends Component {
     // Handle widget props
     const wp = field.widgetProps || {}
     const widgetProps = {
-      ..._.pick(field, ['placeholder', 'type', 'className', 'class']),
-      disabled: field.disabled || this.props.disabled,
+      ..._.pick(field, ['placeholder', 'type', 'className', 'class', 'onChange']),
+      disabled: field.disabled || meta.disabled || this.props.disabled,
       ...wp,
     }
     const { getFieldDecorator } = this.props.form
@@ -228,8 +229,6 @@ class FormBuilder extends Component {
     // eslint-disable-next-line
     for (let i = 0; i < elements.length; ) {
       const cols = []
-      // let fieldSpan = fields[i].colSpan || 1
-      console.log('new row')
       for (
         let j = 0;
         (j < columns || j === 0) && // total col span is less than columns
@@ -261,11 +260,7 @@ class FormBuilder extends Component {
 
   render() {
     const meta = this.getMeta()
-    return (
-      <div className="antd-form-builder">
-        {this.renderLayout(meta.fields.map(this.renderField), meta.fields)}
-      </div>
-    )
+    return this.renderLayout(meta.fields.map(this.renderField), meta.fields)
   }
 }
 
