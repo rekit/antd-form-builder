@@ -11,7 +11,7 @@ export default () => {
     }
     window.addEventListener('hashchange', handleHashChange)
     return () => {
-      window.removeEventListener(handleHashChange)
+      window.removeEventListener('hashchange', handleHashChange)
     }
   }, [setHash])
   return hash

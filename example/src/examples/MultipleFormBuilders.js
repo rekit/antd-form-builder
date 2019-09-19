@@ -27,10 +27,6 @@ export default Form.create()(({ form }) => {
 
   return (
     <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '1000px' }}>
-      <div className="example-description">
-        Some times you need to group fields into different fieldsets, or need more complex layout.
-        You can use multiple form builders in one form.
-      </div>
       <fieldset>
         <legend>Part 1</legend>
         <FormBuilder form={form} meta={meta1} />

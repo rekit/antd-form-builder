@@ -9,13 +9,18 @@ import MultipleFormBuilders from './examples/MultipleFormBuilders'
 import './App.css'
 
 const examples = {
-  basic: { name: 'Basic', component: Basic },
+  basic: { name: 'Basic', component: Basic, description: 'abc' },
   'view-mode': { name: 'View Mode', component: ComplexLayout },
   'dynamic-fields': { name: 'Dynamic Fields', component: DynamicFields },
   'async-data-source': { name: 'Async Data Source', component: AsyncDataSource },
   'multiple-columns': { name: 'Multiple Columns', component: MultipleColumns },
   'complex-layout': { name: 'Complex Layout', component: ComplexLayout },
-  'multiple-form-builders': { name: 'Multiple Form Builders', component: MultipleFormBuilders },
+  'multiple-form-builders': {
+    name: 'Multiple Form Builders',
+    component: MultipleFormBuilders,
+    description:
+      'Some times you need to group fields into different fieldsets, or need more complex layout. You can use multiple form builders in one form.',
+  },
   'single-element': { name: 'Single Element', component: ComplexLayout },
   validation: { name: 'Validation', component: ComplexLayout },
   modal: { name: 'Form in Modal', component: ComplexLayout },
@@ -29,13 +34,17 @@ export default () => {
   const current = useHash() || 'basic'
 
   const renderExample = () => {
-    if (!examples[current] || !examples[current].component) {
+    const item = examples[current]
+    if (!item || !item.component) {
       return <span style={{ color: 'red' }}>Error: example "{current}" not found.</span>
     }
-    const Comp = examples[current].component
+    const Comp = item.component
     return (
       <React.Fragment>
-        <h1>{examples[current].name}</h1>
+        <h1>
+          {item.name}
+          <p className="example-description">{item.description}</p>
+        </h1>
         <Comp />
       </React.Fragment>
     )
@@ -45,6 +54,7 @@ export default () => {
     <div className="app">
       <div className="sider">
         <h1>antd-form-builder</h1>
+
         <ul>
           {Object.keys(examples).map(key => (
             <li key={key}>

@@ -209,36 +209,43 @@ class FormBuilder extends Component {
     )
   }
 
-  renderLayout(fields, rawFields) {
+  renderLayout(elements, fields) {
     // Layout the form in columns
     const columns = this.props.meta.columns || 1
     if (columns === 1) {
-      return fields
+      return elements
     }
     const rowClassName = `antd-form-builder-row ${
       this.props.viewMode ? 'antd-form-builder-row-view-mode' : ''
     }`
 
-    const gutter = this.props.meta.gutter || 10
+    const meta = this.getMeta()
+    const gutter = _.has(meta, 'gutter') ? meta.gutter : 10
     const rows = []
     // for each column , how many grid cols
-    const colspan = 24 / columns
+    const spanUnit = 24 / columns
     // eslint-disable-next-line
-    for (let i = 0; i < fields.length; ) {
+    for (let i = 0; i < elements.length; ) {
       const cols = []
-      let eleSpan = rawFields[i].colSpan || 1
+      let fieldSpan = fields[i].colSpan || 1
 
       for (
         let j = 0;
-        (j + eleSpan <= columns || cols.length === 0) && i < fields.length;
-        j += eleSpan
+        (j + fieldSpan <= columns || cols.length === 0) && // total col span is less than columns
+        i < elements.length && // elements
+        (!['left', 'both'].includes(fields[i].clear) || cols.length === 0); // field doesn't need to start a new row
+        j += fieldSpan
       ) {
-        eleSpan = rawFields[i].colSpan || 1
+        fieldSpan = fields[i].colSpan || 1
         cols.push(
-          <Col key={j} span={Math.min(24, colspan * eleSpan)}>
-            {fields[i]}
+          <Col key={j} span={Math.min(24, spanUnit * fieldSpan)}>
+            {elements[i]}
           </Col>,
         )
+        if (['both', 'right'].includes(fields[i].clear)) {
+          i += 1
+          break
+        }
         i += 1
       }
       rows.push(
