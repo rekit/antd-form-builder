@@ -4,8 +4,8 @@ antd-form-builder is a small (< 300 lines source code) but powerful helper utili
 
 [![NPM](https://img.shields.io/npm/v/antd-form-builder.svg)](https://www.npmjs.com/package/antd-form-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-## Live Demo
-You can see live demo of examples at: https://rekit.github.io/antd-form-builder .
+## Examples
+https://rekit.github.io/antd-form-builder
 
 ## Background
 I've been using ant.design and this little helper utitlity since 3 years ago in more than 10 projects. Not only in Rekit Studio, Rekit App but also in internal projects of my company. It has been just working well. In the past, every project has a copy of this form builder since it's really small. But it becomes a problem when there are slight difference among projects and it lacks of documentation. So I decided to publish it as a npm module, write docs and create demos for it.
@@ -16,18 +16,28 @@ The key principle in my mind to create antd-form-builder is it should just help 
 ## Meta Driven
 Besides the simplified API which helps to create form easily, antd-form-builder is also very useful if you have meta driven requirement. For example if your form structure needs to be configurable, the meta could be a pure JSON object which can be easily saved and managed separately.
 
+## Install
+
+```bash
+npm install --save-dev antd-form-builder
+```
+
 ## Usage
+
+## API Reference
+
+### FormBuilder
+
+### FormBuilder.defineWidget(key, Component, metaConvertor)
+
+### meta
 
 
 
 
 Building forms with Ant.design, an amazing UI component library for React, is quite annoying because you need to write much verbose code. Since 3 years ago, 
 
-## Install
 
-```bash
-npm install --save-dev antd-form-builder
-```
 
 ## Usage
 

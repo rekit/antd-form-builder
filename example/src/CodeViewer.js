@@ -15,6 +15,7 @@ import codeCustomComponent from '!!raw-loader!./examples/CustomComponent.js'
 import codeViewEdit from '!!raw-loader!./examples/ViewEdit.js'
 import codeMixed from '!!raw-loader!./examples/Mixed.js'
 import codeWizard from '!!raw-loader!./examples/Wizard.js'
+import codeSimple from '!!raw-loader!./examples/Simple.js'
 
 const codeMap = {
   basic: codeBasic,
@@ -31,6 +32,7 @@ const codeMap = {
   'custom-component': codeCustomComponent,
   mixed: codeMixed,
   wizard: codeWizard,
+  simple: codeSimple,
 }
 export default ({ code }) => {
   useEffect(() => {

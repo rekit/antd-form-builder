@@ -15,10 +15,15 @@ import CustomComponent from './examples/CustomComponent'
 import ViewEdit from './examples/ViewEdit'
 import Mixed from './examples/Mixed'
 import Wizard from './examples/Wizard'
+import Simple from './examples/Simple'
 
 import './App.css'
 
 const examples = {
+  simple: {
+    name: 'Simple',
+    component: Simple,
+  },
   basic: { name: 'Basic', component: Basic, description: 'Basic form usage.' },
   'view-edit': {
     name: 'View / Edit',
@@ -32,6 +37,7 @@ const examples = {
     description:
       "You can dynamically add or remove fields according to the user's input. In this example, if choose other, then a new input appears.",
   },
+
   'async-data-source': {
     name: 'Async Data Source',
     component: AsyncDataSource,
