@@ -23,9 +23,9 @@ const examples = {
   simple: {
     name: 'Simple',
     component: Simple,
-    description: 'Most simple usage.',
+    description: 'The most simple usage.',
   },
-  basic: { name: 'Basic', component: Basic, description: 'Basic form usage.' },
+  basic: { name: 'Basic', component: Basic, description: 'Basic usage.' },
   'view-edit': {
     name: 'View / Edit',
     component: ViewEdit,
@@ -158,8 +158,16 @@ export default () => {
               <img src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social" />
             </a>
             <br />
-            <a href="https://github.com/rekit/antd-form-builder">
-              <img src="https://img.shields.io/badge/API-Reference-green" />
+            <a href="https://github.com/rekit/antd-form-builder" alt="Github Repo">
+              <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
+            </a>
+            <br />
+            <a href="https://codesandbox.io/s/antd-form-builder-example-9qyuw">
+              <img
+                width="150px"
+                src="https://codesandbox.io/static/img/play-codesandbox.svg"
+                alt="codesandbox"
+              />
             </a>
           </div>
         </div>

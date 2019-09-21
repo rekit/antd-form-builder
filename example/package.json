@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "antd-form-builder": "file:..",
+    "antd": "^3.23.4",
+    "antd-form-builder": "^1.0.0",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.1.0",
     "react": "^16.4.1",

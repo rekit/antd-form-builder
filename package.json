@@ -1,6 +1,6 @@
 {
   "name": "antd-form-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Form builder for ant.design.",
   "author": "supnate",
   "license": "MIT",
@@ -58,8 +58,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "antd": "^3.23.3"
-  }
+  ]
 }

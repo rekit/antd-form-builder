@@ -5,6 +5,7 @@ antd-form-builder is a small (< 300 lines source code) but powerful helper utili
 [![NPM](https://img.shields.io/npm/v/antd-form-builder.svg)](https://www.npmjs.com/package/antd-form-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Examples
+You can see the live demo at:
 https://rekit.github.io/antd-form-builder
 
 ## Background
@@ -23,7 +24,7 @@ npm install --save-dev antd-form-builder
 ```
 
 ## Usage
-The most simple usage below:
+The most simple usage is like below:
 ```js
 import React from 'react'
 import { Form, Button } from 'antd'
@@ -169,13 +170,6 @@ const realMeta = { fields: [meta] }
 ```
 
 
-
-
-
-
-
-
-## API Reference
 
 ## License
 
