@@ -23,6 +23,7 @@ const examples = {
   simple: {
     name: 'Simple',
     component: Simple,
+    description: 'Most simple usage.',
   },
   basic: { name: 'Basic', component: Basic, description: 'Basic form usage.' },
   'view-edit': {
