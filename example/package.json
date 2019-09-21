@@ -1,6 +1,6 @@
 {
   "name": "antd-form-builder-example",
-  "homepage": "https://supnate.github.io/antd-form-builder",
+  "homepage": ".",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && rm -rf ../docs && mv build ../docs",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

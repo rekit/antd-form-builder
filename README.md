@@ -7,7 +7,6 @@ antd-form-builder is a small (< 300 lines source code) but powerful helper utili
 ## Live Demo
 You can see live demo of examples at: https://rekit.github.io/antd-form-builder .
 
-
 ## Background
 I've been using ant.design and this little helper utitlity since 3 years ago in more than 10 projects. Not only in Rekit Studio, Rekit App but also in internal projects of my company. It has been just working well. In the past, every project has a copy of this form builder since it's really small. But it becomes a problem when there are slight difference among projects and it lacks of documentation. So I decided to publish it as a npm module, write docs and create demos for it.
 
