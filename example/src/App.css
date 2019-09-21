@@ -5,18 +5,31 @@
 
 .app .sider {
   position: fixed;
+  padding-top: 80px;
   width: 240px;
   height: 100%;
   top: 0px;
   left: 0px;
   background-color: #f7f7f7;
+  overflow: auto;
 }
 
 .app .sider h1 {
-  font-size: 20px;
+  position: fixed;
+  width: 240px;
+  top: 0px;
+  font-size: 12px;
   background-color: #f0f0f0;
-  line-height: 50px;
-  padding-left: 28px;
+  padding: 10px 0 10px 28px;
+  color: #999;
+
+}
+
+.app .sider h1 span {
+  font-size: 20px;
+  display: block;
+  margin-top: 5px;
+  color: #333;
 }
 .app .sider ul, .app .sider li {
   margin: 0;
@@ -25,7 +38,7 @@
 }
 
 .app .sider li {
-  line-height: 300%;
+  line-height: 260%;
 }
 
 .app .sider li a {
@@ -38,6 +51,13 @@
 
 }
 
+.app .sider .social {
+  padding-left: 28px;
+  margin-top: 20px;
+  line-height: 40px;
+}
+
+
 .app .example-container {
   padding: 40px;
 
@@ -48,6 +68,7 @@
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
+
 
 .app .example-container .ant-form {
   width: 600px;

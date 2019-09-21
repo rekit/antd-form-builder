@@ -12,26 +12,48 @@ import Validation from './examples/Validation'
 import Coordinated from './examples/Coordinated'
 import FormInModal from './examples/FormInModal'
 import CustomComponent from './examples/CustomComponent'
+import ViewEdit from './examples/ViewEdit'
+import Mixed from './examples/Mixed'
+import Wizard from './examples/Wizard'
 
 import './App.css'
 
 const examples = {
   basic: { name: 'Basic', component: Basic, description: 'Basic form usage.' },
-  'view-mode': { name: 'View Mode', component: ComplexLayout },
+  'view-edit': {
+    name: 'View / Edit',
+    component: ViewEdit,
+    description:
+      'FormBuilder can also be used to display read-only form fields besides editing them. Set viewMode to true and provide viewWidget property to field meta to use it. You can also use readOnly property for a single field to be view mode.',
+  },
   'dynamic-fields': {
     name: 'Dynamic Fields',
     component: DynamicFields,
     description:
       "You can dynamically add or remove fields according to the user's input. In this example, if choose other, then a new input appears.",
   },
-  'async-data-source': { name: 'Async Data Source', component: AsyncDataSource },
-  'multiple-columns': { name: 'Multiple Columns', component: MultipleColumns },
-  'complex-layout': { name: 'Complex Layout', component: ComplexLayout },
+  'async-data-source': {
+    name: 'Async Data Source',
+    component: AsyncDataSource,
+    description:
+      'Some form field widgets may need to load data source if necessary, the sample shows how to do it',
+  },
+  'multiple-columns': {
+    name: 'Multiple Columns',
+    component: MultipleColumns,
+    description:
+      "It's easy to set multiple columns layout for the form. Note it should be able to divide 24",
+  },
+  'complex-layout': {
+    name: 'Complex Layout',
+    component: ComplexLayout,
+    description: 'The example shows a complex layout. Similar approach with multiple columns.',
+  },
   'multiple-form-builders': {
     name: 'Multiple Form Builders',
     component: MultipleFormBuilders,
     description:
-      'Some times you need to group fields into different fieldsets, or need more complex layout. You can use multiple form builders in one form.',
+      'Some times you need to group fields into different fieldset, or need more complex layout. You can use multiple form builders in one form.',
   },
   'single-field': {
     name: 'Single Field',
@@ -46,7 +68,11 @@ const examples = {
       <span>
         You can use rules property to specify how to validate fields. For more information please go
         to:{' '}
-        <a href="https://ant.design/components/form/#Validation-Rules" target="_blank">
+        <a
+          href="https://ant.design/components/form/#Validation-Rules"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           https://ant.design/components/form/#Validation-Rules
         </a>
       </span>
@@ -70,8 +96,18 @@ const examples = {
     description:
       "It's easy to create your own form field component, ether to get new capabilities or even just for layout.",
   },
-  mixed: { name: 'Mixed', component: Basic },
-  wizard: { name: 'Wizard', component: Basic },
+  mixed: {
+    name: 'Mixed',
+    component: Mixed,
+    description:
+      'Form builder is designed to not limit original antd form api, so you can use them together.',
+  },
+  wizard: {
+    name: 'Wizard',
+    component: Wizard,
+    description:
+      'Wizard is an advanced usage of form builder, you can design your own meta structure to support dynamic wizard.',
+  },
 }
 
 export default () => {
@@ -97,7 +133,9 @@ export default () => {
   return (
     <div className="app">
       <div className="sider">
-        <h1>antd-form-builder</h1>
+        <h1>
+          antd-form-builder<span>Examples</span>
+        </h1>
 
         <ul>
           {Object.keys(examples).map(key => (
@@ -108,6 +146,15 @@ export default () => {
             </li>
           ))}
         </ul>
+        <div className="social">
+          <a href="https://github.com/rekit/antd-form-builder">
+            <img src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social" />
+          </a>
+          <br />
+          <a href="https://github.com/rekit/antd-form-builder">
+            <img src="https://img.shields.io/badge/API-Reference-green" />
+          </a>
+        </div>
       </div>
       <div className="example-container">{renderExample()}</div>
       <div className="code-container">

@@ -20,12 +20,9 @@ export default Form.create()(({ form }) => {
         colSpan: 4,
         render() {
           return (
-            <h1 style={{ color: 'darkcyan' }}>
-              Address
-              <span style={{ color: '#555', fontSize: '14px', marginLeft: '15px' }}>
-                YOUR INFORMATION IS PRIVATE
-              </span>
-            </h1>
+            <fieldset>
+              <legend>Contact Infomation</legend>
+            </fieldset>
           )
         },
       },
@@ -39,12 +36,9 @@ export default Form.create()(({ form }) => {
         colSpan: 4,
         render() {
           return (
-            <h1 style={{ color: 'darkcyan' }}>
-              Bed &amp; Bath
-              <span style={{ color: '#555', fontSize: '14px', marginLeft: '15px' }}>
-                WHAT IS YOUR HOME LIKE?
-              </span>
-            </h1>
+            <fieldset>
+              <legend>Bed &amp; Bath</legend>
+            </fieldset>
           )
         },
       },

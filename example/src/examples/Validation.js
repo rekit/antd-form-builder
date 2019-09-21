@@ -24,13 +24,12 @@ export default Form.create()(({ form }) => {
     {
       key: 'username',
       label: 'Username',
-      extra: 'Note: username nate, bood or kevin alread exist',
+      extra: 'Note: username nate, bood or kevin already exist',
       hasFeedback: true, // Show validation status icon in the right
       required: true, // this adds an entry to rules: [{ required: true, message: 'Username is required' }]
       rules: [
         {
           validator: (rule, value, callback) => {
-            console.log('rule:', rule)
             // Do async validation to check if username already exists
             // Use setTimeout to emulate api call
             setTimeout(() => {

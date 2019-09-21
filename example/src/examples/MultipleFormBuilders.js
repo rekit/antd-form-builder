@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default Form.create()(({ form }) => {
-  const [columns, setColumns] = useState(2)
   const handleSubmit = useCallback(
     evt => {
       evt.preventDefault()

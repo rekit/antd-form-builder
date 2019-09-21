@@ -3,6 +3,7 @@ import React, { Component, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Col, Form, Icon, Row, Tooltip, Input } from 'antd'
+import './FormBuilder.css'
 
 const FormItem = Form.Item
 const widgetMap = {}
@@ -39,7 +40,7 @@ function convertMeta(field) {
   if (item) {
     const newField = item.metaConvertor(field)
     if (!newField) {
-      throw new Error(`metaConvertor of '${String(field.widget)}' must return a new field`)
+      throw new Error(`metaConvertor of '${String(field.widget)}' must return a field`)
     }
     return newField
   }
@@ -106,7 +107,6 @@ class FormBuilder extends Component {
       colon: meta.colon,
       ...formItemLayout,
       label,
-      className: field.readonly ? 'antd-form-builder-item-readonly' : null,
       ..._.pick(field, [
         'help',
         'extra',
@@ -118,6 +118,9 @@ class FormBuilder extends Component {
         'hasFeedback',
       ]),
       ...field.formItemProps,
+      className: `${this.props.viewMode ? 'ant-form-item-view-mode' : ''} ${(
+        field.formItemProps || {}
+      ).className || ''}`,
     }
 
     if (field.colSpan && formItemProps.labelCol) {
@@ -146,36 +149,44 @@ class FormBuilder extends Component {
       initialValue = _.get(this.props.values, field.key) || undefined
     }
 
-    if (this.props.viewMode || field.readOnly) {
+    if (this.props.viewMode || field.viewMode) {
       let viewEle = null
-      if (field.viewWidget) {
+      const formValues = this.props.form ? this.props.form.getFieldsValue() : {}
+      let viewValue = _.has(formValues, field.key) ? _.get(formValues, field.key) : initialValue
+      if (field.renderView) {
+        viewEle = field.renderView(viewValue, this.props.form)
+      } else if (field.viewWidget) {
         const ViewWidget =
           typeof field.viewWidget === 'string' ? getWidget(field.viewWidget) : field.viewWidget
-        viewEle = <ViewWidget value={initialValue} {...field.viewWidgetProps} field={field} />
+        viewEle = (
+          <ViewWidget
+            value={viewValue}
+            form={this.props.form}
+            field={field}
+            {...field.viewWidgetProps}
+          />
+        )
       } else if (field.link) {
-        const href = typeof field.link === 'string' ? field.link : initialValue
+        const href = typeof field.link === 'string' ? field.link : viewValue
         viewEle = (
           <a href={href} target={field.linkTarget || '_self'}>
-            {initialValue}
+            {viewValue}
           </a>
         )
       } else if (field.options) {
         // a little hacky here, if a field is select/options like, auto use label for value
-        const found = _.find(field.options, opt => opt[0] === initialValue)
+        const found = _.find(field.options, opt => opt[0] === viewValue)
         if (found) {
-          initialValue = found[1]
+          viewValue = found[1]
         }
       }
       if (!viewEle) {
-        if (typeof initialValue === 'boolean') viewEle = _.capitalize(String(initialValue))
-        else if (initialValue === undefined) viewEle = 'N/A'
-        else viewEle = String(initialValue) || ''
+        if (typeof viewValue === 'boolean') viewEle = _.capitalize(String(viewValue))
+        else if (viewValue === undefined) viewEle = 'N/A'
+        else viewEle = String(viewValue) || ''
       }
-      return (
-        <FormItem {...formItemProps}>
-          <span className="antd-form-builder-read-only-view">{viewEle}</span>
-        </FormItem>
-      )
+
+      return <FormItem {...formItemProps}>{viewEle}</FormItem>
     }
 
     // Handle field props
@@ -189,6 +200,7 @@ class FormBuilder extends Component {
     const fieldProps = {
       validateFirst: true,
       initialValue,
+      preserve: true, // by default, preserve the value
       ..._.pick(field, [
         'getValueFromEvent',
         'normalize',
@@ -220,6 +232,7 @@ class FormBuilder extends Component {
         <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>,
       )
     }
+
     return (
       <FormItem {...formItemProps}>
         {getFieldDecorator(field.id || field.key, fieldProps)(
@@ -283,6 +296,7 @@ class FormBuilder extends Component {
 }
 
 FormBuilder.defineWidget = (name, widget, metaConvertor = null) => {
+  if (widgetMap[name]) throw new Error(`Widget "${name}" already defined.`)
   widgetMap[name] = {
     widget,
     metaConvertor,

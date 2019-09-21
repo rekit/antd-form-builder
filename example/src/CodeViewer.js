@@ -12,10 +12,13 @@ import codeValidation from '!!raw-loader!./examples/Validation.js'
 import codeCoordinated from '!!raw-loader!./examples/Coordinated.js'
 import codeFormInModal from '!!raw-loader!./examples/FormInModal.js'
 import codeCustomComponent from '!!raw-loader!./examples/CustomComponent.js'
+import codeViewEdit from '!!raw-loader!./examples/ViewEdit.js'
+import codeMixed from '!!raw-loader!./examples/Mixed.js'
+import codeWizard from '!!raw-loader!./examples/Wizard.js'
 
 const codeMap = {
   basic: codeBasic,
-  'view-mode': codeComplexLayout,
+  'view-edit': codeViewEdit,
   'dynamic-fields': codeDynamicFields,
   'async-data-source': codeAsyncDataSource,
   'multiple-columns': codeMultipleColumns,
@@ -26,8 +29,8 @@ const codeMap = {
   coordinated: codeCoordinated,
   'form-in-modal': codeFormInModal,
   'custom-component': codeCustomComponent,
-  mixed: codeBasic,
-  wizard: codeBasic,
+  mixed: codeMixed,
+  wizard: codeWizard,
 }
 export default ({ code }) => {
   useEffect(() => {

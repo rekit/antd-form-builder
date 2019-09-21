@@ -2,12 +2,6 @@ import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-const MOCK_USERNAMES = {
-  nate: true,
-  bood: true,
-  kevin: true,
-}
-
 export default Form.create()(({ form }) => {
   const handleSubmit = useCallback(
     evt => {

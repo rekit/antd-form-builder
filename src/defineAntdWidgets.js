@@ -21,12 +21,12 @@ const mapOptions = options => {
   })
 }
 
-FormBuilder.defineWidget('checkbox', Checkbox, ele => {
-  return { ...ele, valuePropName: 'checked' }
+FormBuilder.defineWidget('checkbox', Checkbox, field => {
+  return { ...field, valuePropName: 'checked' }
 })
 
-FormBuilder.defineWidget('switch', Switch, ele => {
-  return { ...ele, valuePropName: 'checked' }
+FormBuilder.defineWidget('switch', Switch, field => {
+  return { ...field, valuePropName: 'checked' }
 })
 
 FormBuilder.defineWidget('button', Button)
@@ -36,49 +36,48 @@ FormBuilder.defineWidget('textarea', Input.TextArea)
 FormBuilder.defineWidget('number', InputNumber)
 FormBuilder.defineWidget('date-picker', DatePicker)
 FormBuilder.defineWidget('radio', Radio)
-FormBuilder.defineWidget('radio-group', Radio.Group, ele => {
-  const RadioComp = ele.buttonGroup ? Radio.Button : Radio
-  if (ele.options && !ele.children) {
+FormBuilder.defineWidget('radio-group', Radio.Group, field => {
+  const RadioComp = field.buttonGroup ? Radio.Button : Radio
+  if (field.options && !field.children) {
     return {
-      ...ele,
+      ...field,
       widgetProps: {
-        ...ele.widgetProps,
-        name: ele.key,
+        ...field.widgetProps,
+        name: field.key,
       },
-      children: mapOptions(ele.options).map(opt => (
+      children: mapOptions(field.options).map(opt => (
         <RadioComp value={opt.value} key={opt.value}>
           {opt.label}
         </RadioComp>
       )),
     }
   }
-  return ele
+  return field
 })
 
-FormBuilder.defineWidget('checkbox', Checkbox)
-FormBuilder.defineWidget('checkbox-group', Checkbox.Group, ele => {
-  if (ele.options && !ele.children) {
+FormBuilder.defineWidget('checkbox-group', Checkbox.Group, field => {
+  if (field.options && !field.children) {
     return {
-      ...ele,
-      children: mapOptions(ele.options).map(opt => (
+      ...field,
+      children: mapOptions(field.options).map(opt => (
         <Checkbox value={opt.value} key={opt.value}>
           {opt.label}
         </Checkbox>
       )),
     }
   }
-  return ele
+  return field
 })
-FormBuilder.defineWidget('select', Select, ele => {
-  if (ele.options && !ele.children) {
+FormBuilder.defineWidget('select', Select, field => {
+  if (field.options && !field.children) {
     return {
-      ...ele,
-      children: mapOptions(ele.options).map(opt => (
+      ...field,
+      children: mapOptions(field.options).map(opt => (
         <Select.Option value={opt.value} key={opt.value}>
           {opt.label}
         </Select.Option>
       )),
     }
   }
-  return ele
+  return field
 })

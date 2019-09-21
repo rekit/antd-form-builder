@@ -60,6 +60,6 @@
     "dist"
   ],
   "dependencies": {
-    
+    "antd": "^3.23.3"
   }
 }
