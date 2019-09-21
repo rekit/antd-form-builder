@@ -5,24 +5,26 @@
 
 .app .sider {
   position: fixed;
-  padding-top: 80px;
   width: 240px;
   height: 100%;
   top: 0px;
   left: 0px;
   background-color: #f7f7f7;
-  overflow: auto;
 }
 
 .app .sider h1 {
-  position: fixed;
-  width: 240px;
-  top: 0px;
   font-size: 12px;
   background-color: #f0f0f0;
   padding: 10px 0 10px 28px;
   color: #999;
+  height: 75px;
+}
 
+.app .sider img.logo {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 32px;
 }
 
 .app .sider h1 span {
@@ -31,6 +33,33 @@
   margin-top: 5px;
   color: #333;
 }
+.app .sider .scroll-container {
+  position: absolute;
+  overflow: auto;
+  top: 75px;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.app .sider .scroll-container::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.app .sider .scroll-container::-webkit-scrollbar-thumb {
+  transition: all 0.3s ease;
+  border-color: transparent;
+  background-color: #ddd;
+  z-index: 40;
+}
+
+.app .sider .scroll-container::-webkit-scrollbar-corner {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+
 .app .sider ul, .app .sider li {
   margin: 0;
   padding: 0;

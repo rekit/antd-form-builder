@@ -136,24 +136,25 @@ export default () => {
         <h1>
           antd-form-builder<span>Examples</span>
         </h1>
-
-        <ul>
-          {Object.keys(examples).map(key => (
-            <li key={key}>
-              <a href={`#${key}`} className={current === key ? 'active' : ''}>
-                {examples[key].name}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className="social">
-          <a href="https://github.com/rekit/antd-form-builder">
-            <img src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social" />
-          </a>
-          <br />
-          <a href="https://github.com/rekit/antd-form-builder">
-            <img src="https://img.shields.io/badge/API-Reference-green" />
-          </a>
+        <div className="scroll-container">
+          <ul>
+            {Object.keys(examples).map(key => (
+              <li key={key}>
+                <a href={`#${key}`} className={current === key ? 'active' : ''}>
+                  {examples[key].name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="social">
+            <a href="https://github.com/rekit/antd-form-builder">
+              <img src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social" />
+            </a>
+            <br />
+            <a href="https://github.com/rekit/antd-form-builder">
+              <img src="https://img.shields.io/badge/API-Reference-green" />
+            </a>
+          </div>
         </div>
       </div>
       <div className="example-container">{renderExample()}</div>
