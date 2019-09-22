@@ -67,7 +67,7 @@ export default Form.create()(({ form }) => {
             </Button>
           )}
         </h1>
-        <FormBuilder form={form} meta={meta} values={personalInfo} viewMode={viewMode} />
+        <FormBuilder form={form} meta={meta} initialValues={personalInfo} viewMode={viewMode} />
         {!viewMode && (
           <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
             <Button htmlType="submit" type="primary" disabled={pending}>

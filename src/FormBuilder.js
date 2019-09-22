@@ -7,7 +7,6 @@ import './FormBuilder.css'
 
 const FormItem = Form.Item
 const widgetMap = {}
-const defaultFormItemLayout = [8, 16]
 
 const getWrappedComponentWithForwardRef = _.memoize(Comp =>
   forwardRef((props, ref) => {
@@ -50,9 +49,10 @@ function convertMeta(field) {
 class FormBuilder extends Component {
   static propTypes = {
     meta: PropTypes.any.isRequired,
-    values: PropTypes.object,
+    initialValues: PropTypes.object,
     form: PropTypes.object,
     disabled: PropTypes.bool,
+    formItemLayout: PropTypes.any,
     viewMode: PropTypes.bool, // if viewMode, labels are left aligned
   }
 
@@ -61,6 +61,7 @@ class FormBuilder extends Component {
     form: null,
     viewMode: false,
     values: {},
+    formItemLayout: [8, 16],
   }
 
   getMeta() {
@@ -93,8 +94,8 @@ class FormBuilder extends Component {
       field.label
     )
 
-    let formItemLayout =
-      field.formItemLayout || meta.formItemLayout || (field.label ? defaultFormItemLayout : null)
+    let formItemLayout = field.formItemLayout || (field.label ? this.props.formItemLayout : null)
+    console.log('form layout: ', formItemLayout)
     if (_.isArray(formItemLayout)) {
       formItemLayout = {
         labelCol: { span: formItemLayout[0] },
@@ -136,7 +137,7 @@ class FormBuilder extends Component {
       return field.render.call(this, {
         formItemProps,
         field,
-        ..._.pick(this.props, ['form', 'disabled', 'viewMode', 'values']),
+        ..._.pick(this.props, ['form', 'disabled', 'viewMode', 'initialValues']),
       })
     }
 
@@ -144,9 +145,9 @@ class FormBuilder extends Component {
     if (_.has(field, 'initialValue')) {
       initialValue = field.initialValue
     } else if (field.getInitialValue) {
-      initialValue = field.getInitialValue(field, this.props.values, this.props.form)
+      initialValue = field.getInitialValue(field, this.props.initialValues, this.props.form)
     } else {
-      initialValue = _.get(this.props.values, field.key) || undefined
+      initialValue = _.get(this.props.initialValues, field.key) || undefined
     }
 
     if (this.props.viewMode || field.viewMode) {

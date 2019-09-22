@@ -155,10 +155,13 @@ export default () => {
           </ul>
           <div className="social">
             <a href="https://github.com/rekit/antd-form-builder">
-              <img src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social" />
+              <img
+                src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social"
+                alt="Github Repo"
+              />
             </a>
             <br />
-            <a href="https://github.com/rekit/antd-form-builder" alt="Github Repo">
+            <a href="https://github.com/rekit/antd-form-builder">
               <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
             </a>
             <br />
