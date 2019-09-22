@@ -180,6 +180,12 @@ Properties are list below:
 | fields | array | null | Fields definition for the form. See below info for how to define a field.|
 
 ### field meta
+Field meta is used to define each field. Generally it includes three kinds of information for each field:
+1. `props` passed to <Form.Item>
+2. `options` passed to `form.getFieldDecorator(key, options)
+3. Other information for the field.
+
+
 
 ## License
 
