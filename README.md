@@ -170,6 +170,7 @@ const realMeta = { fields: [meta] }
 ```
 
 Properties are list below:
+
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | columns | number | 1 |How many columns of the form layout. |
