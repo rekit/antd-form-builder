@@ -12,7 +12,7 @@ export default Form.create()(({ form }) => {
   )
   const meta = {
     columns: 4,
-    formItemLayout: {}, // Must set this for inline layout
+    formItemLayout: null, // Must set this for inline layout
     colon: true,
     fields: [
       {

@@ -52,7 +52,6 @@ class FormBuilder extends Component {
     initialValues: PropTypes.object,
     form: PropTypes.object,
     disabled: PropTypes.bool,
-    formItemLayout: PropTypes.any,
     viewMode: PropTypes.bool, // if viewMode, labels are left aligned
   }
 
@@ -61,7 +60,6 @@ class FormBuilder extends Component {
     form: null,
     viewMode: false,
     values: {},
-    formItemLayout: [8, 16],
   }
 
   getMeta() {
@@ -94,15 +92,14 @@ class FormBuilder extends Component {
       field.label
     )
 
-    let formItemLayout = field.formItemLayout || (field.label ? this.props.formItemLayout : null)
-    console.log('form layout: ', formItemLayout)
-    if (_.isArray(formItemLayout)) {
+    let formItemLayout =
+      field.formItemLayout || (field.label ? _.has(meta, 'formItemLayout') || [8, 16] : null)
+    if (_.isArray(formItemLayout) && formItemLayout.length >= 2) {
       formItemLayout = {
         labelCol: { span: formItemLayout[0] },
         wrapperCol: { span: formItemLayout[1] },
       }
     }
-
     const formItemProps = {
       key: field.key,
       colon: meta.colon,
