@@ -190,21 +190,21 @@ Field meta is used to define each field. Generally it includes three kinds of in
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | tooltip | string/React Node | | If set, there is a question mark icon besides label to show the tooltip. |
-| colSpan | | | |
-| clear | | | |
-| widget | | | |
-| widgetProps | | | |
-| viewWidget | | | |
-| viewWidgetProps | | | |
-| render | | | |
-| renderView | | | |
-| viewMode | | | |
-| initialValue | | | |
-| getInitialValue | | | |
-| disabled | | | |
-| forwardRef | | | |
-| noFormItem | | | |
-| children | | | |
+| colSpan | number | 1 | How many columns the field should take up. |
+| clear | enum | | In multiple columns layout, used to clear left, right or both side fields. Like the `clear` property in css. Could be `left`: the field starts from a new row; `right`: no fields behind the field; `both`: no other fields in the same row. |
+| widget | string/Component | Input | Which component used to render field for editing. The component should be able to be managed by antd form. |
+| widgetProps | object | | Props passed to widget. |
+| viewWidget | string/Component | text | Which component used to render field in view mode. |
+| viewWidgetProps | object | | Props passed to viewWidget |
+| render | function | | If provided, this is used for rendering the whole field in both edit and view mode, should render <Form.Item>, `getFieldDecorator` itself. `widget` property will be ignored. |
+| renderView | function | | If provided, this is used for rendering field value in view mode, `viewWidget` will be ignored. |
+| viewMode | bool | false | Whether the field is in view mode. |
+| initialValue | any | | The initialValue to be passed to the field widget. In view mode, it's the value to be display. |
+| getInitialValue | func(field, initialValues, form) | | Get the `initialValue` of the field. This may be used to combine multiple fields into one field |
+| disabled | bool | false | If set to true, every widget in field will be given a `disabled` property regardless of if it's supported. |
+| forwardRef | bool | | If your field widget is a funcional component which doesn't implement forwardRef, set this to true so that React doesn't prompt warning message. |
+| noFormItem | bool | false | By default, each field is wrapped with <Form.Item>, if set to true, it just use `getField |
+| children | ReactNode | | The `children` of widget defined in meta.  |
 | required | bool | false | Whether the field is required. |
 | message | string | | If a field is required, you can define what message provided if no input. By default, it's `${field.label} is required.`|
 
