@@ -16,6 +16,7 @@ import codeViewEdit from '!!raw-loader!./examples/ViewEdit.js'
 import codeMixed from '!!raw-loader!./examples/Mixed.js'
 import codeWizard from '!!raw-loader!./examples/Wizard.js'
 import codeSimple from '!!raw-loader!./examples/Simple.js'
+import codeViewMode from '!!raw-loader!./examples/ViewMode.js'
 
 const codeMap = {
   basic: codeBasic,
@@ -33,6 +34,7 @@ const codeMap = {
   mixed: codeMixed,
   wizard: codeWizard,
   simple: codeSimple,
+  'view-mode': codeViewMode,
 }
 export default ({ code }) => {
   useEffect(() => {

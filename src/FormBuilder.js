@@ -246,9 +246,9 @@ class FormBuilder extends Component {
     if (columns === 1) {
       return elements
     }
-    const rowClassName = `antd-form-builder-row ${
-      this.props.viewMode ? 'antd-form-builder-row-view-mode' : ''
-    }`
+    // const rowClassName = `antd-form-builder-row ${
+    //   this.props.viewMode ? 'antd-form-builder-row-view-mode' : ''
+    // }`
 
     const meta = this.getMeta()
     const gutter = _.has(meta, 'gutter') ? meta.gutter : 10
@@ -279,7 +279,7 @@ class FormBuilder extends Component {
         i += 1
       }
       rows.push(
-        <Row key={i} gutter={gutter} className={rowClassName}>
+        <Row key={i} gutter={gutter}>
           {cols}
         </Row>,
       )

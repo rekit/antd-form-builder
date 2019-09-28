@@ -16,6 +16,7 @@ import ViewEdit from './examples/ViewEdit'
 import Mixed from './examples/Mixed'
 import Wizard from './examples/Wizard'
 import Simple from './examples/Simple'
+import ViewMode from './examples/ViewMode'
 
 import './App.css'
 
@@ -26,11 +27,16 @@ const examples = {
     description: 'The most simple usage.',
   },
   basic: { name: 'Basic', component: Basic, description: 'Basic usage.' },
+  'view-mode': {
+    name: 'View Mode',
+    component: ViewMode,
+    description:
+      'FormBuilder could also be used as view mode just for displaying information in form layout. It could be used even without Form.',
+  },
   'view-edit': {
     name: 'View / Edit',
     component: ViewEdit,
-    description:
-      'FormBuilder can also be used to display read-only form fields besides editing them. Set viewMode to true and provide viewWidget property to field meta to use it. You can also use readOnly property for a single field to be view mode.',
+    description: 'FormBuilder makes it super easy to toggle view/edit mode of a form.',
   },
   'dynamic-fields': {
     name: 'Dynamic Fields',
