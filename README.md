@@ -116,6 +116,7 @@ Field meta is used to define each field. Each field meta is an object defined in
 | children | ReactNode | | The `children` of widget defined in meta.  |
 | required | bool | false | Whether the field is required. |
 | message | string | | If a field is required, you can define what message provided if no input. By default, it's `${field.label} is required.`|
+| options | array | | Only used by select, radio-group. checkbox-group components, explained below. |
 | **[formItemProps](https://ant.design/components/form/#Form.Item)** | **object** |  | **The props passed to <Form.Item>. Below properties are short way to pass props to <Form.Item>. [See more from antd's doc](https://ant.design/components/form/#Form.Item)** |
 | colon| bool| true |Used with `label`, whether to display : after label text. |
 | extra| string/ReactNode | | The extra prompt message. It is similar to help. Usage example: to display error message and prompt message at the same time. |
@@ -129,7 +130,6 @@ Field meta is used to define each field. Each field meta is an object defined in
 | getValueFromEvent | function(..args) | | Specify how to get value from event or other onChange arguments|
 | getValueProps | function(value) | | Get the component props according to field value. |
 | normalize |function(value, prevValue, allValues) | | Normalize value to form component |
-| options | array | | Only used by select, radio-group. checkbox-group components, explained below. |
 | preserve | bool | true |Keep the field even if field removed.NOTE: the default value is true for FormBuilder. |
 | rules |object[] | | Includes validation rules. Please refer to "Validation Rules" part for details.|
 | trigger | string | 'onChange'|When to collect the value of children node |
@@ -155,7 +155,7 @@ The predefined components are list below:
 | password | Input.Password | |
 | textarea | Input.TextArea | |
 | number | InputNumber | |
-| select | Select | Typically you need to provide `children` property for <Option /> array to the field meta metioned above. To make it easy to use, you can provide an `options` array to the field meta, internally it will be convented to `children` property. Explained below. |
+| select | Select | Typically you need to provide `children` property for Option array to the field meta metioned above. To make it easy to use, you can provide an `options` array to the field meta, internally it will be convented to `children` property. Explained below. |
 | date-picker | DatePicker | |
 | radio | Radio | |
 | checkbox | CheckBox | |
