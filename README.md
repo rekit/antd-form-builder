@@ -48,6 +48,9 @@ export default Form.create()(({ form }) => {
   )
 })
 ```
+
+Then you get a form:
+# <img style="border: 1px solid #eee" src="images/login.png?raw=true" width="500">
 To see more examples, please go to https://rekit.github.io/antd-form-builder
 
 ## Define Custom Widget

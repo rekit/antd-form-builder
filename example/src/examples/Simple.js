@@ -6,7 +6,7 @@ export default Form.create()(({ form }) => {
   const meta = {
     fields: [
       { key: 'username', label: 'User Name' },
-      { key: 'password', label: 'Last Name', widget: 'password' },
+      { key: 'password', label: 'Password', widget: 'password' },
     ],
   }
 
@@ -14,7 +14,7 @@ export default Form.create()(({ form }) => {
     <Form>
       <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
-        <Button type="primary">Login</Button>
+        <Button type="primary">Log in</Button>
       </Form.Item>
     </Form>
   )
