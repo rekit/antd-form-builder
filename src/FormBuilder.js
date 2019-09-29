@@ -201,6 +201,7 @@ class FormBuilder extends Component {
       preserve: true, // by default, preserve the value
       ..._.pick(field, [
         'getValueFromEvent',
+        'getValueProps',
         'normalize',
         'trigger',
         'preserve',
