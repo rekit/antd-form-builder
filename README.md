@@ -1,6 +1,5 @@
 # antd-form-builder
-
-antd-form-builder is a small (< 300 lines source code) but powerful helper utility for building forms with ant.design for React. It not only helps to define form fields easily but also for fields layout.
+The FormBuilder is a small helper (< 300 lines of source code) for building forms with [ant.design](https://ant.design) easily while not preventing you from using the original antd form API.
 
 [![NPM](https://img.shields.io/npm/v/antd-form-builder.svg)](https://www.npmjs.com/package/antd-form-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -9,13 +8,13 @@ You can see the live demo at:
 https://rekit.github.io/antd-form-builder
 
 ## Background
-I've been using ant.design and this little helper utitlity since 3 years ago in more than 10 projects. Not only in Rekit Studio, Rekit App but also in internal projects of my company. It has been just working well. In the past, every project has a copy of this form builder since it's really small. But it became a problem when there was slight difference among projects and it lacks of documentation. So I decided to publish it as a npm module, write docs and create demos for it.
+I've been using [ant.design](https://ant.design) and this little helper utitlity since 3 years ago in more than 10 projects. Not only in [Rekit Studio](https://github.com/rekit/rekit-studio), [Rekit App](https://github.com/rekit/rekit-app) but also in internal projects of my company. It has been just working well. In the past, every project has a copy of this FormBuilder since it's really small. But it became a problem when there was slight difference among projects and it lacks of documentation. So I decided to publish it as a public npm module, write docs and create demos for it.
 
 ## Philosophy
 The key principle in my mind to create antd-form-builder is it should just help to define form fields and the layout while it doesn't reduce the flexibility of antd's original form API. So in simple patterns you can create a form very easily but if a form is much complicated you can still use the original form API. You can even use antd-form-builder together with the raw API in a mixed way.
 
 ## Meta Driven
-Besides the simplified API which helps to create form easily, antd-form-builder is also very useful if you have meta driven requirement. For example if your form structure needs to be configurable, the meta could be a pure JSON object which can be easily saved and managed separately.
+Besides the simplified API which helps to create form easily, the FormBuilder is also very useful if you have meta driven requirement. For example if your form structure needs to be configurable, the meta could be a pure JSON object which can be easily saved and managed separately.
 
 ## Install
 
@@ -53,8 +52,8 @@ Then you get a form:
 # <img style="border: 1px solid #eee" src="images/login.png?raw=true" width="500">
 To see more examples, please go to https://rekit.github.io/antd-form-builder
 
-## Define Custom Widget
-To define widget in a field, you can use either a string which maps to a widget or a react component directly.
+## Define Widget
+To define the widget for a field, you can use either a string which maps to a widget or a react component directly.
 ```js
 const meta = { key: 'name', label: 'Name', widget: 'input'}
 // or
@@ -177,15 +176,15 @@ Properties are list below:
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | columns | number | 1 |How many columns of the form layout. |
-| viewMode | bool | false | If in viewMode, will use viewWidget for field meta and labels are left aligned.|
+| viewMode | bool | false | If in viewMode, will use viewWidget for field meta and labels are left aligned. You don't need to wrap FormBuilder in a Form in view mode. |
 | formItemLayout | object/array| [8, 16] | The `labelCol` and `wrapperCol` passed to Form.Item. If it's an array, will be converted to `{ labelCol: { span: arr[0] }, wrapperCol: { span: arr[1] }}`. If a filed has different layout, define it in its own meta. |
 | disabled | bool | false | If true, all fields components will be given a `disabled` property. |
 | initialValues | object | null | Set initialValues to the form, usually used in form which edit values or in viewMode. You can also set initialValue for each field. |
 | fields | array | null | Fields definition for the form. See below info for how to define a field.|
-| gutter | number | 0 | Fields definition for the form. See below info for how to define a field.|
+| gutter | number | 0 | The gap between columns.|
 
 ### Field meta
-Field meta is used to define each field. It's a single place to combine parameters to FormBuilder itself, <Form.Item> and `getFieldDecorators`. All options are listed below:
+Field meta is used to define each field. Each field meta is an object defined in `meta.fields`. It's a central place to combine parameters to FormBuilder itself, <Form.Item> and `getFieldDecorators`. All options are listed below:
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -209,7 +208,7 @@ Field meta is used to define each field. It's a single place to combine paramete
 | children | ReactNode | | The `children` of widget defined in meta.  |
 | required | bool | false | Whether the field is required. |
 | message | string | | If a field is required, you can define what message provided if no input. By default, it's `${field.label} is required.`|
-| ***[formItemProps](https://ant.design/components/form/#Form.Item)*** | **object** |  | **The props passed to <Form.Item>. Below properties are short way to pass props to <Form.Item>. [See more from antd's doc](https://ant.design/components/form/#Form.Item)** |
+| **[formItemProps](https://ant.design/components/form/#Form.Item)** | **object** |  | **The props passed to <Form.Item>. Below properties are short way to pass props to <Form.Item>. [See more from antd's doc](https://ant.design/components/form/#Form.Item)** |
 | colon| bool| true |Used with `label`, whether to display : after label text. |
 | extra| string/ReactNode | | The extra prompt message. It is similar to help. Usage example: to display error message and prompt message at the same time. |
 | hasFeedback | bool | false |Used with `validateStatus`, this option specifies the validation status icon. Recommended to be used only with `Input`. |
@@ -230,16 +229,20 @@ Field meta is used to define each field. It's a single place to combine paramete
 | valuePropName | string| |Props of children node, for example, the prop of Switch is 'checked'. |
 
 ## Contribute
-This project is bootstraped by https://github.com/transitive-bullshit/create-react-library . To start development locally, follow below steps:
+This project is bootstraped by [create-react-library](https://github.com/transitive-bullshit/create-react-library). To start development locally, follow below steps:
 
 ```sh
 # 1. Clone repo
 git clone https://github.com/rekit/antd-form-builder.git
 
-# 2. Run rollup in watch mode
+# 2. Install dependencies
+cd antd-form-builder
+npm install
+
+# 3. Run rollup in watch mode
 npm start
 
-# 3. Start example dev server (in anther tab)
+# 4. Start example dev server (in anther tab)
 cd example
 npm start
 ```

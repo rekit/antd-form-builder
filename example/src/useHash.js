@@ -8,6 +8,7 @@ export default () => {
     function handleHashChange() {
       const hash = getHash() || 'basic'
       setHash(hash)
+      window.scrollTo({ top: 0 })
     }
     window.addEventListener('hashchange', handleHashChange)
     return () => {
