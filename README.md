@@ -104,6 +104,7 @@ Field meta is used to define each field. Each field meta is an object defined in
 | widgetProps | object | | Props passed to widget. |
 | viewWidget | string/Component | text | Which component used to render field in view mode. |
 | viewWidgetProps | object | | Props passed to viewWidget |
+| formItemLayout | object/array| [8, 16] | This applies formItemLayout only to this field rather than which defined in the root meta. |
 | render | function | | If provided, this is used for rendering the whole field in both edit and view mode, should render <Form.Item>, `getFieldDecorator` itself. `widget` property will be ignored. |
 | renderView | function | | If provided, this is used for rendering field value in view mode, `viewWidget` will be ignored. |
 | colSpan | number | 1 | How many columns the field should take up. |
