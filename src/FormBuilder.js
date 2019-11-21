@@ -121,7 +121,7 @@ class FormBuilder extends Component {
       ).className || ''}`,
     }
 
-    if (field.colSpan && formItemProps.labelCol) {
+    if (field.colSpan && formItemProps.labelCol && !field.formItemLayout) {
       const labelCol = Math.round(formItemProps.labelCol.span / field.colSpan)
 
       Object.assign(formItemProps, {

@@ -10,15 +10,12 @@ const PriceInput = ({ value, onChange }) => (
     <Col span={16}>
       <InputNumber
         style={{ width: '100%' }}
-        value={value.split(' ').shift()}
-        onChange={v => onChange(`${v} ${value.split(' ').pop()}`)}
+        value={value.price}
+        onChange={v => onChange({ price: v, currency: value.currency })}
       />
     </Col>
     <Col span={8}>
-      <Select
-        value={value.split(' ').pop()}
-        onChange={v => onChange(`${value.split(' ').shift()} ${v}`)}
-      >
+      <Select value={value.currency} onChange={v => onChange({ price: value.price, currency: v })}>
         <Option value="RMB">RMB</Option>
         <Option value="USD">USD</Option>
       </Select>
@@ -51,13 +48,32 @@ export default Form.create()(({ form }) => {
   const meta = [
     { key: 'product', label: 'Product' },
     {
-      key: 'price',
+      key: '_temp_price_currency',
       label: 'Price',
       // Set forwardRef to true if use functional component as field widget
       // to remove warnings
       forwardRef: true,
       widget: PriceInput,
-      initialValue: '6.6 RMB',
+      normalize(value, prevValue, allValues) {
+        console.log('all values: ', allValues)
+        return {
+          price: allValues.price,
+          currency: allValues.currency,
+        }
+      },
+      widgetProps: {
+        onChange(obj) {
+          console.log('obj:', obj)
+          // setTimeout(() => form.setFieldsValue(obj), 500)
+        },
+      },
+      getInitialValue(f, allValues) {
+        console.log('all values: ', allValues)
+        return {
+          price: allValues.price,
+          currency: allValues.currency,
+        }
+      },
     },
     {
       key: 'captcha',
@@ -99,7 +115,7 @@ export default Form.create()(({ form }) => {
 
   return (
     <Form onSubmit={handleSubmit} style={{ width: '500px' }}>
-      <FormBuilder meta={meta} form={form} />
+      <FormBuilder meta={meta} form={form} initialValues={{ price: 8, currency: 'USD' }} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           Submit
