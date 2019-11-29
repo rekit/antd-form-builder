@@ -261,6 +261,7 @@ const meta = {
 So if you define you own widget, you can give a metaConvertor to provide a convenient way to define field widget.
 
 ## Contribute
+### Local development
 This project is bootstraped by [create-react-library](https://github.com/transitive-bullshit/create-react-library). To start development locally, follow below steps:
 
 ```sh
@@ -280,6 +281,12 @@ npm start
 ```
 
 Now, anytime you make a change to your library in src/ or to the example app's example/src, create-react-app will live-reload your local dev server so you can iterate on your component in real-time.
+
+### Build examples
+```sh
+cd examples
+npm run build
+```
 
 ## License
 
