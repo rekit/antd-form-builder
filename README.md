@@ -287,6 +287,7 @@ Now, anytime you make a change to your library in src/ or to the example app's e
 cd examples
 npm run build
 ```
+This will build examples into root `docs` folder which is used as gh-pages root. So after build, commit or pr the changes to the repo.
 
 ## License
 
