@@ -139,12 +139,13 @@ class FormBuilder extends Component {
     }
 
     let initialValue
+    const initialValues = meta.initialValues || this.props.initialValues || {}
     if (_.has(field, 'initialValue')) {
       initialValue = field.initialValue
     } else if (field.getInitialValue) {
-      initialValue = field.getInitialValue(field, this.props.initialValues, this.props.form)
+      initialValue = field.getInitialValue(field, initialValues, this.props.form)
     } else {
-      initialValue = _.get(this.props.initialValues, field.key) || undefined
+      initialValue = _.get(initialValues, field.key) || undefined
     }
 
     if (this.props.viewMode || field.viewMode) {
@@ -227,16 +228,18 @@ class FormBuilder extends Component {
       FieldWidget = getWrappedComponentWithForwardRef(FieldWidget)
     }
     if (field.noFormItem) {
-      return getFieldDecorator(field.id || field.key, fieldProps)(
-        <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>,
-      )
+      return getFieldDecorator(
+        field.id || field.key,
+        fieldProps,
+      )(<FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>)
     }
 
     return (
       <FormItem {...formItemProps}>
-        {getFieldDecorator(field.id || field.key, fieldProps)(
-          <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>,
-        )}
+        {getFieldDecorator(
+          field.id || field.key,
+          fieldProps,
+        )(<FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>)}
       </FormItem>
     )
   }
