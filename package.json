@@ -1,6 +1,6 @@
 {
   "name": "antd-form-builder",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Form builder for ant.design.",
   "author": "supnate",
   "license": "MIT",
@@ -24,6 +24,7 @@
   "peerDependencies": {
     "antd": "^3.0.0",
     "prop-types": "^15.5.4",
+    "lodash": "^4.0.0",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0"
   },
