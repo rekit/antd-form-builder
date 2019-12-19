@@ -135,7 +135,7 @@ Field meta is used to define each field. Each field meta is an object defined in
 | rules |object[] | | Includes validation rules. Please refer to "Validation Rules" part for details.|
 | trigger | string | 'onChange'|When to collect the value of children node |
 | validateFirst | bool | true | Whether stop validate on first rule of error for this field. NOTE: the default value is true for FormBuilder.|
-| validateTrigger | string|string[]| 'onChange' |When to validate the value of children node. |
+| validateTrigger | string / string[]| 'onChange' |When to validate the value of children node. |
 | valuePropName | string| |Props of children node, for example, the prop of Switch is 'checked'. |
 
 ## Use String Key to Define a Widget
