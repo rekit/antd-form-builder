@@ -93,7 +93,7 @@ class FormBuilder extends Component {
     )
 
     let formItemLayout =
-      field.formItemLayout || (field.label ? _.has(meta, 'formItemLayout') || [8, 16] : null)
+      field.formItemLayout || (field.label ? _.get(meta, 'formItemLayout') || [8, 16] : null)
     if (_.isArray(formItemLayout) && formItemLayout.length >= 2) {
       formItemLayout = {
         labelCol: { span: formItemLayout[0] },
