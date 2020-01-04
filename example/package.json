@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "antd": "^3.23.4",
+    "antd": "^3.26.6",
     "antd-form-builder": "^1.0.3",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.1.0",

@@ -120,7 +120,10 @@ class FormBuilder extends Component {
         field.formItemProps || {}
       ).className || ''}`,
     }
-
+    if (field.label && typeof field.label === 'string') {
+      console.log('field label')
+      formItemProps['data-label'] = field.label
+    }
     if (field.colSpan && formItemProps.labelCol && !field.formItemLayout) {
       const labelCol = Math.round(formItemProps.labelCol.span / field.colSpan)
 
