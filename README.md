@@ -84,7 +84,6 @@ Properties are list below:
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | columns | number | 1 |How many columns of the form layout. |
-| viewMode | bool | false | If in viewMode, will use viewWidget for field meta and labels are left aligned. You don't need to wrap FormBuilder in a Form in view mode. |
 | formItemLayout | object/array| [8, 16] | The `labelCol` and `wrapperCol` passed to Form.Item. If it's an array, will be converted to `{ labelCol: { span: arr[0] }, wrapperCol: { span: arr[1] }}`. If a filed has different layout, define it in its own meta. |
 | disabled | bool | false | If true, all fields components will be given a `disabled` property. |
 | initialValues | object | null | Set initialValues to the form, usually used in form which edit values or in viewMode. You can also set initialValue for each field. |
