@@ -91,6 +91,8 @@ Properties are list below:
 | gutter | number | 0 | The gap between columns.|
 
 ### Field meta
+> Important Notes: There are two default values that are different from which of original antd API: `preserve` and `validateFirst`. The default value are both `true` in the FormBuilder but are `fales` in antd's original form API.. For `preserve` it means if you dynamically add or remove some fields, you may need to mannually set it to `false` so that when a field is removed it doesn't exist in the return value from `form.getFieldsValue`. In our case, we heavily use FormBuilder in a wizard, so we set all fields to `preseve:true` as default value. And for dynamical fields, we detect if some value is necessary by some condition value rahter than if it exists.
+
 Field meta is used to define each field. Each field meta is an object defined in `meta.fields`. It's a central place to combine parameters to FormBuilder itself, <Form.Item> and `getFieldDecorators`. All options are listed below:
 
 | Name | Type | Default | Description |
