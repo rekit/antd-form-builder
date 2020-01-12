@@ -121,7 +121,6 @@ class FormBuilder extends Component {
       ).className || ''}`,
     }
     if (field.label && typeof field.label === 'string') {
-      console.log('field label')
       formItemProps['data-label'] = field.label
     }
     if (field.colSpan && formItemProps.labelCol && !field.formItemLayout) {
