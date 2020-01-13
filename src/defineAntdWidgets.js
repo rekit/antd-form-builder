@@ -8,16 +8,13 @@ const mapOptions = options => {
     throw new Error('Options should be array in form builder meta.')
   }
   return options.map(opt => {
-    let value
-    let label
     if (_.isArray(opt)) {
-      value = opt[0]
-      label = opt[1]
+      return {value: opt[0], label: opt[1]}
+    } else if(_.isPlainObject(opt)) {
+      return opt
     } else {
-      value = opt
-      label = opt
+      return {value: opt, label: opt}
     }
-    return { value, label }
   })
 }
 
