@@ -100,6 +100,7 @@ class FormBuilder extends Component {
         wrapperCol: { span: formItemLayout[1] },
       }
     }
+    const isFieldViewMode = this.props.viewMode || field.viewMode
     const formItemProps = {
       key: field.key,
       colon: meta.colon,
@@ -116,9 +117,8 @@ class FormBuilder extends Component {
         'hasFeedback',
       ]),
       ...field.formItemProps,
-      className: `${this.props.viewMode ? 'ant-form-item-view-mode' : ''} ${(
-        field.formItemProps || {}
-      ).className || ''}`,
+      className: `${isFieldViewMode ? 'ant-form-item-view-mode' : ''} ${(field.formItemProps || {})
+        .className || ''}`,
     }
     if (field.label && typeof field.label === 'string') {
       formItemProps['data-label'] = field.label
@@ -150,7 +150,7 @@ class FormBuilder extends Component {
       initialValue = _.get(initialValues, field.key) || undefined
     }
 
-    if (this.props.viewMode || field.viewMode) {
+    if (isFieldViewMode) {
       let viewEle = null
       const formValues = this.props.form ? this.props.form.getFieldsValue() : {}
       let viewValue = _.has(formValues, field.key) ? _.get(formValues, field.key) : initialValue
@@ -184,7 +184,11 @@ class FormBuilder extends Component {
       if (!viewEle) {
         if (typeof viewValue === 'boolean') viewEle = _.capitalize(String(viewValue))
         else if (viewValue === undefined) viewEle = 'N/A'
-        else viewEle = String(viewValue) || ''
+        else {
+          viewEle = (
+            <span className="antd-form-builder-string-content">{String(viewValue) || ''}</span>
+          )
+        }
       }
 
       return <FormItem {...formItemProps}>{viewEle}</FormItem>
