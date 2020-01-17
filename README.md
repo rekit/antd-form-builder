@@ -1,5 +1,5 @@
 # antd-form-builder
-The FormBuilder is a small helper (< 300 lines of source code) for building forms with [React](https://reactjs.org) and [ant.design](https://ant.design) easily while not preventing you from using the original antd form API.
+The FormBuilder is a small helper (< 300 lines of source code) for building forms with [React](https://reactjs.org) and [ant.design](https://ant.design) easily while not preventing you from using the original antd form API. It can not only be used as editable form but also to display readonly information with form layout.
 
 [![NPM](https://img.shields.io/npm/v/antd-form-builder.svg)](https://www.npmjs.com/package/antd-form-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -85,6 +85,7 @@ Properties are listed below:
 | --- | --- | --- | --- |
 | columns | number | 1 |How many columns of the form layout. |
 | formItemLayout | object/array| [8, 16] | The `labelCol` and `wrapperCol` passed to Form.Item. If it's an array, will be converted to `{ labelCol: { span: arr[0] }, wrapperCol: { span: arr[1] }}`. If a filed has different layout, define it in its own meta. |
+| viewMode | bool | In view mode, FormBuild uses viewWidget property for a field, show value directly if viewWidget not defined. And labels are left aligned in the form. Default to false.|
 | disabled | bool | false | If true, all fields components will be given a `disabled` property. |
 | initialValues | object | null | Set initialValues to the form, usually used in form which edit values or in viewMode. You can also set initialValue for each field. |
 | fields | array | null | Fields definition for the form. See below info for how to define a field.|
