@@ -102,7 +102,7 @@ class FormBuilder extends Component {
         wrapperCol: { span: formItemLayout[1] },
       }
     }
-    const isFieldViewMode = this.props.viewMode || meta.viewMode || field.viewMode
+    const isFieldViewMode = this.props.viewMode || meta.viewMode || field.viewMode || field.readOnly
     const formItemProps = {
       key: field.key,
       colon: meta.colon,
@@ -153,6 +153,30 @@ class FormBuilder extends Component {
       initialValue = _.get(initialValues, field.key) || undefined
     }
 
+    // Handle field props
+    const rules = [...(field.rules || [])]
+    if (field.required) {
+      rules.unshift({
+        required: true,
+        message: field.message || `${field.label || field.key} is required.`, // default to English, if needs localization, define it in fieldProps.rules.
+      })
+    }
+    const fieldProps = {
+      initialValue,
+      preserve: this.props.preserve,
+      ..._.pick(field, [
+        'getValueFromEvent',
+        'getValueProps',
+        'normalize',
+        'trigger',
+        'preserve',
+        'valuePropName',
+        'validateTrigger',
+        'validateFirst',
+      ]),
+      rules,
+      ...field.fieldProps,
+    }
     if (isFieldViewMode) {
       let viewEle = null
       const formValues = this.props.form ? this.props.form.getFieldsValue() : {}
@@ -194,32 +218,17 @@ class FormBuilder extends Component {
         }
       }
 
+      if (this.props.form && field.readOnly) {
+        return (
+          <FormItem {...formItemProps}>
+            {this.props.form.getFieldDecorator(
+              field.id || field.key,
+              fieldProps,
+            )(<span className="antd-form-builder-read-only-content">{viewEle}</span>)}
+          </FormItem>
+        )
+      }
       return <FormItem {...formItemProps}>{viewEle}</FormItem>
-    }
-
-    // Handle field props
-    const rules = [...(field.rules || [])]
-    if (field.required) {
-      rules.unshift({
-        required: true,
-        message: field.message || `${field.label || field.key} is required.`, // default to English, if needs localization, define it in fieldProps.rules.
-      })
-    }
-    const fieldProps = {
-      initialValue,
-      preserve: this.props.preserve,
-      ..._.pick(field, [
-        'getValueFromEvent',
-        'getValueProps',
-        'normalize',
-        'trigger',
-        'preserve',
-        'valuePropName',
-        'validateTrigger',
-        'validateFirst',
-      ]),
-      rules,
-      ...field.fieldProps,
     }
 
     // Handle widget props
