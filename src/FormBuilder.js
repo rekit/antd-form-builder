@@ -100,7 +100,7 @@ class FormBuilder extends Component {
         wrapperCol: { span: formItemLayout[1] },
       }
     }
-    const isFieldViewMode = this.props.viewMode || field.viewMode
+    const isFieldViewMode = this.props.viewMode || meta.viewMode || field.viewMode
     const formItemProps = {
       key: field.key,
       colon: meta.colon,
@@ -254,9 +254,6 @@ class FormBuilder extends Component {
     if (columns === 1) {
       return elements
     }
-    // const rowClassName = `antd-form-builder-row ${
-    //   this.props.viewMode ? 'antd-form-builder-row-view-mode' : ''
-    // }`
 
     const meta = this.getMeta()
     const gutter = _.has(meta, 'gutter') ? meta.gutter : 10
