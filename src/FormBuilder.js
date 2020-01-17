@@ -53,6 +53,7 @@ class FormBuilder extends Component {
     form: PropTypes.object,
     disabled: PropTypes.bool,
     viewMode: PropTypes.bool, // if viewMode, labels are left aligned
+    preserve: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -60,6 +61,7 @@ class FormBuilder extends Component {
     form: null,
     viewMode: false,
     values: {},
+    preserve: false,
   }
 
   getMeta() {
@@ -204,6 +206,7 @@ class FormBuilder extends Component {
     }
     const fieldProps = {
       initialValue,
+      preserve: this.props.preserve,
       ..._.pick(field, [
         'getValueFromEvent',
         'getValueProps',
