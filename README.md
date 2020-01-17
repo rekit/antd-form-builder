@@ -79,7 +79,7 @@ If meta is an object without `fields` property, it's treated as a single field m
 const realMeta = { fields: [meta] }
 ```
 
-Properties are list below:
+Properties are listed below:
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -149,7 +149,7 @@ const meta = { key: 'name', label: 'Name', widget: Input }
 
 The reason why you can use a string for widget property is because there are some key-component mapping pre-defined in `antd-form-builder/defineAntdWidget.js`. Normally you can use a component for widget/viewWidget property of a field meta, but sometimes it's more convenient to use string so that you don't need to import the component while defining meta. And it's especially useful if you want to save meta in some config json.
 
-The predefined components are list below:
+The predefined components are listed below:
 
 | key | Component | meta convention |
 | --- | --- | --- |
