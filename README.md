@@ -99,6 +99,7 @@ Field meta is used to define each field. Each field meta is an object defined in
 | key | string | | Required. The field key. Could be nested like `user.name.last`. It's just the key value passed to `getFieldDecorator(key, options)` |
 | label| string | | Label text.|
 | viewMode | bool | false | Whether the field is in view mode. Note if a field is in viewMode but FormBuilder is not, the label in the field is still right aligned. |
+| readOnly | bool | false | Whether the field is readOnly. The difference compared to `viewMode` is a read-only field is managed by form that is the value is collected when use `form.getFieldsValue`, but `viewMode` is not. It is also validated if some rules are configured for the field. |
 | tooltip | string/React Node | | If set, there is a question mark icon besides label to show the tooltip. |
 | widget | string/Component | Input | Which component used to render field for editing. The component should be able to be managed by antd form. |
 | widgetProps | object | | Props passed to widget. |
