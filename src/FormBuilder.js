@@ -203,9 +203,7 @@ class FormBuilder extends Component {
       })
     }
     const fieldProps = {
-      validateFirst: true,
       initialValue,
-      preserve: true, // by default, preserve the value
       ..._.pick(field, [
         'getValueFromEvent',
         'getValueProps',
