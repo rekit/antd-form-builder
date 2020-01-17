@@ -119,8 +119,9 @@ class FormBuilder extends Component {
         'hasFeedback',
       ]),
       ...field.formItemProps,
-      className: `${isFieldViewMode ? 'ant-form-item-view-mode' : ''} ${(field.formItemProps || {})
-        .className || ''}`,
+      className: `${this.props.viewMode || meta.viewMode ? 'ant-form-item-view-mode' : ''} ${(
+        field.formItemProps || {}
+      ).className || ''}`,
     }
     if (field.label && typeof field.label === 'string') {
       formItemProps['data-label'] = field.label
