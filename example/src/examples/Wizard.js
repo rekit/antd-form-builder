@@ -74,7 +74,8 @@ export default Form.create()(({ form }) => {
 
   // Clone the meta for dynamic change
   const newWizardMeta = JSON.parse(JSON.stringify(wizardMeta))
-
+  // In a wizard, every field should be preserved when swtich steps.
+  newWizardMeta.steps.forEach(s => s.formMeta.fields.forEach(f => (f.preserve = true)))
   if (form.getFieldValue('noAccountInfo')) {
     _.pullAt(newWizardMeta.steps, 1)
   }
