@@ -73,7 +73,13 @@ export default Form.create()(({ form }) => {
             <Button htmlType="submit" type="primary" disabled={pending}>
               {pending ? 'Updating...' : 'Update'}
             </Button>
-            <Button onClick={() => { form.resetFields(); setViewMode(true) }} style={{ marginLeft: '15px' }}>
+            <Button
+              onClick={() => {
+                form.resetFields()
+                setViewMode(true)
+              }}
+              style={{ marginLeft: '15px' }}
+            >
               Cancel
             </Button>
           </Form.Item>

@@ -11,3 +11,14 @@
 .ant-form-item-view-mode .ant-form-item-control {
   line-height: 1.5;
 }
+
+.ant-form-item-children .antd-form-builder-string-content {
+  line-height: 1.5;
+  display: inline-block;
+  padding-top: 9px;
+}
+
+.ant-form-item-view-mode .antd-form-builder-string-content {
+  display: inline;
+  padding-top: 0;
+}
