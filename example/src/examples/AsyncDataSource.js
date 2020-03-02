@@ -1,5 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Form, Button } from 'antd'
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css'
+import { Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 const MOCK_DATA = {

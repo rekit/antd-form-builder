@@ -2,7 +2,10 @@
 import React, { Component, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Col, Form, Icon, Row, Tooltip, Input } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Col, Row, Tooltip, Input } from 'antd'
 import './FormBuilder.css'
 
 const FormItem = Form.Item
@@ -87,7 +90,7 @@ class FormBuilder extends Component {
         {field.label}
         <Tooltip title={field.tooltip}>
           {' '}
-          <Icon type="question-circle-o" />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     ) : (

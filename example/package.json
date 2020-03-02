@@ -5,12 +5,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "antd": "^3.26.6",
-    "antd-form-builder": "^1.0.3",
+    "@ant-design/compatible": "^1.0.0",
+    "antd": "^4.0.0",
+    "antd-form-builder": "..",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.1.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-scripts": "^1.1.4"
   },
   "scripts": {

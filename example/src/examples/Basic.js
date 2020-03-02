@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Button, Rate } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Rate } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export class App extends Component {

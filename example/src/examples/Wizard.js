@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import _ from 'lodash'
-import { Form, Button, Steps } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Steps } from 'antd'
 import FormBuilder from 'antd-form-builder'
 const { Step } = Steps
 const DateView = ({ value }) => (value ? value.format('MMM Do YYYY') : 'N/A')

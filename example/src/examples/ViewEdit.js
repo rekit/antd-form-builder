@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react'
-import { Form, Button, Modal } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Modal } from 'antd'
 import moment from 'moment'
 import FormBuilder from 'antd-form-builder'
 

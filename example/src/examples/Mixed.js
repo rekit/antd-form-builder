@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react'
-import { Form, Select, Input, Button } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Select, Input, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 const { Option } = Select
 export default Form.create()(({ form }) => {
