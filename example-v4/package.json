@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "antd": "^3.26.6",
+    "@ant-design/icons": "^4.0.2",
+    "antd": "^4.0.1",
     "antd-form-builder": "file:..",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.1.0",
@@ -14,7 +15,7 @@
     "react-scripts": "^1.1.4"
   },
   "scripts": {
-    "start": "PORT=3050 react-scripts start",
+    "start": "PORT=3051 react-scripts start",
     "build": "react-scripts build && rm -rf ../docs && mv build ../docs",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
