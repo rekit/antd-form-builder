@@ -51,13 +51,19 @@ function normalizeMeta(meta) {
   }
 }
 
-function FormBuilder({ meta, viewMode, initialValues, form = null }) {
+function FormBuilder({ meta, viewMode, initialValues, disabled = false, form = null }) {
   const newMeta = normalizeMeta(meta)
   newMeta.viewMode = newMeta.viewMode || viewMode
   newMeta.initialValues = newMeta.initialValues || initialValues
   const { fields, columns = 1, gutter = 10 } = newMeta
   const elements = fields.map(field => (
-    <FormBuilderField key={field.key} field={field} meta={newMeta} form={form} />
+    <FormBuilderField
+      key={field.key}
+      field={field}
+      disabled={disabled}
+      meta={newMeta}
+      form={form}
+    />
   ))
   if (columns === 1) {
     return elements
@@ -104,6 +110,11 @@ FormBuilder.defineWidget = (name, widget, metaConvertor = null) => {
     widget,
     metaConvertor,
   }
+}
+
+FormBuilder.useForceUpdate = () => {
+  const [, updateState] = React.useState()
+  return React.useCallback(() => updateState({}), [])
 }
 
 FormBuilder.propTypes = {

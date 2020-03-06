@@ -18,17 +18,18 @@ const fetchCities = country => {
   })
 }
 
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+export default () => {
+  const [form] = Form.useForm()
+  const [, updateState] = React.useState()
+  const forceUpdate = React.useCallback(() => updateState({}), [])
+  // const forceUpdate = FormBuilder.useForceUpdate()
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  }, [])
 
   const [cities, setCities] = useState({})
   const country = form.getFieldValue('country')
+  console.log('country: ', country)
   useEffect(() => {
     if (country && !cities[country]) {
       fetchCities(country).then(arr => {
@@ -48,6 +49,7 @@ export default Form.create()(({ form }) => {
       placeholder: 'Select country...',
       widgetProps: {
         onChange: () => {
+          console.log('widget on change')
           // Clear city value when country is changed
           form.setFieldsValue({ city: undefined })
         },
@@ -65,8 +67,8 @@ export default Form.create()(({ form }) => {
   ]
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormBuilder meta={meta} form={form} />
+    <Form form={form} onValuesChange={forceUpdate} onFinish={handleFinish}>
+      <FormBuilder meta={meta} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           Submit
@@ -74,4 +76,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

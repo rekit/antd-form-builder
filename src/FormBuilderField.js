@@ -6,18 +6,19 @@ import get from 'lodash/get'
 import has from 'lodash/has'
 import find from 'lodash/find'
 import pick from 'lodash/pick'
+import capitalize from 'lodash/capitalize'
 import { Form, Tooltip, Input } from 'antd'
+import QuestionIcon from './QuestionIcon'
 const FormItem = Form.Item
 
 const isV4 = !!Form.useForm
+
 const useForm =
   Form.useForm ||
   (props => {
-    // const [form] = useState(props.form)
-    return props.form
+    return [props.form]
   })
 
-const Icon = () => '?'
 const getWrappedComponentWithForwardRef = memoize(Comp =>
   forwardRef((props, ref) => {
     return (
@@ -30,13 +31,13 @@ const getWrappedComponentWithForwardRef = memoize(Comp =>
 
 function FormBuilderField(props) {
   const { field, meta } = props
-  const form = useForm(props)
+  const [form] = useForm(props)
   const label = field.tooltip ? (
     <span>
       {field.label}
       <Tooltip title={field.tooltip}>
         {' '}
-        <Icon type="question-circle-o" />
+        <QuestionIcon />
       </Tooltip>
     </span>
   ) : (
@@ -52,6 +53,7 @@ function FormBuilderField(props) {
     }
   }
   const isFieldViewMode = meta.viewMode || field.viewMode || field.readOnly
+  // const fieldName = field.key || field.name
   const formItemProps = {
     key: field.key,
     colon: meta.colon,
@@ -66,11 +68,18 @@ function FormBuilderField(props) {
       'htmlFor',
       'validateStatus',
       'hasFeedback',
+      'noStyle',
+      'shouldUpdate',
+      'dependencies',
     ]),
     ...field.formItemProps,
-    className: `${meta.viewMode ? 'ant-form-item-view-mode' : ''} ${(field.formItemProps || {})
-      .className || ''}`,
+    className: `${meta.viewMode ? 'ant-form-item-view-mode' : ''} ${field.className ||
+      (field.formItemLayout && field.formItemLayout.className)}`,
   }
+  if (isV4) {
+    formItemProps.name = field.key ? field.key.split('.') : field.name
+  }
+
   if (field.label && typeof field.label === 'string') {
     formItemProps['data-label'] = field.label // help e2e test
   }
@@ -125,6 +134,10 @@ function FormBuilderField(props) {
     rules,
     ...field.fieldProps,
   }
+  if (isV4) {
+    // if is v4, form item props, merge field props to formItemProps
+    Object.assign(formItemProps, fieldProps)
+  }
   if (isFieldViewMode) {
     let viewEle = null
     const formValues = form ? form.getFieldsValue() : {}
@@ -151,7 +164,7 @@ function FormBuilderField(props) {
       }
     }
     if (!viewEle) {
-      if (typeof viewValue === 'boolean') viewEle = _.capitalize(String(viewValue))
+      if (typeof viewValue === 'boolean') viewEle = capitalize(String(viewValue))
       else if (viewValue === undefined) viewEle = 'N/A'
       else {
         viewEle = (
@@ -160,6 +173,7 @@ function FormBuilderField(props) {
       }
     }
 
+    // TODO: readOnly seems to be the same with viewMode in antd v4
     if (form && field.readOnly) {
       const ele = <span className="antd-form-builder-read-only-content">{viewEle}</span>
       return (
@@ -177,7 +191,7 @@ function FormBuilderField(props) {
     disabled: field.disabled || meta.disabled || props.disabled,
     ...wp,
   }
-  // const { getFieldDecorator } = form
+
   let FieldWidget = field.widget || Input
 
   if (field.forwardRef) {
@@ -186,6 +200,10 @@ function FormBuilderField(props) {
   const ele = <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>
   const ele2 = isV4 ? ele : form.getFieldDecorator(field.id || field.key, fieldProps)(ele)
 
+  if (isV4) {
+    // antd v4 always has form item
+    return <FormItem {...formItemProps}>{ele}</FormItem>
+  }
   return field.noFormItem ? ele2 : <FormItem {...formItemProps}>{ele2}</FormItem>
 }
 

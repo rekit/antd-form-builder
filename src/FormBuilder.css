@@ -22,3 +22,10 @@
   display: inline;
   padding-top: 0;
 }
+
+.antd-form-builder-question-icon {
+  fill: #40a9ff;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}

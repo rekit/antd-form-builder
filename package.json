@@ -23,6 +23,8 @@
   },
   "peerDependencies": {
     "antd": ">3.0.0",
+    "@ant-desing/icons": ">3.0.0",
+    "@ant-desing/compatible": "^1.0.1",
     "prop-types": "^15.5.4",
     "lodash": "^4.0.0",
     "react": "^15.0.0 || ^16.0.0",

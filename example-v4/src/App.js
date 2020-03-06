@@ -3,7 +3,7 @@ import useHash from './useHash'
 import CodeViewer from './CodeViewer'
 import Basic from './examples/Basic'
 // import DynamicFields from './examples/DynamicFields'
-// import AsyncDataSource from './examples/AsyncDataSource'
+import AsyncDataSource from './examples/AsyncDataSource'
 // import MultipleColumns from './examples/MultipleColumns'
 // import ComplexLayout from './examples/ComplexLayout'
 // import MultipleFormBuilders from './examples/MultipleFormBuilders'
@@ -45,12 +45,12 @@ const examples = {
   //     "You can dynamically add or remove fields according to the user's input. In this example, if choose other, then a new input appears.",
   // },
 
-  // 'async-data-source': {
-  //   name: 'Async Data Source',
-  //   component: AsyncDataSource,
-  //   description:
-  //     'Some form field widgets may need to load data source if necessary, the sample shows how to do it',
-  // },
+  'async-data-source': {
+    name: 'Async Data Source',
+    component: AsyncDataSource,
+    description:
+      'Some form field widgets may need to load data source if necessary, the sample shows how to do it',
+  },
   // 'multiple-columns': {
   //   name: 'Multiple Columns',
   //   component: MultipleColumns,

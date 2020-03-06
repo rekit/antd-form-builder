@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@ant-design/compatible": "^1.0.1",
     "@ant-design/icons": "^4.0.2",
     "antd": "^4.0.1",
     "antd-form-builder": "file:..",
