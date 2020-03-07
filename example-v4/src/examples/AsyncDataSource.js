@@ -78,7 +78,7 @@ export default () => {
 
   // If country selected but no cities in store, then it's loading
   return (
-    <Form form={form} onFieldsChange={form.handleFieldsChange} onFinish={handleFinish}>
+    <Form form={form} onValuesChange={form.handleValuesChange} onFinish={handleFinish}>
       <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
