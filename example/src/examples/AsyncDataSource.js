@@ -47,6 +47,7 @@ export default Form.create()(({ form }) => {
       widget: 'select',
       options: ['China', 'USA', 'France'],
       placeholder: 'Select country...',
+      initialValue: 'China',
       widgetProps: {
         onChange: () => {
           // Clear city value when country is changed

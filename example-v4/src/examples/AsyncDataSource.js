@@ -19,26 +19,10 @@ const fetchCities = country => {
 }
 
 export default () => {
-  const [form] = Form.useForm()
-  const [, updateState] = React.useState()
-  const forceUpdate = React.useCallback(() => updateState({}), [])
-  // const forceUpdate = FormBuilder.useForceUpdate()
-  const handleFinish = useCallback(values => {
-    console.log('Submit: ', values)
-  }, [])
-
+  const [form] = FormBuilder.useForm()
   const [cities, setCities] = useState({})
-  const country = form.getFieldValue('country')
-  console.log('country: ', country)
-  useEffect(() => {
-    if (country && !cities[country]) {
-      fetchCities(country).then(arr => {
-        setCities(p => ({ ...p, [country]: arr }))
-      })
-    }
-  }, [country, setCities, cities])
 
-  // If country selected but no cities in store, then it's loading
+  const country = form.getFieldValue('country')
   const loading = country && !cities[country]
   const meta = [
     {
@@ -47,6 +31,8 @@ export default () => {
       widget: 'select',
       options: ['China', 'USA', 'France'],
       placeholder: 'Select country...',
+      initialValue: 'China',
+      dynamic: true,
       widgetProps: {
         onChange: () => {
           console.log('widget on change')
@@ -64,11 +50,36 @@ export default () => {
       widgetProps: { loading },
       disabled: loading || !country,
     },
+    {
+      key: 'test',
+      label: 'Test',
+      initialValue: 'test',
+      // getInitialValue: (a, b, form) => form.getFieldValue('country'),
+    },
+    {
+      key: 'test2',
+      label: 'Test2',
+      initialValue: 'test2',
+      // getInitialValue: (a, b, form) => form.getFieldValue('country'),
+    },
   ]
 
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  }, [])
+
+  useEffect(() => {
+    if (country && !cities[country]) {
+      fetchCities(country).then(arr => {
+        setCities(p => ({ ...p, [country]: arr }))
+      })
+    }
+  }, [country, setCities, cities])
+
+  // If country selected but no cities in store, then it's loading
   return (
-    <Form form={form} onValuesChange={forceUpdate} onFinish={handleFinish}>
-      <FormBuilder meta={meta} />
+    <Form form={form} onFieldsChange={form.handleFieldsChange} onFinish={handleFinish}>
+      <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           Submit

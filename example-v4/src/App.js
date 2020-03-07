@@ -159,26 +159,28 @@ export default () => {
               </li>
             ))}
           </ul>
-          <div className="social">
-            <a href="https://github.com/rekit/antd-form-builder">
-              <img
-                src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social"
-                alt="Github Repo"
-              />
-            </a>
-            <br />
-            <a href="https://github.com/rekit/antd-form-builder">
-              <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
-            </a>
-            <br />
-            <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/example">
-              <img
-                width="150px"
-                src="https://codesandbox.io/static/img/play-codesandbox.svg"
-                alt="codesandbox"
-              />
-            </a>
-          </div>
+          {0 && (
+            <div className="social">
+              <a href="https://github.com/rekit/antd-form-builder">
+                <img
+                  src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social"
+                  alt="Github Repo"
+                />
+              </a>
+              <br />
+              <a href="https://github.com/rekit/antd-form-builder">
+                <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
+              </a>
+              <br />
+              <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/example">
+                <img
+                  width="150px"
+                  src="https://codesandbox.io/static/img/play-codesandbox.svg"
+                  alt="codesandbox"
+                />
+              </a>
+            </div>
+          )}
         </div>
       </div>
       <div className="example-container">{renderExample()}</div>

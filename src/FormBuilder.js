@@ -2,10 +2,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import isArray from 'lodash/isArray'
+import castArray from 'lodash/castArray'
 import find from 'lodash/find'
-import { Col, Row } from 'antd'
+import has from 'lodash/has'
+import { Col, Row, Form } from 'antd'
 import FormBuilderField from './FormBuilderField'
 import './FormBuilder.css'
+
+const isV4 = !!Form.useForm
+// const useForm = Form.useForm || (f => [f])
 
 const widgetMap = {}
 
@@ -51,11 +56,29 @@ function normalizeMeta(meta) {
   }
 }
 
-function FormBuilder({ meta, viewMode, initialValues, disabled = false, form = null }) {
+function FormBuilder(props) {
+  const { meta, viewMode, initialValues, disabled = false, form = null } = props
+  if (!meta) return null
+
   const newMeta = normalizeMeta(meta)
   newMeta.viewMode = newMeta.viewMode || viewMode
   newMeta.initialValues = newMeta.initialValues || initialValues
   const { fields, columns = 1, gutter = 10 } = newMeta
+  if (isV4) {
+    if (form) {
+      const fromMeta = castArray(newMeta.dynamicFields || [])
+
+      fields.forEach(f => {
+        if (f.dynamic) {
+          fromMeta.push(f.key || (isArray(f.name) ? f.name.join('.') : f.name))
+        }
+      })
+      form._dynamicFields = fromMeta.reduce((p, c) => {
+        p.push(c)
+        return p
+      }, [])
+    }
+  }
   const elements = fields.map(field => (
     <FormBuilderField
       key={field.key}
@@ -117,8 +140,40 @@ FormBuilder.useForceUpdate = () => {
   return React.useCallback(() => updateState({}), [])
 }
 
+FormBuilder.useForm = f => {
+  const [form] = Form.useForm(f)
+  const forceUpdate = FormBuilder.useForceUpdate()
+  form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+  form.handleValuesChange = changedValues => {
+    if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
+      forceUpdate()
+    }
+  }
+  return [form]
+}
+
+FormBuilder.createForm = ctx => {
+  try {
+    const FormStore = require('rc-field-form/lib/useForm').FormStore
+    const formStore = new FormStore(() => ctx.forceUpdate())
+    const form = formStore.getForm()
+    Object.assign(form, {
+      __INTERNAL__: {},
+      scrollToField: () => {},
+    })
+    form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+    form.handleValuesChange = changedValues => {
+      if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
+        ctx.forceUpdate()
+      }
+    }
+    return form
+  } catch (err) {
+    return null
+  }
+}
 FormBuilder.propTypes = {
-  meta: PropTypes.any.isRequired,
+  meta: PropTypes.any,
 }
 
 export default FormBuilder

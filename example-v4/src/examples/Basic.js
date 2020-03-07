@@ -3,22 +3,19 @@ import { Form, Button, Rate } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default class App extends Component {
-  formRef = React.createRef()
-  componentDidMount() {
-    // console.log(this.formRef.current)
-  }
-  handleSubmit = evt => {
-    evt.preventDefault()
-    console.log('submit: ', this.props.form.getFieldsValue())
+  form = FormBuilder.createForm(this)
+  handleFinish = evt => {
+    console.log('submit: ', this.form.getFieldsValue())
   }
 
   render() {
     const options = ['Apple', 'Orange', 'Banana']
     const meta = {
       columns: 1,
+      dynamicFields: '*',
       fields: [
         {
-          key: 'input',
+          key: 'obj.input',
           label: 'Input',
           required: true,
           tooltip: 'This is the tooltip.',
@@ -43,11 +40,18 @@ export default class App extends Component {
       ],
     }
 
+    console.log(this.form.getFieldValue('checkbox'))
+
     return (
-      <Form layout="horizontal" onSubmit={this.handleSubmit}>
-        <FormBuilder meta={meta} />
+      <Form
+        form={this.form}
+        layout="horizontal"
+        onValuesChange={this.form.handleValuesChange}
+        onFinish={this.handleFinish}
+      >
+        <FormBuilder meta={meta} form={this.form} />
         <Form.Item wrapperCol={{ span: 16, offset: 8 }} className="form-footer">
-          <Button htmlType="submit" type="primary">
+          <Button htmlType="submit" type="primary" onClick={() => this.forceUpdate()}>
             Submit
           </Button>
         </Form.Item>

@@ -13,12 +13,6 @@ const FormItem = Form.Item
 
 const isV4 = !!Form.useForm
 
-const useForm =
-  Form.useForm ||
-  (props => {
-    return [props.form]
-  })
-
 const getWrappedComponentWithForwardRef = memoize(Comp =>
   forwardRef((props, ref) => {
     return (
@@ -30,8 +24,8 @@ const getWrappedComponentWithForwardRef = memoize(Comp =>
 )
 
 function FormBuilderField(props) {
-  const { field, meta } = props
-  const [form] = useForm(props)
+  const { field, meta, form } = props
+
   const label = field.tooltip ? (
     <span>
       {field.label}
@@ -53,7 +47,6 @@ function FormBuilderField(props) {
     }
   }
   const isFieldViewMode = meta.viewMode || field.viewMode || field.readOnly
-  // const fieldName = field.key || field.name
   const formItemProps = {
     key: field.key,
     colon: meta.colon,
@@ -68,10 +61,10 @@ function FormBuilderField(props) {
       'htmlFor',
       'validateStatus',
       'hasFeedback',
-      'noStyle',
       'shouldUpdate',
       'dependencies',
     ]),
+    noStyle: field.noFormItem || field.noStyle,
     ...field.formItemProps,
     className: `${meta.viewMode ? 'ant-form-item-view-mode' : ''} ${field.className ||
       (field.formItemLayout && field.formItemLayout.className)}`,
@@ -134,8 +127,16 @@ function FormBuilderField(props) {
     rules,
     ...field.fieldProps,
   }
-  if (isV4) {
+  if (isV4 && form) {
     // if is v4, form item props, merge field props to formItemProps
+    const internalHooks = form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+    internalHooks.setInitialValues(
+      {
+        [field.key]: initialValue,
+      },
+      'init',
+    )
+    delete fieldProps.initialValue
     Object.assign(formItemProps, fieldProps)
   }
   if (isFieldViewMode) {
@@ -197,7 +198,14 @@ function FormBuilderField(props) {
   if (field.forwardRef) {
     FieldWidget = getWrappedComponentWithForwardRef(FieldWidget)
   }
-  const ele = <FieldWidget {...widgetProps}>{field.children || null}</FieldWidget>
+  const valueProps = {}
+  // console.log('touched:', field.key, form.isFieldTouched([field.key]))
+  // if (!form.isFieldTouched(field.key)) valueProps[field.valuePropName || 'value'] = initialValue
+  const ele = (
+    <FieldWidget {...widgetProps} {...valueProps}>
+      {field.children || null}
+    </FieldWidget>
+  )
   const ele2 = isV4 ? ele : form.getFieldDecorator(field.id || field.key, fieldProps)(ele)
 
   if (isV4) {
