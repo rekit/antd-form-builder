@@ -102,6 +102,7 @@ function FormBuilderField(props) {
   } else {
     initialValue = get(initialValues, field.key) || undefined
   }
+  initialValue && console.log('initial value: ', initialValue)
 
   // Handle field props
   const rules = [...(field.rules || [])]
@@ -142,11 +143,14 @@ function FormBuilderField(props) {
   if (isFieldViewMode) {
     let viewEle = null
     const formValues = form ? form.getFieldsValue() : {}
-    let viewValue = has(formValues, field.key) ? get(formValues, field.key) : initialValue
+    let viewValue = has(formValues, field.key || field.name.join('.'))
+      ? get(formValues, field.key)
+      : initialValue
     if (field.renderView) {
       viewEle = field.renderView(viewValue, form)
     } else if (field.viewWidget) {
       const ViewWidget = field.viewWidget
+      console.log('render view widget', field.key, viewValue)
       viewEle = (
         <ViewWidget value={viewValue} form={form} field={field} {...field.viewWidgetProps} />
       )
@@ -183,6 +187,9 @@ function FormBuilderField(props) {
         </FormItem>
       )
     }
+    delete formItemProps.name
+    delete formItemProps.key
+    console.log(viewEle)
     return <FormItem {...formItemProps}>{viewEle}</FormItem>
   }
   // Handle widget props

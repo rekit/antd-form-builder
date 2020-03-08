@@ -2,7 +2,7 @@ import React from 'react'
 import useHash from './useHash'
 import CodeViewer from './CodeViewer'
 import Basic from './examples/Basic'
-// import DynamicFields from './examples/DynamicFields'
+import DynamicFields from './examples/DynamicFields'
 import AsyncDataSource from './examples/AsyncDataSource'
 // import MultipleColumns from './examples/MultipleColumns'
 // import ComplexLayout from './examples/ComplexLayout'
@@ -15,35 +15,35 @@ import AsyncDataSource from './examples/AsyncDataSource'
 // import ViewEdit from './examples/ViewEdit'
 // import Mixed from './examples/Mixed'
 // import Wizard from './examples/Wizard'
-// import Simple from './examples/Simple'
-// import ViewMode from './examples/ViewMode'
+import Simple from './examples/Simple'
+import ViewMode from './examples/ViewMode'
 
 import './App.css'
 
 const examples = {
-  // simple: {
-  //   name: 'Simple',
-  //   component: Simple,
-  //   description: 'The most simple usage.',
-  // },
+  simple: {
+    name: 'Simple',
+    component: Simple,
+    description: 'The most simple usage.',
+  },
   basic: { name: 'Basic', component: Basic, description: 'Basic usage.' },
-  // 'view-mode': {
-  //   name: 'View Mode',
-  //   component: ViewMode,
-  //   description:
-  //     'FormBuilder could also be used as view mode just for displaying information in form layout. It could be used even without Form.',
-  // },
+  'view-mode': {
+    name: 'View Mode',
+    component: ViewMode,
+    description:
+      'FormBuilder could also be used as view mode just for displaying information in form layout. It could be used even without Form.',
+  },
   // 'view-edit': {
   //   name: 'View / Edit',
   //   component: ViewEdit,
   //   description: 'FormBuilder makes it super easy to toggle view/edit mode of a form.',
   // },
-  // 'dynamic-fields': {
-  //   name: 'Dynamic Fields',
-  //   component: DynamicFields,
-  //   description:
-  //     "You can dynamically add or remove fields according to the user's input. In this example, if choose other, then a new input appears.",
-  // },
+  'dynamic-fields': {
+    name: 'Dynamic Fields',
+    component: DynamicFields,
+    description:
+      "You can dynamically add or remove fields according to the user's input. In this example, if choose other, then a new input appears.",
+  },
 
   'async-data-source': {
     name: 'Async Data Source',

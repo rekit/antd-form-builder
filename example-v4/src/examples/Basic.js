@@ -40,8 +40,6 @@ export default class App extends Component {
       ],
     }
 
-    console.log(this.form.getFieldValue('checkbox'))
-
     return (
       <Form
         form={this.form}

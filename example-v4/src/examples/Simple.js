@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
+export default () => {
   const meta = {
     fields: [
       { key: 'username', label: 'User Name' },
@@ -10,12 +10,18 @@ export default Form.create()(({ form }) => {
     ],
   }
 
+  const handleFinish = React.useCallback(values => {
+    console.log('Submit: ', values)
+  }, [])
+
   return (
-    <Form>
-      <FormBuilder meta={meta} form={form} />
+    <Form onFinish={handleFinish}>
+      <FormBuilder meta={meta} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
-        <Button type="primary">Log in</Button>
+        <Button type="primary" htmlType="submit">
+          Log in
+        </Button>
       </Form.Item>
     </Form>
   )
-})
+}

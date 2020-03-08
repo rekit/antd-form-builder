@@ -1,10 +1,11 @@
 import React from 'react'
 import moment from 'moment'
+import { Form } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 const DateView = ({ value }) => value.format('MMM Do YYYY')
 
-export default ({ form }) => {
+export default () => {
   const personalInfo = {
     name: { first: 'Nate', last: 'Wang' },
     email: 'myemail@gmail.com',
@@ -36,7 +37,7 @@ export default ({ form }) => {
 
   return (
     <div>
-      <div layout="horizontal" style={{ width: '800px' }}>
+      <div style={{ width: '800px' }}>
         <h1>Personal Infomation</h1>
         <FormBuilder meta={meta} initialValues={personalInfo} viewMode />
       </div>

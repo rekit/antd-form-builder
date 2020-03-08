@@ -35,7 +35,6 @@ export default () => {
       dynamic: true,
       widgetProps: {
         onChange: () => {
-          console.log('widget on change')
           // Clear city value when country is changed
           form.setFieldsValue({ city: undefined })
         },
@@ -49,18 +48,6 @@ export default () => {
       placeholder: loading ? 'Loading...' : 'Select city...',
       widgetProps: { loading },
       disabled: loading || !country,
-    },
-    {
-      key: 'test',
-      label: 'Test',
-      initialValue: 'test',
-      // getInitialValue: (a, b, form) => form.getFieldValue('country'),
-    },
-    {
-      key: 'test2',
-      label: 'Test2',
-      initialValue: 'test2',
-      // getInitialValue: (a, b, form) => form.getFieldValue('country'),
     },
   ]
 
