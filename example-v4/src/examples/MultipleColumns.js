@@ -2,15 +2,12 @@ import React, { useState, useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
+export default () => {
+  const [form] = FormBuilder.useForm()
   const [columns, setColumns] = useState(2)
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
   const meta = {
     columns,
     fields: [
@@ -29,7 +26,6 @@ export default Form.create()(({ form }) => {
         key: 'checkbox',
         label: 'Checkbox',
         widget: 'checkbox',
-        valuePropName: 'checked',
         initialValue: true,
       },
       { key: 'select', label: 'Select', widget: 'select', options: ['Apple', 'Orange', 'Banana'] },
@@ -40,8 +36,8 @@ export default Form.create()(({ form }) => {
     ],
   }
   return (
-    <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '1000px' }}>
-      <FormBuilder form={form} meta={meta} />
+    <Form form={form} layout="horizontal" onFinish={handleFinish} style={{ width: '1000px' }}>
+      <FormBuilder meta={meta} form={form} />
       <Form.Item className="form-footer">
         <Button htmlType="submit" type="primary">
           Submit
@@ -49,4 +45,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

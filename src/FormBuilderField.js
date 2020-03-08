@@ -166,6 +166,7 @@ function FormBuilderField(props) {
     delete fieldProps.initialValue
     Object.assign(formItemProps, fieldProps)
   }
+
   if (isFieldViewMode) {
     let viewEle = null
     const formValues = form ? form.getFieldsValue() : {}
@@ -232,8 +233,6 @@ function FormBuilderField(props) {
     FieldWidget = getWrappedComponentWithForwardRef(FieldWidget)
   }
   const valueProps = {}
-  // console.log('touched:', field.key, form.isFieldTouched([field.key]))
-  // if (!form.isFieldTouched(field.key)) valueProps[field.valuePropName || 'value'] = initialValue
   const ele = (
     <FieldWidget {...widgetProps} {...valueProps}>
       {field.children || null}

@@ -5,7 +5,7 @@ import CodeViewer from './CodeViewer'
 import Basic from './examples/Basic'
 import DynamicFields from './examples/DynamicFields'
 import AsyncDataSource from './examples/AsyncDataSource'
-// import MultipleColumns from './examples/MultipleColumns'
+import MultipleColumns from './examples/MultipleColumns'
 // import ComplexLayout from './examples/ComplexLayout'
 // import MultipleFormBuilders from './examples/MultipleFormBuilders'
 // import SingleField from './examples/SingleField'
@@ -54,12 +54,12 @@ const examples = {
     description:
       'Some form field widgets may need to load data source if necessary, the sample shows how to do it',
   },
-  // 'multiple-columns': {
-  //   name: 'Multiple Columns',
-  //   component: MultipleColumns,
-  //   description:
-  //     "It's easy to set multiple columns layout for the form. Note it should be able to divide 24",
-  // },
+  'multiple-columns': {
+    name: 'Multiple Columns',
+    component: MultipleColumns,
+    description:
+      "It's easy to set multiple columns layout for the form. Note it should be able to divide 24",
+  },
   // 'complex-layout': {
   //   name: 'Complex Layout',
   //   component: ComplexLayout,

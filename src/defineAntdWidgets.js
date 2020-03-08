@@ -9,11 +9,11 @@ const mapOptions = options => {
   }
   return options.map(opt => {
     if (_.isArray(opt)) {
-      return {value: opt[0], label: opt[1]}
-    } else if(_.isPlainObject(opt)) {
+      return { value: opt[0], label: opt[1] }
+    } else if (_.isPlainObject(opt)) {
       return opt
     } else {
-      return {value: opt, label: opt}
+      return { value: opt, label: opt }
     }
   })
 }
