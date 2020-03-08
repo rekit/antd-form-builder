@@ -4,13 +4,9 @@ import FormBuilder from 'antd-form-builder'
 
 export default () => {
   const [form] = FormBuilder.useForm()
-  const handleFinish = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
 
   const meta = [
     {
