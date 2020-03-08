@@ -2,14 +2,10 @@ import React, { useCallback } from 'react'
 import { Form, Select, Input, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 const { Option } = Select
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleFinish = useCallback(values => console.log('Submit: ', values), [])
   const meta1 = [
     { key: 'name.first', label: 'First Name', required: true },
     { key: 'name.last', label: 'Last Name', required: true },
@@ -21,22 +17,27 @@ export default Form.create()(({ form }) => {
     rules: [{ type: 'email', message: 'Invalid email' }],
   }
 
-  const prefixSelector = form.getFieldDecorator('prefix', {
-    initialValue: '86',
-  })(
-    <Select style={{ width: 70 }}>
-      <Option value="86">+86</Option>
-      <Option value="87">+87</Option>
-    </Select>,
-  )
+  const prefixMeta = {
+    key: 'prefix',
+    options: ['+86', '+87'],
+    widget: 'select',
+    widgetProps: {
+      style: { width: 70 },
+    },
+  }
+  const prefixSelector = <FormBuilder meta={prefixMeta} form={form} />
 
   return (
-    <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '500px' }}>
+    <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '500px' }}>
       <FormBuilder meta={meta1} form={form} />
-      <Form.Item label="Phone Number" labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
-        {form.getFieldDecorator('phone', {
-          rules: [{ required: true, message: 'Please input your phone number!' }],
-        })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+      <Form.Item
+        label="Phone Number"
+        name="phone"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        rules={[{ required: true, message: 'Please input your phone number!' }]}
+      >
+        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
       </Form.Item>
       <FormBuilder meta={meta2} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }} className="form-footer">
@@ -46,4 +47,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

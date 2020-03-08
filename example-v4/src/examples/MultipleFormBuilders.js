@@ -2,14 +2,11 @@ import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
   const meta1 = [
     { key: 'name.first', label: 'First Name', required: true },
     { key: 'name.last', label: 'Last Name', required: true },
@@ -39,7 +36,7 @@ export default Form.create()(({ form }) => {
   }
 
   return (
-    <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '500px' }}>
+    <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '500px' }}>
       <fieldset>
         <legend>Personal Information</legend>
         <FormBuilder form={form} meta={meta1} />
@@ -59,4 +56,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

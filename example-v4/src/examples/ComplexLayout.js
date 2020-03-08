@@ -2,14 +2,11 @@ import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
   const meta = {
     columns: 4,
     formItemLayout: null, // Must set this for inline layout
@@ -104,7 +101,7 @@ export default Form.create()(({ form }) => {
   }
 
   return (
-    <Form layout="vertical" onSubmit={handleSubmit}>
+    <Form form={form} layout="vertical" onSubmit={handleFinish}>
       <FormBuilder form={form} meta={meta} />
       <Form.Item>
         <Button htmlType="submit" type="primary" style={{ width: '100%' }}>
@@ -113,4 +110,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

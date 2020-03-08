@@ -8,17 +8,11 @@ const MOCK_USERNAMES = {
   kevin: true,
 }
 
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      form.validateFields((err, values) => {
-        if (err) return
-        console.log('Submit: ', form.getFieldsValue())
-      })
-    },
-    [form],
-  )
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleSubmit = useCallback(values => {
+    console.log('Submit: ', values)
+  })
 
   const meta = [
     {
@@ -32,13 +26,15 @@ export default Form.create()(({ form }) => {
           validator: (rule, value, callback) => {
             // Do async validation to check if username already exists
             // Use setTimeout to emulate api call
-            setTimeout(() => {
-              if (MOCK_USERNAMES[value]) {
-                callback(new Error(`Username "${value}" already exists.`))
-              } else {
-                callback()
-              }
-            }, 1000)
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                if (MOCK_USERNAMES[value]) {
+                  reject(new Error(`Username "${value}" already exists.`))
+                } else {
+                  resolve()
+                }
+              }, 1000)
+            })
           },
         },
       ],
@@ -68,11 +64,13 @@ export default Form.create()(({ form }) => {
       rules: [
         {
           validator: (rule, value, callback) => {
-            if (value !== form.getFieldValue('password')) {
-              callback(new Error('Two passwords are inconsistent.'))
-            } else {
-              callback()
-            }
+            return new Promise((resolve, reject) => {
+              if (value !== form.getFieldValue('password')) {
+                reject(new Error('Two passwords are inconsistent.'))
+              } else {
+                resolve()
+              }
+            })
           },
         },
       ],
@@ -80,7 +78,7 @@ export default Form.create()(({ form }) => {
   ]
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form form={form} onSubmit={handleSubmit}>
       <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
@@ -89,4 +87,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

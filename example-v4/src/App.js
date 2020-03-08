@@ -6,16 +6,16 @@ import Basic from './examples/Basic'
 import DynamicFields from './examples/DynamicFields'
 import AsyncDataSource from './examples/AsyncDataSource'
 import MultipleColumns from './examples/MultipleColumns'
-// import ComplexLayout from './examples/ComplexLayout'
-// import MultipleFormBuilders from './examples/MultipleFormBuilders'
-// import SingleField from './examples/SingleField'
-// import Validation from './examples/Validation'
-// import Coordinated from './examples/Coordinated'
-// import FormInModal from './examples/FormInModal'
-// import CustomComponent from './examples/CustomComponent'
+import ComplexLayout from './examples/ComplexLayout'
+import MultipleFormBuilders from './examples/MultipleFormBuilders'
+import SingleField from './examples/SingleField'
+import Validation from './examples/Validation'
+import Coordinated from './examples/Coordinated'
+import FormInModal from './examples/FormInModal'
+import CustomComponent from './examples/CustomComponent'
 import ViewEdit from './examples/ViewEdit'
-// import Mixed from './examples/Mixed'
-// import Wizard from './examples/Wizard'
+import Mixed from './examples/Mixed'
+import Wizard from './examples/Wizard'
 import Simple from './examples/Simple'
 import ViewMode from './examples/ViewMode'
 
@@ -60,70 +60,70 @@ const examples = {
     description:
       "It's easy to set multiple columns layout for the form. Note it should be able to divide 24",
   },
-  // 'complex-layout': {
-  //   name: 'Complex Layout',
-  //   component: ComplexLayout,
-  //   description: 'The example shows a complex layout. Similar approach with multiple columns.',
-  // },
-  // 'multiple-form-builders': {
-  //   name: 'Multiple Form Builders',
-  //   component: MultipleFormBuilders,
-  //   description:
-  //     'Some times you need to group fields into different fieldset, or need more complex layout. You can use multiple form builders in one form.',
-  // },
-  // 'single-field': {
-  //   name: 'Single Field',
-  //   component: SingleField,
-  //   description:
-  //     'You can use FormBuilder for even a single form field. This example also shows inline layout of the form.',
-  // },
-  // validation: {
-  //   name: 'Validation',
-  //   component: Validation,
-  //   description: (
-  //     <span>
-  //       You can use rules property to specify how to validate fields. For more information please go
-  //       to:{' '}
-  //       <a
-  //         href="https://ant.design/components/form/#Validation-Rules"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         https://ant.design/components/form/#Validation-Rules
-  //       </a>
-  //     </span>
-  //   ),
-  // },
-  // 'form-in-modal': {
-  //   name: 'Form in Modal',
-  //   component: FormInModal,
-  //   description:
-  //     'The example shows how to use form in a dialog to call api and show status in dialog buttons.',
-  // },
-  // coordinated: {
-  //   name: 'Coordinated Controls',
-  //   component: Coordinated,
-  //   description:
-  //     'You can set field value according to input of another control by use form.setFieldsValue api.',
-  // },
-  // 'custom-component': {
-  //   name: 'Custom Component',
-  //   component: CustomComponent,
-  //   description:
-  //     "It's easy to create your own form field component, ether to get new capabilities or even just for layout.",
-  // },
-  // mixed: {
-  //   name: 'Mixed',
-  //   component: Mixed,
-  //   description:
-  //     'Form builder is designed to not limit original antd form api, so you can use them together.',
-  // },
-  // wizard: {
-  //   name: 'Wizard',
-  //   component: Wizard,
-  //   description:
-  //     'Wizard is an advanced usage of form builder, you can design your own meta structure to support dynamic wizard.',
-  // },
+  'complex-layout': {
+    name: 'Complex Layout',
+    component: ComplexLayout,
+    description: 'The example shows a complex layout. Similar approach with multiple columns.',
+  },
+  'multiple-form-builders': {
+    name: 'Multiple Form Builders',
+    component: MultipleFormBuilders,
+    description:
+      'Some times you need to group fields into different fieldset, or need more complex layout. You can use multiple form builders in one form.',
+  },
+  'single-field': {
+    name: 'Single Field',
+    component: SingleField,
+    description:
+      'You can use FormBuilder for even a single form field. This example also shows inline layout of the form.',
+  },
+  validation: {
+    name: 'Validation',
+    component: Validation,
+    description: (
+      <span>
+        You can use rules property to specify how to validate fields. For more information please go
+        to:{' '}
+        <a
+          href="https://ant.design/components/form/#Validation-Rules"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          https://ant.design/components/form/#Validation-Rules
+        </a>
+      </span>
+    ),
+  },
+  'form-in-modal': {
+    name: 'Form in Modal',
+    component: FormInModal,
+    description:
+      'The example shows how to use form in a dialog to call api and show status in dialog buttons.',
+  },
+  coordinated: {
+    name: 'Coordinated Controls',
+    component: Coordinated,
+    description:
+      'You can set field value according to input of another control by use form.setFieldsValue api.',
+  },
+  'custom-component': {
+    name: 'Custom Component',
+    component: CustomComponent,
+    description:
+      "It's easy to create your own form field component, ether to get new capabilities or even just for layout.",
+  },
+  mixed: {
+    name: 'Mixed',
+    component: Mixed,
+    description:
+      'Form builder is designed to not limit original antd form api, so you can use them together.',
+  },
+  wizard: {
+    name: 'Wizard',
+    component: Wizard,
+    description:
+      'Wizard is an advanced usage of form builder, you can design your own meta structure to support dynamic wizard.',
+  },
 }
 
 export default () => {

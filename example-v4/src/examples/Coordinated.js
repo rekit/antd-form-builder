@@ -2,17 +2,11 @@ import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      form.validateFields((err, values) => {
-        if (err) return
-        console.log('Submit: ', form.getFieldsValue())
-      })
-    },
-    [form],
-  )
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
 
   const meta = [
     {
@@ -32,7 +26,7 @@ export default Form.create()(({ form }) => {
   ]
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onFinish={handleFinish} form={form}>
       <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
@@ -41,4 +35,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}

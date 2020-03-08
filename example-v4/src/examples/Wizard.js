@@ -62,15 +62,10 @@ const wizardMeta = {
   ],
 }
 
-export default Form.create()(({ form }) => {
+export default () => {
+  const [form] = FormBuilder.useForm()
   const [currentStep, setCurrentStep] = useState(0)
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      console.log('Submit: ', form.getFieldsValue())
-    },
-    [form],
-  )
+  const handleFinish = useCallback(values => console.log('Submit: ', values), [])
 
   // Clone the meta for dynamic change
   const newWizardMeta = JSON.parse(JSON.stringify(wizardMeta))
@@ -124,7 +119,7 @@ export default Form.create()(({ form }) => {
   }
   const isReview = currentStep === stepsLength - 1
   return (
-    <Form layout="horizontal" style={{ width: '880px' }}>
+    <Form layout="horizontal" form={form} style={{ width: '880px' }} onFinish={handleFinish}>
       <Steps current={currentStep}>
         {newWizardMeta.steps.map(s => (
           <Step key={s.title} title={s.title} />
@@ -144,10 +139,10 @@ export default Form.create()(({ form }) => {
           </Button>
         )}
         <Button>Cancel</Button>&nbsp; &nbsp;
-        <Button type="primary" onClick={isReview ? handleSubmit : handleNext}>
+        <Button type="primary" onClick={isReview ? () => form.submit() : handleNext}>
           {isReview ? 'Submit' : 'Next'}
         </Button>
       </Form.Item>
     </Form>
   )
-})
+}

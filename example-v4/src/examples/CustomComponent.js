@@ -33,17 +33,11 @@ const CaptchaInput = props => (
     </Col>
   </Row>
 )
-export default Form.create()(({ form }) => {
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      form.validateFields((err, values) => {
-        if (err) return
-        console.log('Submit: ', form.getFieldsValue())
-      })
-    },
-    [form],
-  )
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+  })
 
   const meta = [
     { key: 'product', label: 'Product' },
@@ -55,7 +49,6 @@ export default Form.create()(({ form }) => {
       forwardRef: true,
       widget: PriceInput,
       normalize(value, prevValue, allValues) {
-        console.log('all values: ', allValues)
         return {
           price: allValues.price,
           currency: allValues.currency,
@@ -114,7 +107,7 @@ export default Form.create()(({ form }) => {
   ]
 
   return (
-    <Form onSubmit={handleSubmit} style={{ width: '500px' }}>
+    <Form form={form} onFinish={handleFinish} style={{ width: '500px' }}>
       <FormBuilder meta={meta} form={form} initialValues={{ price: 8, currency: 'USD' }} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
@@ -123,4 +116,4 @@ export default Form.create()(({ form }) => {
       </Form.Item>
     </Form>
   )
-})
+}
