@@ -88,8 +88,9 @@ function FormBuilderField(props) {
     ]),
 
     ...field.formItemProps,
-    className: `${meta.viewMode ? 'ant-form-item-view-mode' : ''} ${field.className ||
-      (field.formItemLayout && field.formItemLayout.className)}`,
+    className: `${
+      meta.viewMode ? 'ant-form-item-view-mode' + (isV4 ? ' ant-form-item-view-mode-v4' : '') : ''
+    } ${field.className || (field.formItemLayout && field.formItemLayout.className)}`,
   }
   if (isV4) {
     if (field.key || field.name) {

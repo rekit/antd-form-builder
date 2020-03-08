@@ -1,6 +1,9 @@
 .ant-form-item.ant-form-item-view-mode {
   margin-bottom: 20px;
 }
+.ant-form-item.ant-form-item-view-mode-v4 {
+  margin-bottom: 5px;
+}
 
 .ant-form-item-view-mode .ant-form-item-label {
   text-align: left;

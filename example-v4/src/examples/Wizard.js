@@ -21,6 +21,7 @@ const wizardMeta = {
             key: 'noAccountInfo',
             label: 'No Account Info',
             widget: 'switch',
+            dynamic: true,
             tooltip: 'Switch on to remove account step',
           },
         ],
@@ -65,12 +66,14 @@ const wizardMeta = {
 export default () => {
   const [form] = FormBuilder.useForm()
   const [currentStep, setCurrentStep] = useState(0)
-  const handleFinish = useCallback(values => console.log('Submit: ', values), [])
+  const handleFinish = useCallback(() => {
+    console.log('Submit: ', form.getFieldsValue(true))
+  }, [form])
 
   // Clone the meta for dynamic change
   const newWizardMeta = JSON.parse(JSON.stringify(wizardMeta))
   // In a wizard, every field should be preserved when swtich steps.
-  newWizardMeta.steps.forEach(s => s.formMeta.fields.forEach(f => (f.preserve = true)))
+  // newWizardMeta.steps.forEach(s => s.formMeta.fields.forEach(f => (f.preserve = true)))
   if (form.getFieldValue('noAccountInfo')) {
     _.pullAt(newWizardMeta.steps, 1)
   }
@@ -106,20 +109,24 @@ export default () => {
   const stepsLength = newWizardMeta.steps.length
 
   const handleNext = () => {
-    form.validateFields(err => {
-      if (err) return
+    form.validateFields().then(() => {
       setCurrentStep(currentStep + 1)
     })
   }
   const handleBack = () => {
-    form.validateFields(err => {
-      if (err) return
+    form.validateFields().then(() => {
       setCurrentStep(currentStep - 1)
     })
   }
   const isReview = currentStep === stepsLength - 1
   return (
-    <Form layout="horizontal" form={form} style={{ width: '880px' }} onFinish={handleFinish}>
+    <Form
+      layout="horizontal"
+      form={form}
+      onValuesChange={form.handleValuesChange}
+      style={{ width: '880px' }}
+      onFinish={handleFinish}
+    >
       <Steps current={currentStep}>
         {newWizardMeta.steps.map(s => (
           <Step key={s.title} title={s.title} />
