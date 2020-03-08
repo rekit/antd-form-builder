@@ -13,33 +13,30 @@ const MOCK_INFO = {
   address: 'No.1000 Some Road, Zhangjiang Park, Pudong New District',
 }
 const DateView = ({ value }) => value.format('MMM Do YYYY')
-export default Form.create()(({ form }) => {
+export default () => {
+  const [form] = FormBuilder.useForm()
   const [viewMode, setViewMode] = useState(true)
   const [pending, setPending] = useState(false)
   const [personalInfo, setPersonalInfo] = useState(MOCK_INFO)
-  const handleSubmit = useCallback(
-    evt => {
-      evt.preventDefault()
-      const values = form.getFieldsValue()
-      console.log('Submit: ', values)
-      setPending(true)
-      setTimeout(() => {
-        setPending(false)
-        setPersonalInfo(values)
-        setViewMode(true)
-        Modal.success({
-          title: 'Success',
-          content: 'Infomation updated.',
-        })
-      }, 1500)
-    },
-    [form],
-  )
+  const handleFinish = useCallback(values => {
+    console.log('Submit: ', values)
+    setPending(true)
+    setTimeout(() => {
+      setPending(false)
+      setPersonalInfo(values)
+      setViewMode(true)
+      Modal.success({
+        title: 'Success',
+        content: 'Infomation updated.',
+      })
+    }, 1500)
+  })
   const meta = {
     columns: 2,
     disabled: pending,
+    initialValues: personalInfo,
     fields: [
-      { key: 'name.first', label: 'First Name', required: true },
+      { name: ['name', 'first'], label: 'First Name', required: true },
       { key: 'name.last', label: 'Last Name', required: true },
       { key: 'gender', label: 'Gender', widget: 'radio-group', options: ['Male', 'Female'] },
       {
@@ -58,7 +55,7 @@ export default Form.create()(({ form }) => {
 
   return (
     <div>
-      <Form layout="horizontal" onSubmit={handleSubmit} style={{ width: '800px' }}>
+      <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '800px' }}>
         <h1 style={{ height: '40px', fontSize: '16px', marginTop: '50px', color: '#888' }}>
           Personal Infomation
           {viewMode && (
@@ -67,7 +64,7 @@ export default Form.create()(({ form }) => {
             </Button>
           )}
         </h1>
-        <FormBuilder form={form} meta={meta} initialValues={personalInfo} viewMode={viewMode} />
+        <FormBuilder form={form} meta={meta} viewMode={viewMode} />
         {!viewMode && (
           <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
             <Button htmlType="submit" type="primary" disabled={pending}>
@@ -87,4 +84,4 @@ export default Form.create()(({ form }) => {
       </Form>
     </div>
   )
-})
+}

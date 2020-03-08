@@ -1,4 +1,5 @@
 import React from 'react'
+import { Select } from 'antd'
 import useHash from './useHash'
 import CodeViewer from './CodeViewer'
 import Basic from './examples/Basic'
@@ -12,14 +13,16 @@ import AsyncDataSource from './examples/AsyncDataSource'
 // import Coordinated from './examples/Coordinated'
 // import FormInModal from './examples/FormInModal'
 // import CustomComponent from './examples/CustomComponent'
-// import ViewEdit from './examples/ViewEdit'
+import ViewEdit from './examples/ViewEdit'
 // import Mixed from './examples/Mixed'
 // import Wizard from './examples/Wizard'
 import Simple from './examples/Simple'
 import ViewMode from './examples/ViewMode'
 
 import './App.css'
+import './App.css'
 
+const { Option } = Select
 const examples = {
   simple: {
     name: 'Simple',
@@ -33,11 +36,11 @@ const examples = {
     description:
       'FormBuilder could also be used as view mode just for displaying information in form layout. It could be used even without Form.',
   },
-  // 'view-edit': {
-  //   name: 'View / Edit',
-  //   component: ViewEdit,
-  //   description: 'FormBuilder makes it super easy to toggle view/edit mode of a form.',
-  // },
+  'view-edit': {
+    name: 'View / Edit',
+    component: ViewEdit,
+    description: 'FormBuilder makes it super easy to toggle view/edit mode of a form.',
+  },
   'dynamic-fields': {
     name: 'Dynamic Fields',
     component: DynamicFields,
@@ -147,7 +150,12 @@ export default () => {
     <div className="app">
       <div className="sider">
         <h1>
-          antd-form-builder<span>Examples</span>
+          <span className="header-name">antd-form-builder</span>
+          <span className="example-title">Examples</span>
+          <Select defaultValue="v4.x" size="small">
+            <Option value="v4.x">Antd v4.x</Option>
+            <Option value="v3.x">Antd v3.x</Option>
+          </Select>
         </h1>
         <div className="scroll-container">
           <ul>

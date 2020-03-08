@@ -2,7 +2,7 @@
 import React, { forwardRef } from 'react'
 import memoize from 'lodash/memoize'
 import isArray from 'lodash/isArray'
-import get from 'lodash/get'
+// import get from 'lodash/get'
 import has from 'lodash/has'
 import find from 'lodash/find'
 import pick from 'lodash/pick'
@@ -12,6 +12,30 @@ import QuestionIcon from './QuestionIcon'
 const FormItem = Form.Item
 
 const isV4 = !!Form.useForm
+
+const getValue = (obj, namePath) => {
+  const arr = typeof namePath === 'string' ? namePath.split('.') : namePath
+  let current = obj
+
+  for (let i = 0; i < arr.length; i += 1) {
+    if (has(current, arr[i])) {
+      current = current[arr[i]]
+    } else {
+      return undefined
+    }
+  }
+
+  return current
+}
+
+const setValue = (obj, namePath, value) => {
+  const len = namePath.length
+  if (len === 0) return
+  for (let i = 0; i < len - 1; i++) {
+    obj = obj[namePath[i]] = {}
+  }
+  obj[namePath[len - 1]] = value
+}
 
 const getWrappedComponentWithForwardRef = memoize(Comp =>
   forwardRef((props, ref) => {
@@ -39,7 +63,7 @@ function FormBuilderField(props) {
   )
 
   let formItemLayout =
-    field.formItemLayout || (field.label ? get(meta, 'formItemLayout') || [8, 16] : null)
+    field.formItemLayout || (field.label ? getValue(meta, 'formItemLayout') || [8, 16] : null)
   if (isArray(formItemLayout) && formItemLayout.length >= 2) {
     formItemLayout = {
       labelCol: { span: formItemLayout[0] },
@@ -61,16 +85,20 @@ function FormBuilderField(props) {
       'htmlFor',
       'validateStatus',
       'hasFeedback',
-      'shouldUpdate',
-      'dependencies',
     ]),
-    noStyle: field.noFormItem || field.noStyle,
+
     ...field.formItemProps,
     className: `${meta.viewMode ? 'ant-form-item-view-mode' : ''} ${field.className ||
       (field.formItemLayout && field.formItemLayout.className)}`,
   }
   if (isV4) {
-    formItemProps.name = field.key ? field.key.split('.') : field.name
+    if (field.key || field.name) {
+      formItemProps.name = field.name || field.key.split('.')
+    }
+    Object.assign(formItemProps, {
+      noStyle: field.noFormItem || field.noStyle,
+      ...pick(field, ['shouldUpdate', 'dependencies']),
+    })
   }
 
   if (field.label && typeof field.label === 'string') {
@@ -100,9 +128,8 @@ function FormBuilderField(props) {
   } else if (field.getInitialValue) {
     initialValue = field.getInitialValue(field, initialValues, form)
   } else {
-    initialValue = get(initialValues, field.key) || undefined
+    initialValue = getValue(initialValues, field.name || field.key)
   }
-  initialValue && console.log('initial value: ', initialValue)
 
   // Handle field props
   const rules = [...(field.rules || [])]
@@ -130,13 +157,12 @@ function FormBuilderField(props) {
   }
   if (isV4 && form) {
     // if is v4, form item props, merge field props to formItemProps
-    const internalHooks = form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
-    internalHooks.setInitialValues(
-      {
-        [field.key]: initialValue,
-      },
-      'init',
-    )
+    if (formItemProps.name) {
+      const internalHooks = form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+      const values = {}
+      setValue(values, formItemProps.name, initialValue)
+      internalHooks.setInitialValues(values, 'init')
+    }
     delete fieldProps.initialValue
     Object.assign(formItemProps, fieldProps)
   }
@@ -144,7 +170,7 @@ function FormBuilderField(props) {
     let viewEle = null
     const formValues = form ? form.getFieldsValue() : {}
     let viewValue = has(formValues, field.key || field.name.join('.'))
-      ? get(formValues, field.key)
+      ? getValue(formValues, formItemProps.name || field.key)
       : initialValue
     if (field.renderView) {
       viewEle = field.renderView(viewValue, form)
