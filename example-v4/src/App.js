@@ -146,8 +146,8 @@ export default () => {
   }
 
   const handleVersionChange = ver => {
-    if (ver === 'v4.x') {
-      document.location = '/antd-form-builder/examples-v4'
+    if (ver === 'v3.x') {
+      document.location = '/antd-form-builder/examples-v3'
     }
   }
 
