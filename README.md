@@ -14,26 +14,80 @@ The key principle in my mind to create antd-form-builder is it should just help 
 ## Meta Driven
 Besides the simplified API which helps to create form easily, the FormBuilder is also very useful if you have meta driven requirement. For example if your form structure needs to be configurable, the meta could be a pure JSON object which can be easily saved and managed separately.
 
-## About Ant.Design v4
+## About the New Form API of Ant.Design v4
 The new v4 version of ant.design has been released. The form component has been re-written so some API is not backward-compatible now. One of main reasons why antd re-wrote form is for performance improvment of large and complicated forms. But it also lost some flexibilty of creating dynamic forms. In v3, when any form field is changed, the component will be re-rendered because it's hign-order-component based. But in v4 whenever a field is changed the component in which antd form is used will never re-render. That means it's now impossible to create dynamic forms with such code:
 
 ```jsx
 <Form>
-  {form.getFieldValue('someField') === 'foo' && <Form.Item {...}/>}
+  {form.getFieldValue('f1') === 'foo' && <Form.Item {...}/>}
 </Form>
 ```
 
 Instead, you will need similar code like below:
 ```jsx
-<Form>
+<Form form={form}>
+  <Form.Item label="Field1" name="f1">
+    <Input />
+  </Form.Item>
   <Form.Item shouldUpdate>
-    {form.getFieldValue('someField') === 'foo' && <Form.Item {...}/>}
+    {() =>
+      form.getFieldValue("f1") === "foo" && (
+        <Form.Item label="Field2" name="f2">
+          <Input />
+        </Form.Item>
+      )
+    }
   </Form.Item>
 </Form>
 ```
 
-In my opinion, this API design looks hacky because the nested form item here is meaningless. The new `shouldUpdate` property means when other fileds are changed this 
+Then when you type in 'foo' in the field1 the second field2 will appear.
 
+IMO, this API design looks hacky because the nested form item here is meaningless but the outer one is just a wrapper. The new `shouldUpdate` property means when other fileds are changed the `Form.Item` will re-render.
+
+The new API is much less flexible for dynamic forms because you have to put all dynamic logic in the render props. That also means you have to break components into small parts that update separately in render props.
+
+So for the new form API of antd v4, the antd-form-builder can still save much time for building dynamic forms.
+
+## New API for antd v4
+Though the API of antd-form-builder is backward-compatible, the new form builder still increases the major version to 2.0 since there're some new API for antd v4. If you still use antd v3 you don't need to change any code after upgrading to form builder 2.0. If you use v4, below is the key difference.
+
+### 1. For class components
+You need to create a form instance by FormBuilder.createForm() and pass it to the antd `Form`:
+```jsx
+import FormBuilder from 'antd-form-builder';
+
+export default class App extends Component {
+  form = FormBuilder.createForm(this)
+  render() {
+    const meta = [{ key: 'name', label: 'Name' }]
+    return (
+      <Form form={this.form} onValuesChange={this.form.handleValuesChange}>
+        <FormBuilder meta={meta} form={this.form} />
+      </Form>
+    )
+  }
+}
+```
+
+### 2. For functional components
+You need to create a form with the hook `FormBuilder.useForm()` and pass it to the antd's `Form`:
+```jsx
+import FormBuilder from 'antd-form-builder'
+
+export default () => {
+  const [form] = FormBuilder.useForm()
+  const meta = [{ key: 'name', label: 'Name' }]
+  return (
+    <Form form={form} onValuesChange={form.handleValuesChange}>
+      <FormBuilder meta={meta} form={form} />
+    </Form>
+  )
+}
+```
+
+### 3. Pass `form.handleValuesChange` to antd's `Form`
+The `form` instance created by FormBuilder has a `handleValuesChange` method, you need to pass it to `onValuesChange` to antd's `Form`. This is because in the v4 Form, when fields are changed, the component is not re-renderred. This "urgly" mechanism ensure the wrapper component is always re-renderred when fields change unless you set `dynamic: false`. The reason why it took a bit long time for the FormBuilder 2.0 is just I also think this API looks a bit stange but unitl now I've not found a better way. However you don't need to worry about using this API because it will not bring incompatabilty issue.
 
 ## Install
 
@@ -42,13 +96,14 @@ npm install --save-dev antd-form-builder
 ```
 
 ## Usage
-The most simple usage is like below:
+The most simple usage is like below (for antd v4):
 ```js
 import React from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
-export default Form.create()(({ form }) => {
+export default () => {
+  const [form] = FormBuilder.useForm()
   const meta = {
     fields: [
       { key: 'username', label: 'User Name' },
@@ -57,22 +112,34 @@ export default Form.create()(({ form }) => {
   }
 
   return (
-    <Form>
+    <Form form={form}>
       <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary">Login</Button>
       </Form.Item>
     </Form>
   )
-})
+}
 ```
 
 Then you get a form:
-# <img style="border: 1px solid #eee" src="images/login.png?raw=true" width="500">
+
+<img style="border: 1px solid #eee" src="images/login.png?raw=true" width="500">
+
 To see more examples, please go to https://rekit.github.io/antd-form-builder
 
 
 ## API Reference
+The FormBuilder could be used for both antd v3 and v4, but the API set has a little difference. They will be marked as <img src="images/v3only.png?raw=true" width="55"> and <img src="images/v4only.png?raw=true" width="55">.
+
+### General API for antd v4
+| Name  | Description |
+| --- | --- |
+| FormBuilder.createForm() <img src="images/v4only.png?raw=true" width="55">| Create a form instance for class components to be passed to antd's `Form` |
+| FormBuilder.useForm() <img src="images/v4only.png?raw=true" width="55">| Create a form instance for functional components to be passed to antd's `Form` |
+| form.handleValuesChange <img src="images/v4only.png?raw=true" width="55">| Pass this property from form instance to `onValuesChange` to antd's `Form`. |
+
+See above section about the introduction of the new API 
 
 ### FormBuilder
 #### Props:
@@ -118,7 +185,9 @@ Field meta is used to define each field. Each field meta is an object defined in
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | key | string | | Required. The field key. Could be nested like `user.name.last`. It's just the key value passed to `getFieldDecorator(key, options)` |
+| name <img src="images/v4only.png?raw=true" width="55"> | string/array | | Alternative of `key`. In form v4, if you need nested property for colleced form values like : `{ name: { first, last } }` you can define an array for the `name` property: `['name', 'first']`. If you prefer `name.first`, use `key` to define it. |
 | label| string | | Label text.|
+| dynamic <img src="images/v4only.png?raw=true" width="55">| boolean | true | If set to true, the change of the field will cause wrapper component to re-render, its default value is true, unless you meet performance issue, you don't need to manually set it to false. |
 | viewMode | bool | false | Whether the field is in view mode. Note if a field is in viewMode but FormBuilder is not, the label in the field is still right aligned. |
 | readOnly | bool | false | Whether the field is readOnly. The difference compared to `viewMode` is a read-only field is managed by form that is the value is collected when use `form.getFieldsValue`, but `viewMode` is not. It is also validated if some rules are configured for the field. |
 | tooltip | string/React Node | | If set, there is a question mark icon besides label to show the tooltip. |
@@ -153,7 +222,7 @@ Field meta is used to define each field. Each field meta is an object defined in
 | getValueFromEvent | function(..args) | | Specify how to get value from event or other onChange arguments|
 | getValueProps | function(value) | | Get the component props according to field value. |
 | normalize |function(value, prevValue, allValues) | | Normalize value to form component |
-| preserve | bool | false |Keep the field even if field removed. |
+| preserve <img src="images/v3only.png?raw=true" width="55">| bool | false |Keep the field even if field removed. |
 | rules |object[] | | Includes validation rules. Please refer to "Validation Rules" part for details.|
 | trigger | string | 'onChange'|When to collect the value of children node |
 | validateFirst | bool | false | Whether stop validate on first rule of error for this field. |

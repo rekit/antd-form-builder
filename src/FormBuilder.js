@@ -32,6 +32,7 @@ function normalizeMeta(meta) {
   fields = fields.map(field => {
     const widget = getWidget(field.widget)
     const viewWidget = getWidget(field.viewWidget)
+    const dynamic = field.dynamic !== false
     // Find metaConvertor
     const item = find(
       Object.values(widgetMap),
@@ -42,9 +43,9 @@ function normalizeMeta(meta) {
       if (!newField) {
         throw new Error(`metaConvertor of '${String(field.widget)}' must return a field`)
       }
-      return { ...newField, viewWidget, widget }
+      return { ...newField, viewWidget, widget, dynamic }
     }
-    return { ...field, widget, viewWidget }
+    return { ...field, widget, viewWidget, dynamic }
   })
   if (isArray(meta) || (!meta.fields && !meta.elements)) {
     return { fields }
