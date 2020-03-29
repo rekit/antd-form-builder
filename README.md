@@ -1,5 +1,5 @@
 # antd-form-builder
-The FormBuilder is a small helper (< 300 lines of source code) for building forms with [React](https://reactjs.org) and [ant.design](https://ant.design) easily while not preventing you from using the original antd form API. It can not only be used as editable form but also to display readonly information with form layout.
+The FormBuilder is a small helper (< 300 lines of source code) for building forms with [React](https://reactjs.org) and [ant.design](https://ant.design) easily while not preventing you from using the original antd form API. It can not only be used as editable form but also to display readonly information with form layout. It supports both antd v3 and v4 versions.
 
 [![NPM](https://img.shields.io/npm/v/antd-form-builder.svg)](https://www.npmjs.com/package/antd-form-builder) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -13,6 +13,27 @@ The key principle in my mind to create antd-form-builder is it should just help 
 
 ## Meta Driven
 Besides the simplified API which helps to create form easily, the FormBuilder is also very useful if you have meta driven requirement. For example if your form structure needs to be configurable, the meta could be a pure JSON object which can be easily saved and managed separately.
+
+## About Ant.Design v4
+The new v4 version of ant.design has been released. The form component has been re-written so some API is not backward-compatible now. One of main reasons why antd re-wrote form is for performance improvment of large and complicated forms. But it also lost some flexibilty of creating dynamic forms. In v3, when any form field is changed, the component will be re-rendered because it's hign-order-component based. But in v4 whenever a field is changed the component in which antd form is used will never re-render. That means it's now impossible to create dynamic forms with such code:
+
+```jsx
+<Form>
+  {form.getFieldValue('someField') === 'foo' && <Form.Item {...}/>}
+</Form>
+```
+
+Instead, you will need similar code like below:
+```jsx
+<Form>
+  <Form.Item shouldUpdate>
+    {form.getFieldValue('someField') === 'foo' && <Form.Item {...}/>}
+  </Form.Item>
+</Form>
+```
+
+In my opinion, this API design looks hacky because the nested form item here is meaningless. The new `shouldUpdate` property means when other fileds are changed this 
+
 
 ## Install
 

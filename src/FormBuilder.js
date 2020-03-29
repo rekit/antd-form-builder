@@ -10,7 +10,6 @@ import FormBuilderField from './FormBuilderField'
 import './FormBuilder.css'
 
 const isV4 = !!Form.useForm
-// const useForm = Form.useForm || (f => [f])
 
 const widgetMap = {}
 
