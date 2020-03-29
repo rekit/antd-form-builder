@@ -20,7 +20,6 @@ import Simple from './examples/Simple'
 import ViewMode from './examples/ViewMode'
 
 import './App.css'
-import './App.css'
 
 const { Option } = Select
 const examples = {
@@ -146,13 +145,19 @@ export default () => {
     )
   }
 
+  const handleVersionChange = ver => {
+    if (ver === 'v4.x') {
+      document.location = '/antd-form-builder/examples-v4'
+    }
+  }
+
   return (
     <div className="app">
       <div className="sider">
         <h1>
           <span className="header-name">antd-form-builder</span>
           <span className="example-title">Examples</span>
-          <Select defaultValue="v4.x" size="small">
+          <Select defaultValue="v4.x" size="small" onChange={handleVersionChange}>
             <Option value="v4.x">Antd v4.x</Option>
             <Option value="v3.x">Antd v3.x</Option>
           </Select>
@@ -167,28 +172,27 @@ export default () => {
               </li>
             ))}
           </ul>
-          {0 && (
-            <div className="social">
-              <a href="https://github.com/rekit/antd-form-builder">
-                <img
-                  src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social"
-                  alt="Github Repo"
-                />
-              </a>
-              <br />
-              <a href="https://github.com/rekit/antd-form-builder">
-                <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
-              </a>
-              <br />
-              <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/example">
-                <img
-                  width="150px"
-                  src="https://codesandbox.io/static/img/play-codesandbox.svg"
-                  alt="codesandbox"
-                />
-              </a>
-            </div>
-          )}
+
+          <div className="social">
+            <a href="https://github.com/rekit/antd-form-builder">
+              <img
+                src="https://img.shields.io/github/stars/rekit/antd-form-builder?style=social"
+                alt="Github Repo"
+              />
+            </a>
+            <br />
+            <a href="https://github.com/rekit/antd-form-builder">
+              <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
+            </a>
+            <br />
+            <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/example">
+              <img
+                width="150px"
+                src="https://codesandbox.io/static/img/play-codesandbox.svg"
+                alt="codesandbox"
+              />
+            </a>
+          </div>
         </div>
       </div>
       <div className="example-container">{renderExample()}</div>
