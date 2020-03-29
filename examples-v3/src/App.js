@@ -185,7 +185,7 @@ export default () => {
               <img src="https://img.shields.io/badge/API-Reference-green" alt="api reference" />
             </a>
             <br />
-            <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/example-v3">
+            <a href="https://codesandbox.io/s/github/rekit/antd-form-builder/tree/master/examples-v3">
               <img
                 width="150px"
                 src="https://codesandbox.io/static/img/play-codesandbox.svg"
