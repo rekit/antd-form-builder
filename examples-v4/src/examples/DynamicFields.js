@@ -13,7 +13,6 @@ export default () => {
       key: 'favoriteFruit',
       label: 'Favorite Fruit',
       widget: 'radio-group',
-      dynamic: true,
       options: ['Apple', 'Orange', 'Other'],
       initialValue: 'Apple',
     },
