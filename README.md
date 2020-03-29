@@ -128,6 +128,7 @@ Then you get a form:
 
 To see more examples, please go to https://rekit.github.io/antd-form-builder
 
+> NOTE: if you use antd v3.x, you may see a warning about module not found: `rc-field-form/lib/useForm`. It's not a problem because it needs to dynamically detect if the current Form is v3 or v4. If you know a better way without warning, feel free to create a PR.
 
 ## API Reference
 The FormBuilder could be used for both antd v3 and v4, but the API set has a little difference. They will be marked as <img src="images/v3only.png?raw=true" width="55"> and <img src="images/v4only.png?raw=true" width="55">.
