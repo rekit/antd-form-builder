@@ -136,7 +136,7 @@ The FormBuilder could be used for both antd v3 and v4, but the API set has a lit
 ### General API for antd v4
 | Name  | Description |
 | --- | --- |
-| FormBuilder.createForm() <img src="images/v4only.png?raw=true" width="55">| Create a form instance for class components to be passed to antd's `Form` |
+| FormBuilder.createForm(context) <img src="images/v4only.png?raw=true" width="55">| Create a form instance for class components to be passed to antd's `Form`, you need to pass `this` to it. |
 | FormBuilder.useForm() <img src="images/v4only.png?raw=true" width="55">| Create a form instance for functional components to be passed to antd's `Form` |
 | form.handleValuesChange <img src="images/v4only.png?raw=true" width="55">| Pass this property from form instance to `onValuesChange` to antd's `Form`. |
 
