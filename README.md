@@ -53,7 +53,7 @@ So for the new form API of antd v4, the antd-form-builder can still save much ti
 Though the API of antd-form-builder is backward-compatible, the new form builder still increases the major version to 2.0 since there're some new API for antd v4. If you still use antd v3 you don't need to change any code after upgrading to form builder 2.0. If you use v4, below is the key difference.
 
 ### 1. For class components
-You need to create a form instance by FormBuilder.createForm() and pass it to the antd `Form`:
+You need to create a form instance by `FormBuilder.createForm()` and pass it to the antd's `Form`:
 ```jsx
 import FormBuilder from 'antd-form-builder';
 
@@ -86,7 +86,7 @@ export default () => {
 }
 ```
 
-### 3. Pass `form.handleValuesChange` to antd's `Form`
+### 3. Pass `form.handleValuesChange` to antd's `Form`'s `onValuesChange`
 The `form` instance created by FormBuilder has a `handleValuesChange` method, you need to pass it to `onValuesChange` to antd's `Form`. This is because in the v4 Form, when fields are changed, the component is not re-renderred. This "urgly" mechanism ensure the wrapper component is always re-renderred when fields change unless you set `dynamic: false`. The reason why it took a bit long time for the FormBuilder 2.0 is just I also think this API looks a bit stange but unitl now I've not found a better way. However you don't need to worry about using this API because it will not bring incompatabilty issue.
 
 ## Install
