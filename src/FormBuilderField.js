@@ -172,7 +172,7 @@ function FormBuilderField(props) {
       ? getValue(formValues, formItemProps.name || field.key)
       : initialValue
     if (field.renderView) {
-      viewEle = field.renderView(viewValue, form)
+      viewEle = field.renderView(viewValue, form, initialValues)
     } else if (field.viewWidget) {
       const ViewWidget = field.viewWidget
       viewEle = (
