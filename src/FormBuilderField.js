@@ -178,7 +178,6 @@ function FormBuilderField(props) {
       viewEle = field.renderView(viewValue, form)
     } else if (field.viewWidget) {
       const ViewWidget = field.viewWidget
-      console.log('render view widget', field.key, viewValue)
       viewEle = (
         <ViewWidget value={viewValue} form={form} field={field} {...field.viewWidgetProps} />
       )
@@ -217,7 +216,6 @@ function FormBuilderField(props) {
     }
     delete formItemProps.name
     delete formItemProps.key
-    console.log(viewEle)
     return <FormItem {...formItemProps}>{viewEle}</FormItem>
   }
   // Handle widget props
