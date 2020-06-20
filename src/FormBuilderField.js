@@ -135,10 +135,7 @@ function FormBuilderField(props) {
   // Handle field props
   const rules = [...(field.rules || [])]
   if (field.required) {
-    rules.unshift({
-      required: true,
-      message: field.message || `${field.label || field.key} is required.`, // default to English, if needs localization, define it in fieldProps.rules.
-    })
+    rules.unshift({ required: true });
   }
   const fieldProps = {
     initialValue,
