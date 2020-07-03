@@ -10,7 +10,7 @@ import FormBuilderField from './FormBuilderField'
 import './FormBuilder.css'
 
 const isV4 = !!Form.useForm
-
+window.r1 = React
 const widgetMap = {}
 
 function getWidget(widget) {
@@ -143,7 +143,7 @@ FormBuilder.useForceUpdate = () => {
 FormBuilder.useForm = f => {
   const [form] = Form.useForm(f)
   const forceUpdate = FormBuilder.useForceUpdate()
-  form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+  // form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
   form.handleValuesChange = changedValues => {
     if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
       forceUpdate()
@@ -161,7 +161,7 @@ FormBuilder.createForm = ctx => {
       __INTERNAL__: {},
       scrollToField: () => {},
     })
-    form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
+    // form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
     form.handleValuesChange = changedValues => {
       if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
         ctx.forceUpdate()

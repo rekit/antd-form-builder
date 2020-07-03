@@ -14,9 +14,9 @@ const MOCK_INFO = {
 }
 const DateView = ({ value }) => value.format('MMM Do YYYY')
 export default Form.create()(({ form }) => {
-  const [viewMode, setViewMode] = useState(true)
+  const [viewMode, setViewMode] = useState(false)
   const [pending, setPending] = useState(false)
-  const [personalInfo, setPersonalInfo] = useState(MOCK_INFO)
+  const [personalInfo, setPersonalInfo] = useState(null)
   const handleSubmit = useCallback(
     evt => {
       evt.preventDefault()
@@ -25,7 +25,7 @@ export default Form.create()(({ form }) => {
       setPending(true)
       setTimeout(() => {
         setPending(false)
-        setPersonalInfo(values)
+        setPersonalInfo(MOCK_INFO)
         setViewMode(true)
         Modal.success({
           title: 'Success',

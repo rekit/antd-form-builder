@@ -2,7 +2,6 @@
 import React, { forwardRef } from 'react'
 import memoize from 'lodash/memoize'
 import isArray from 'lodash/isArray'
-// import get from 'lodash/get'
 import has from 'lodash/has'
 import find from 'lodash/find'
 import pick from 'lodash/pick'

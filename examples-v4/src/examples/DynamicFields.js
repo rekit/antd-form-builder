@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
-
+window.r2 = React
 export default () => {
   const [form] = FormBuilder.useForm()
   const handleFinish = useCallback(values => {

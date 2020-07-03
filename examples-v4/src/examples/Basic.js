@@ -13,6 +13,7 @@ export default class App extends Component {
     const meta = {
       columns: 1,
       dynamicFields: '*',
+      initialValues: { obj: { input: 12 } },
       fields: [
         {
           key: 'obj.input',
