@@ -4,7 +4,7 @@ import FormBuilder from 'antd-form-builder'
 const { Option } = Select
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const handleFinish = useCallback(values => console.log('Submit: ', values), [])
   const meta1 = [
     { key: 'name.first', label: 'First Name', required: true },
@@ -21,12 +21,12 @@ export default () => {
     key: 'prefix',
     options: ['+86', '+87'],
     widget: 'select',
+    noFormItem: true,
     widgetProps: {
       style: { width: 70 },
     },
   }
   const prefixSelector = <FormBuilder meta={prefixMeta} form={form} />
-
   return (
     <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '500px' }}>
       <FormBuilder meta={meta1} form={form} />

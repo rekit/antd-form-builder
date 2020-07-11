@@ -27,15 +27,6 @@ const getValue = (obj, namePath) => {
   return current
 }
 
-const setValue = (obj, namePath, value) => {
-  const len = namePath.length
-  if (len === 0) return
-  for (let i = 0; i < len - 1; i++) {
-    obj = obj[namePath[i]] = {}
-  }
-  obj[namePath[len - 1]] = value
-}
-
 const getWrappedComponentWithForwardRef = memoize(Comp =>
   forwardRef((props, ref) => {
     return (
@@ -73,7 +64,7 @@ function FormBuilderField(props) {
   const formItemProps = {
     key: field.key,
     colon: meta.colon,
-    ...formItemLayout,
+    ...(meta.formItemProps !== null ? formItemLayout : {}),
     label,
     ...pick(field, [
       'help',
@@ -82,8 +73,10 @@ function FormBuilderField(props) {
       'wrapperCol',
       'colon',
       'htmlFor',
+      'noStyle',
       'validateStatus',
       'hasFeedback',
+      'initialValue',
     ]),
 
     ...field.formItemProps,
@@ -134,7 +127,7 @@ function FormBuilderField(props) {
   // Handle field props
   const rules = [...(field.rules || [])]
   if (field.required) {
-    rules.unshift({ required: true });
+    rules.unshift({ required: true, message: field.requiredMessage || undefined })
   }
   const fieldProps = {
     initialValue,
@@ -152,15 +145,7 @@ function FormBuilderField(props) {
     rules,
     ...field.fieldProps,
   }
-  if (isV4 && form) {
-    // if is v4, form item props, merge field props to formItemProps
-    if (formItemProps.name) {
-      const internalHooks = form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
-      const values = {}
-      setValue(values, formItemProps.name, initialValue)
-      internalHooks.setInitialValues(values, 'init')
-    }
-    delete fieldProps.initialValue
+  if (isV4) {
     Object.assign(formItemProps, fieldProps)
   }
 
@@ -214,6 +199,7 @@ function FormBuilderField(props) {
     delete formItemProps.key
     return <FormItem {...formItemProps}>{viewEle}</FormItem>
   }
+
   // Handle widget props
   const wp = field.widgetProps || {}
   const widgetProps = {
@@ -237,7 +223,11 @@ function FormBuilderField(props) {
 
   if (isV4) {
     // antd v4 always has form item
-    return <FormItem {...formItemProps}>{ele}</FormItem>
+    return (
+      <FormItem {...formItemProps} noStyle>
+        {ele}
+      </FormItem>
+    )
   }
   return field.noFormItem ? ele2 : <FormItem {...formItemProps}>{ele2}</FormItem>
 }

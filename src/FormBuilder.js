@@ -10,7 +10,7 @@ import FormBuilderField from './FormBuilderField'
 import './FormBuilder.css'
 
 const isV4 = !!Form.useForm
-window.r1 = React
+
 const widgetMap = {}
 
 function getWidget(widget) {
@@ -57,6 +57,18 @@ function normalizeMeta(meta) {
 }
 
 function FormBuilder(props) {
+  const { getMeta, form } = props
+  return (
+    <Form.Item shouldUpdate noStyle>
+      {() => {
+        const meta = getMeta ? getMeta() : props.meta
+        return <FormBuilderInner {...props} form={form ? form.current || form : null} meta={meta} />
+      }}
+    </Form.Item>
+  )
+}
+
+function FormBuilderInner(props) {
   const { meta, viewMode, initialValues, disabled = false, form = null } = props
   if (!meta) return null
 
@@ -64,21 +76,6 @@ function FormBuilder(props) {
   newMeta.viewMode = newMeta.viewMode || viewMode
   newMeta.initialValues = newMeta.initialValues || initialValues
   const { fields, columns = 1, gutter = 10 } = newMeta
-  if (isV4) {
-    if (form) {
-      const fromMeta = castArray(newMeta.dynamicFields || [])
-
-      fields.forEach(f => {
-        if (f.dynamic) {
-          fromMeta.push(f.key || (isArray(f.name) ? f.name.join('.') : f.name))
-        }
-      })
-      form._dynamicFields = fromMeta.reduce((p, c) => {
-        p.push(c)
-        return p
-      }, [])
-    }
-  }
   const elements = fields.map(field => (
     <FormBuilderField
       key={field.key}
@@ -89,7 +86,7 @@ function FormBuilder(props) {
     />
   ))
   if (columns === 1) {
-    return elements
+    return <Form.Item shouldUpdate>{() => elements}</Form.Item>
   }
 
   const rows = []
@@ -124,7 +121,7 @@ function FormBuilder(props) {
       </Row>,
     )
   }
-  return rows
+  return <Form.Item shouldUpdate>{rows}</Form.Item>
 }
 
 FormBuilder.defineWidget = (name, widget, metaConvertor = null) => {
@@ -137,40 +134,18 @@ FormBuilder.defineWidget = (name, widget, metaConvertor = null) => {
 
 FormBuilder.useForceUpdate = () => {
   const [, updateState] = React.useState()
-  return React.useCallback(() => updateState({}), [])
+  const forceUpdate = React.useCallback(() => updateState({}), [])
+  return forceUpdate
 }
 
 FormBuilder.useForm = f => {
-  const [form] = Form.useForm(f)
-  const forceUpdate = FormBuilder.useForceUpdate()
-  // form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
-  form.handleValuesChange = changedValues => {
-    if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
-      forceUpdate()
-    }
-  }
-  return [form]
+  throw new Error('FormBuilder.useForm is removed. Please use Form.useForm().')
 }
 
 FormBuilder.createForm = ctx => {
-  try {
-    const FormStore = require('rc-field-form/lib/useForm').FormStore
-    const formStore = new FormStore(() => ctx.forceUpdate())
-    const form = formStore.getForm()
-    Object.assign(form, {
-      __INTERNAL__: {},
-      scrollToField: () => {},
-    })
-    // form.getInternalHooks('RC_FORM_INTERNAL_HOOKS')
-    form.handleValuesChange = changedValues => {
-      if (changedValues && form._dynamicFields.some(f => f === '*' || has(changedValues, f))) {
-        ctx.forceUpdate()
-      }
-    }
-    return form
-  } catch (err) {
-    return null
-  }
+  throw new Error(
+    'FormBuilder.createForm is removed. Please use Form.useForm for functional component and ref for class component.',
+  )
 }
 FormBuilder.propTypes = {
   meta: PropTypes.any,

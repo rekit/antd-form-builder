@@ -5,23 +5,27 @@ import FormBuilder from 'antd-form-builder'
 const Option = Select.Option
 // Here define a custom component just for layout
 // For demo, it accept price string like "18.8 USD"
-const PriceInput = ({ value, onChange }) => (
-  <Row gutter={10}>
-    <Col span={16}>
-      <InputNumber
-        style={{ width: '100%' }}
-        value={value.price}
-        onChange={v => onChange({ price: v, currency: value.currency })}
-      />
-    </Col>
-    <Col span={8}>
-      <Select value={value.currency} onChange={v => onChange({ price: value.price, currency: v })}>
-        <Option value="RMB">RMB</Option>
-        <Option value="USD">USD</Option>
-      </Select>
-    </Col>
-  </Row>
-)
+const PriceInput = ({ value, onChange }) =>
+  value ? (
+    <Row gutter={10}>
+      <Col span={16}>
+        <InputNumber
+          style={{ width: '100%' }}
+          value={value.price}
+          onChange={v => onChange({ price: v, currency: value.currency })}
+        />
+      </Col>
+      <Col span={8}>
+        <Select
+          value={value.currency}
+          onChange={v => onChange({ price: value.price, currency: v })}
+        >
+          <Option value="RMB">RMB</Option>
+          <Option value="USD">USD</Option>
+        </Select>
+      </Col>
+    </Row>
+  ) : null
 // This widget is just a wrapper of Input to add a button
 const CaptchaInput = props => (
   <Row gutter={10}>
@@ -34,39 +38,20 @@ const CaptchaInput = props => (
   </Row>
 )
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const handleFinish = useCallback(values => {
     console.log('Submit: ', values)
   })
-
   const meta = [
     { key: 'product', label: 'Product' },
     {
       key: '_temp_price_currency',
       label: 'Price',
       // Set forwardRef to true if use functional component as field widget
-      // to remove warnings
+      // to avoid warnings
       forwardRef: true,
       widget: PriceInput,
-      normalize(value, prevValue, allValues) {
-        return {
-          price: allValues.price,
-          currency: allValues.currency,
-        }
-      },
-      widgetProps: {
-        onChange(obj) {
-          console.log('obj:', obj)
-          // setTimeout(() => form.setFieldsValue(obj), 500)
-        },
-      },
-      getInitialValue(f, allValues) {
-        console.log('all values: ', allValues)
-        return {
-          price: allValues.price,
-          currency: allValues.currency,
-        }
-      },
+      initialValue: { price: 8, currency: 'USD' },
     },
     {
       key: 'captcha',
@@ -108,7 +93,7 @@ export default () => {
 
   return (
     <Form form={form} onFinish={handleFinish} style={{ width: '500px' }}>
-      <FormBuilder meta={meta} form={form} initialValues={{ price: 8, currency: 'USD' }} />
+      <FormBuilder meta={meta} form={form} />
       <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           Submit

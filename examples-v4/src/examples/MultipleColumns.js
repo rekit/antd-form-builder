@@ -3,7 +3,7 @@ import { Form, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const [columns, setColumns] = useState(2)
   const handleFinish = useCallback(values => {
     console.log('Submit: ', values)

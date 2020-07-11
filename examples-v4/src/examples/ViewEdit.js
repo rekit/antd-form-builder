@@ -14,7 +14,7 @@ const MOCK_INFO = {
 }
 const DateView = ({ value }) => value.format('MMM Do YYYY')
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const [viewMode, setViewMode] = useState(true)
   const [pending, setPending] = useState(false)
   const [personalInfo, setPersonalInfo] = useState(MOCK_INFO)
@@ -31,26 +31,29 @@ export default () => {
       })
     }, 1500)
   })
-  const meta = {
-    columns: 2,
-    disabled: pending,
-    initialValues: personalInfo,
-    fields: [
-      { name: ['name', 'first'], label: 'First Name', required: true },
-      { key: 'name.last', label: 'Last Name', required: true },
-      { key: 'gender', label: 'Gender', widget: 'radio-group', options: ['Male', 'Female'] },
-      {
-        key: 'dateOfBirth',
-        label: 'Date of Birth',
-        widget: 'date-picker',
-        viewWidget: DateView,
-      },
-      { key: 'email', label: 'Email' },
-      { key: 'phone', label: 'Phone' },
-      { key: 'address', label: 'Address', colSpan: 2 },
-      { key: 'city', label: 'City' },
-      { key: 'zipCode', label: 'Zip Code' },
-    ],
+  const getMeta = () => {
+    const meta = {
+      columns: 2,
+      disabled: pending,
+      initialValues: personalInfo,
+      fields: [
+        { name: ['name', 'first'], label: 'First Name', required: true },
+        { key: 'name.last', label: 'Last Name', required: true },
+        { key: 'gender', label: 'Gender', widget: 'radio-group', options: ['Male', 'Female'] },
+        {
+          key: 'dateOfBirth',
+          label: 'Date of Birth',
+          widget: 'date-picker',
+          viewWidget: DateView,
+        },
+        { key: 'email', label: 'Email' },
+        { key: 'phone', label: 'Phone' },
+        { key: 'address', label: 'Address', colSpan: 2 },
+        { key: 'city', label: 'City' },
+        { key: 'zipCode', label: 'Zip Code' },
+      ],
+    }
+    return meta
   }
 
   return (
@@ -64,7 +67,7 @@ export default () => {
             </Button>
           )}
         </h1>
-        <FormBuilder form={form} meta={meta} viewMode={viewMode} />
+        <FormBuilder form={form} getMeta={getMeta} viewMode={viewMode} />
         {!viewMode && (
           <Form.Item className="form-footer" wrapperCol={{ span: 16, offset: 4 }}>
             <Button htmlType="submit" type="primary" disabled={pending}>

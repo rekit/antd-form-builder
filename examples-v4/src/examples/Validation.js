@@ -9,7 +9,7 @@ const MOCK_USERNAMES = {
 }
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const handleSubmit = useCallback(values => {
     console.log('Submit: ', values)
   })

@@ -64,7 +64,7 @@ const wizardMeta = {
 }
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const [currentStep, setCurrentStep] = useState(0)
   const handleFinish = useCallback(() => {
     console.log('Submit: ', form.getFieldsValue(true))

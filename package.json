@@ -60,5 +60,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "eslint-plugin-react-hooks": "^4.0.6"
+  }
 }

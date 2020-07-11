@@ -3,7 +3,7 @@ import { Form, Button, Modal } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
   const [modalVisible, setModalVisible] = useState(false)
   const showModal = useCallback(() => setModalVisible(true), [setModalVisible])
   const hideModal = useCallback(() => setModalVisible(false), [setModalVisible])
@@ -22,10 +22,7 @@ export default () => {
 
   const meta = {
     disabled: pending,
-    fields: [
-      { key: 'name', label: 'Name', required: true },
-      { key: 'desc', label: 'Description' },
-    ],
+    fields: [{ key: 'name', label: 'Name', required: true }, { key: 'desc', label: 'Description' }],
   }
 
   return (
