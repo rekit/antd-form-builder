@@ -223,11 +223,7 @@ function FormBuilderField(props) {
 
   if (isV4) {
     // antd v4 always has form item
-    return (
-      <FormItem {...formItemProps} noStyle>
-        {ele}
-      </FormItem>
-    )
+    return <FormItem {...formItemProps}>{ele}</FormItem>
   }
   return field.noFormItem ? ele2 : <FormItem {...formItemProps}>{ele2}</FormItem>
 }
