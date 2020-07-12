@@ -60,12 +60,12 @@ You need to create a form instance by `FormBuilder.createForm()` and pass it to 
 import FormBuilder from 'antd-form-builder';
 
 export default class App extends Component {
-  form = FormBuilder.createForm(this)
+  formRef = React.createRef()
   render() {
     const meta = [{ key: 'name', label: 'Name' }]
     return (
-      <Form form={this.form} onValuesChange={this.form.handleValuesChange}>
-        <FormBuilder meta={meta} form={this.form} />
+      <Form ref={formRef} onValuesChange={() => this.forceUpdate()}>
+        <FormBuilder meta={meta} form={this.formRef} />
       </Form>
     )
   }
@@ -73,23 +73,25 @@ export default class App extends Component {
 ```
 
 ### 2. For functional components
-You need to create a form with the hook `FormBuilder.useForm()` and pass it to the antd's `Form`:
+You need to create a form with the hook `Form.useForm()` and pass it to the antd's `Form`:
 ```jsx
+import { From } from 'antd';
 import FormBuilder from 'antd-form-builder'
 
 export default () => {
-  const [form] = FormBuilder.useForm()
+  const [form] = Form.useForm()
+  const forceUpdate = FormBuilder.useForceUpdate();
   const meta = [{ key: 'name', label: 'Name' }]
   return (
-    <Form form={form} onValuesChange={form.handleValuesChange}>
+    <Form form={form} onValuesChange={forceUpdate}>
       <FormBuilder meta={meta} form={form} />
     </Form>
   )
 }
 ```
 
-### 3. Pass `form.handleValuesChange` to antd's `Form`'s `onValuesChange`
-The `form` instance created by FormBuilder has a `handleValuesChange` method, you need to pass it to `onValuesChange` to antd's `Form`. This is because in the v4 Form, when fields are changed, the component is not re-renderred. This "urgly" mechanism ensure the wrapper component is always re-renderred when fields change unless you set `dynamic: false`. The reason why it took a bit long time for the FormBuilder 2.0 is just I also think this API looks a bit stange but unitl now I've not found a better way. However you don't need to worry about using this API because it will not bring incompatabilty issue.
+### 3. Pass `forceUpdate` to antd's `Form`'s `onValuesChange`
+This is because in the v4 Form, when fields are changed, the component is not re-renderred. This "urgly" mechanism ensure the wrapper component is always re-renderred when fields change. The reason why it took a bit long time for the FormBuilder 2.0 is just I also think this API looks a bit stange but unitl now I've not found a better way. However you don't need to worry about using this API because it will not bring incompatabilty issue. However, if you don't need dynamic field capability, you don't need to do this. If you want to control the dynamic logic more flexible, you can use `shouldUpdate` with `Form.Item` yourself.
 
 ## Install
 
@@ -138,11 +140,8 @@ The FormBuilder could be used for both antd v3 and v4, but the API set has a lit
 ### General API for antd v4
 | Name  | Description |
 | --- | --- |
-| FormBuilder.createForm(context) <img src="images/v4only.png?raw=true" width="55">| Create a form instance for class components to be passed to antd's `Form`, you need to pass `this` to it. |
-| FormBuilder.useForm() <img src="images/v4only.png?raw=true" width="55">| Create a form instance for functional components to be passed to antd's `Form` |
-| form.handleValuesChange <img src="images/v4only.png?raw=true" width="55">| Pass this property from form instance to `onValuesChange` to antd's `Form`. |
+| FormBuilder.useForceUpdate <img src="images/v4only.png?raw=true" width="55">| If you need dynamic form, that is meta is changed when fields value changed, you should manually trigger re-render by set `onValuesChange={forceUpdate}`. |
 
-See above section about the introduction of the new API 
 
 ### FormBuilder
 #### Props:
@@ -150,6 +149,7 @@ See above section about the introduction of the new API
 | --- | --- | --- |
 | form | object | The antd form instance, unnecessary in viewMode |
 | meta | object/array| The meta for building the form. See below docs for detailed usage |
+| getMeta(form, props) | function | You can pass a function to get form meta rather than give meta object directly. This is new from v2.1.0. |
 | viewMode | bool | In view mode, FormBuild uses viewWidget property for a field, show value directly if viewWidget not defined. And labels are left aligned in the form. Default to false.|
 
 ### meta
@@ -190,7 +190,6 @@ Field meta is used to define each field. Each field meta is an object defined in
 | key | string | | Required. The field key. Could be nested like `user.name.last`. It's just the key value passed to `getFieldDecorator(key, options)` |
 | name <img src="images/v4only.png?raw=true" width="55"> | string/array | | Alternative of `key`. In form v4, if you need nested property for colleced form values like : `{ name: { first, last } }` you can define an array for the `name` property: `['name', 'first']`. If you prefer `name.first`, use `key` to define it. |
 | label| string | | Label text.|
-| dynamic <img src="images/v4only.png?raw=true" width="55">| boolean | true | If set to true, the change of the field will cause wrapper component to re-render, its default value is true, unless you meet performance issue, you don't need to manually set it to false. |
 | viewMode | bool | false | Whether the field is in view mode. Note if a field is in viewMode but FormBuilder is not, the label in the field is still right aligned. |
 | readOnly | bool | false | Whether the field is readOnly. The difference compared to `viewMode` is a read-only field is managed by form that is the value is collected when use `form.getFieldsValue`, but `viewMode` is not. It is also validated if some rules are configured for the field. |
 | tooltip | string/React Node | | If set, there is a question mark icon besides label to show the tooltip. |
@@ -207,7 +206,8 @@ Field meta is used to define each field. Each field meta is an object defined in
 | disabled | bool | false | If set to true, every widget in field will be given a `disabled` property regardless of if it's supported. |
 | clear | enum | | In multiple columns layout, used to clear left, right or both side fields. Like the `clear` property in css. Could be `left`: the field starts from a new row; `right`: no fields behind the field; `both`: no other fields in the same row. |
 | forwardRef | bool | | If your field widget is a funcional component which doesn't implement forwardRef, set this to true so that React doesn't prompt warning message. |
-| noFormItem | bool | false | By default, each field is wrapped with <Form.Item>, if set to true, it just use `getField |
+| noFormItem | bool | false | By default, each field is wrapped with <Form.Item>, if set to true, it just use getFieldDecorators. |
+| noStyle | bool | false | The same with old `noFormItem`. Provlide the alias `noStyle` to be consitent with antd v4. |
 | children | ReactNode | | The `children` of widget defined in meta.  |
 | required | bool | false | Whether the field is required. |
 | message | string | | If a field is required, you can define what message provided if no input. By default, it's `${field.label} is required.`|
