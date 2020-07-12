@@ -26,7 +26,6 @@ export default Form.create()(({ form }) => {
     },
     [form],
   )
-  console.log('rerender')
 
   const [cities, setCities] = useState({})
   const country = form.getFieldValue('country')

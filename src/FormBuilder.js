@@ -58,14 +58,15 @@ function normalizeMeta(meta) {
 
 function FormBuilder(props) {
   const { getMeta, form } = props
-  return (
-    <Form.Item shouldUpdate noStyle>
-      {() => {
-        const meta = getMeta ? getMeta() : props.meta
-        return <FormBuilderInner {...props} form={form ? form.current || form : null} meta={meta} />
-      }}
-    </Form.Item>
-  )
+  const meta = getMeta ? getMeta(form, props) : props.meta
+  return <FormBuilderInner {...props} form={form ? form.current || form : null} meta={meta} />
+  // return (
+  //   <Form.Item shouldUpdate noStyle>
+  //     {() => {
+  //       return <FormBuilderInner {...props} form={form ? form.current || form : null} meta={meta} />
+  //     }}
+  //   </Form.Item>
+  // )
 }
 
 function FormBuilderInner(props) {
@@ -86,7 +87,7 @@ function FormBuilderInner(props) {
     />
   ))
   if (columns === 1) {
-    return <Form.Item shouldUpdate>{() => elements}</Form.Item>
+    return elements
   }
 
   const rows = []
@@ -121,7 +122,7 @@ function FormBuilderInner(props) {
       </Row>,
     )
   }
-  return <Form.Item shouldUpdate>{rows}</Form.Item>
+  return rows
 }
 
 FormBuilder.defineWidget = (name, widget, metaConvertor = null) => {

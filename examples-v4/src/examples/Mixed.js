@@ -5,6 +5,7 @@ const { Option } = Select
 
 export default () => {
   const [form] = Form.useForm()
+  const forceUpdate = FormBuilder.useForceUpdate()
   const handleFinish = useCallback(values => console.log('Submit: ', values), [])
   const meta1 = [
     { key: 'name.first', label: 'First Name', required: true },
@@ -27,8 +28,15 @@ export default () => {
     },
   }
   const prefixSelector = <FormBuilder meta={prefixMeta} form={form} />
+
   return (
-    <Form layout="horizontal" form={form} onFinish={handleFinish} style={{ width: '500px' }}>
+    <Form
+      layout="horizontal"
+      form={form}
+      onFinish={handleFinish}
+      style={{ width: '500px' }}
+      onValuesChange={forceUpdate}
+    >
       <FormBuilder meta={meta1} form={form} />
       <Form.Item
         label="Phone Number"

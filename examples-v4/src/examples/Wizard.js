@@ -66,6 +66,7 @@ const wizardMeta = {
 export default () => {
   const [form] = Form.useForm()
   const [currentStep, setCurrentStep] = useState(0)
+  const forceUpdate = FormBuilder.useForceUpdate()
   const handleFinish = useCallback(() => {
     console.log('Submit: ', form.getFieldsValue(true))
   }, [form])
@@ -123,7 +124,7 @@ export default () => {
     <Form
       layout="horizontal"
       form={form}
-      onValuesChange={form.handleValuesChange}
+      onValuesChange={forceUpdate}
       style={{ width: '880px' }}
       onFinish={handleFinish}
     >

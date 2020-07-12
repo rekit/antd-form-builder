@@ -64,10 +64,15 @@ export default class App extends Component {
 
   render() {
     return (
-      <Form ref={this.formRef} layout="horizontal" onFinish={this.handleFinish}>
-        <FormBuilder getMeta={this.getMeta} form={this.formRef} />
+      <Form
+        ref={this.formRef}
+        layout="horizontal"
+        onFinish={this.handleFinish}
+        onValuesChange={() => this.forceUpdate()}
+      >
+        <FormBuilder meta={this.getMeta()} form={this.formRef} />
         <Form.Item wrapperCol={{ span: 16, offset: 8 }} className="form-footer">
-          <Button htmlType="submit" type="primary" onClick={() => this.forceUpdate()}>
+          <Button htmlType="submit" type="primary">
             Submit
           </Button>
         </Form.Item>

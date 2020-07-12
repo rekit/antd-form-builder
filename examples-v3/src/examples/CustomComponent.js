@@ -48,32 +48,13 @@ export default Form.create()(({ form }) => {
   const meta = [
     { key: 'product', label: 'Product' },
     {
-      key: '_temp_price_currency',
+      key: 'price',
       label: 'Price',
       // Set forwardRef to true if use functional component as field widget
       // to remove warnings
       forwardRef: true,
       widget: PriceInput,
-      normalize(value, prevValue, allValues) {
-        console.log('all values: ', allValues)
-        return {
-          price: allValues.price,
-          currency: allValues.currency,
-        }
-      },
-      widgetProps: {
-        onChange(obj) {
-          console.log('obj:', obj)
-          // setTimeout(() => form.setFieldsValue(obj), 500)
-        },
-      },
-      getInitialValue(f, allValues) {
-        console.log('all values: ', allValues)
-        return {
-          price: allValues.price,
-          currency: allValues.currency,
-        }
-      },
+      initialValue: { price: 8, currency: 'USD' },
     },
     {
       key: 'captcha',

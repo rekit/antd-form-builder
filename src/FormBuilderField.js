@@ -64,7 +64,7 @@ function FormBuilderField(props) {
   const formItemProps = {
     key: field.key,
     colon: meta.colon,
-    ...(meta.formItemProps !== null ? formItemLayout : {}),
+    ...(meta.formItemLayout !== null ? formItemLayout : {}),
     label,
     ...pick(field, [
       'help',
@@ -76,7 +76,6 @@ function FormBuilderField(props) {
       'noStyle',
       'validateStatus',
       'hasFeedback',
-      'initialValue',
     ]),
 
     ...field.formItemProps,
@@ -127,7 +126,7 @@ function FormBuilderField(props) {
   // Handle field props
   const rules = [...(field.rules || [])]
   if (field.required) {
-    rules.unshift({ required: true, message: field.requiredMessage || undefined })
+    rules.unshift({ required: true, message: field.message || field.requiredMessage || undefined })
   }
   const fieldProps = {
     initialValue,
@@ -225,7 +224,7 @@ function FormBuilderField(props) {
     // antd v4 always has form item
     return <FormItem {...formItemProps}>{ele}</FormItem>
   }
-  return field.noFormItem ? ele2 : <FormItem {...formItemProps}>{ele2}</FormItem>
+  return field.noFormItem || field.noStyle ? ele2 : <FormItem {...formItemProps}>{ele2}</FormItem>
 }
 
 export default FormBuilderField

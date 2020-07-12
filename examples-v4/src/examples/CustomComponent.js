@@ -71,7 +71,12 @@ export default () => {
             <Col span={11}>
               <FormBuilder
                 form={form}
-                meta={{ key: 'startDate', widget: 'date-picker', noFormItem: true }}
+                meta={{
+                  key: 'startDate',
+                  widget: 'date-picker',
+                  widgetProps: { style: { width: '100%' } },
+                  noStyle: true,
+                }}
               />
             </Col>
             <Col span={2} style={{ textAlign: 'center' }}>
@@ -80,7 +85,12 @@ export default () => {
             <Col span={11}>
               <FormBuilder
                 form={form}
-                meta={{ key: 'endDate', widget: 'date-picker', noFormItem: true }}
+                meta={{
+                  key: 'endDate',
+                  widget: 'date-picker',
+                  widgetProps: { style: { width: '100%' } },
+                  noStyle: true,
+                }}
               />
             </Col>
           </Row>
