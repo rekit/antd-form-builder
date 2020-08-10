@@ -70,8 +70,8 @@ FormBuilder.defineWidget('select', Select, field => {
     return {
       ...field,
       children: mapOptions(field.options).map(opt => (
-        <Select.Option value={opt.value} key={opt.value} disabled={opt.disabled}>
-          {opt.label}
+        <Select.Option label={opt.label} value={opt.value} key={opt.value} disabled={opt.disabled}>
+          {opt.children || opt.label}
         </Select.Option>
       )),
     }
