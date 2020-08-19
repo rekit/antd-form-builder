@@ -75,7 +75,7 @@ export default class App extends Component {
 ### 2. For functional components
 You need to create a form with the hook `Form.useForm()` and pass it to the antd's `Form`:
 ```jsx
-import { From } from 'antd';
+import { Form } from 'antd';
 import FormBuilder from 'antd-form-builder'
 
 export default () => {
