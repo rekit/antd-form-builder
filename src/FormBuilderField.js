@@ -150,7 +150,7 @@ function FormBuilderField(props) {
 
   if (isFieldViewMode) {
     let viewEle = null
-    const formValues = form ? form.getFieldsValue() : {}
+    const formValues = form ? (isV4 ? form.getFieldsValue(true) : form.getFieldsValue()) : {}
     let viewValue = has(formValues, field.key || field.name.join('.'))
       ? getValue(formValues, formItemProps.name || field.key)
       : initialValue
