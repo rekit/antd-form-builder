@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button, Rate, Radio } from 'antd'
+import { Form, Button, Rate } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 export default class App extends Component {

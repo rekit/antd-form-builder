@@ -8,7 +8,6 @@
     "@ant-design/compatible": "^1.0.1",
     "@ant-design/icons": "^4.0.2",
     "antd": "^4.7.0",
-    "antd-form-builder": "^2.0.0",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.1.0",
     "react": "^16.13.1",

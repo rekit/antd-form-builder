@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
-import { Form, Select, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
 import FormBuilder from 'antd-form-builder'
-const { Option } = Select
 
 export default () => {
   const [form] = Form.useForm()

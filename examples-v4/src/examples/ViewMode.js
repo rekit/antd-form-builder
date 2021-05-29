@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import { Form } from 'antd'
 import FormBuilder from 'antd-form-builder'
 
 const DateView = ({ value }) => value.format('MMM Do YYYY')
