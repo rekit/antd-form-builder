@@ -1,6 +1,6 @@
 {
   "name": "antd-form-builder",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Form builder for ant.design.",
   "author": "supnate",
   "license": "MIT",
@@ -61,7 +61,8 @@
     "rollup-plugin-url": "^1.4.0"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "dependencies": {
     "eslint-plugin-react-hooks": "^4.0.6"
