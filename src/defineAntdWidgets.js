@@ -1,13 +1,23 @@
 import React from 'react'
 import FormBuilder from './FormBuilder'
-import { Input, Checkbox, Switch, Button, Select, InputNumber, Radio, DatePicker } from 'antd'
+import {
+  Input,
+  Checkbox,
+  Switch,
+  Button,
+  Select,
+  InputNumber,
+  Radio,
+  DatePicker,
+  AutoComplete,
+} from 'antd'
 import _ from 'lodash'
 
-const mapOptions = options => {
+const mapOptions = (options) => {
   if (!_.isArray(options)) {
     throw new Error('Options should be array in form builder meta.')
   }
-  return options.map(opt => {
+  return options.map((opt) => {
     if (_.isArray(opt)) {
       return { value: opt[0], label: opt[1] }
     } else if (_.isPlainObject(opt)) {
@@ -18,11 +28,11 @@ const mapOptions = options => {
   })
 }
 
-FormBuilder.defineWidget('checkbox', Checkbox, field => {
+FormBuilder.defineWidget('checkbox', Checkbox, (field) => {
   return { ...field, valuePropName: 'checked' }
 })
 
-FormBuilder.defineWidget('switch', Switch, field => {
+FormBuilder.defineWidget('switch', Switch, (field) => {
   return { ...field, valuePropName: 'checked' }
 })
 
@@ -33,7 +43,7 @@ FormBuilder.defineWidget('textarea', Input.TextArea)
 FormBuilder.defineWidget('number', InputNumber)
 FormBuilder.defineWidget('date-picker', DatePicker)
 FormBuilder.defineWidget('radio', Radio)
-FormBuilder.defineWidget('radio-group', Radio.Group, field => {
+FormBuilder.defineWidget('radio-group', Radio.Group, (field) => {
   const RadioComp = field.buttonGroup ? Radio.Button : Radio
   if (field.options && !field.children) {
     return {
@@ -42,7 +52,7 @@ FormBuilder.defineWidget('radio-group', Radio.Group, field => {
         ...field.widgetProps,
         name: field.key,
       },
-      children: mapOptions(field.options).map(opt => (
+      children: mapOptions(field.options).map((opt) => (
         <RadioComp value={opt.value} key={opt.value}>
           {opt.label}
         </RadioComp>
@@ -52,11 +62,11 @@ FormBuilder.defineWidget('radio-group', Radio.Group, field => {
   return field
 })
 
-FormBuilder.defineWidget('checkbox-group', Checkbox.Group, field => {
+FormBuilder.defineWidget('checkbox-group', Checkbox.Group, (field) => {
   if (field.options && !field.children) {
     return {
       ...field,
-      children: mapOptions(field.options).map(opt => (
+      children: mapOptions(field.options).map((opt) => (
         <Checkbox value={opt.value} key={opt.value}>
           {opt.label}
         </Checkbox>
@@ -65,11 +75,11 @@ FormBuilder.defineWidget('checkbox-group', Checkbox.Group, field => {
   }
   return field
 })
-FormBuilder.defineWidget('select', Select, field => {
+FormBuilder.defineWidget('select', Select, (field) => {
   if (field.options && !field.children) {
     return {
       ...field,
-      children: mapOptions(field.options).map(opt => (
+      children: mapOptions(field.options).map((opt) => (
         <Select.Option label={opt.label} value={opt.value} key={opt.value} disabled={opt.disabled}>
           {opt.children || opt.label}
         </Select.Option>
@@ -77,4 +87,7 @@ FormBuilder.defineWidget('select', Select, field => {
     }
   }
   return field
+})
+FormBuilder.defineWidget('autocomplete', AutoComplete, (field) => {
+  return { ...field, widgetProps: { options: field.options } }
 })
