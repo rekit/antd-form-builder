@@ -1,15 +1,21 @@
 /* eslint react/no-multi-comp: 0 */
-import React, { Component, forwardRef } from 'react'
+import { Col, Form, Input, Row, Tooltip } from 'antd'
+import capitalize from 'lodash/capitalize'
+import find from 'lodash/find'
+import get from 'lodash/get'
+import has from 'lodash/has'
+import isArray from 'lodash/isArray'
+import memoize from 'lodash/memoize'
+import pick from 'lodash/pick'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
-import { Col, Form, Row, Tooltip, Input } from 'antd'
+import React, { Component, forwardRef } from 'react'
 import './FormBuilder.css'
 
 const FormItem = Form.Item
 const widgetMap = {}
 const Icon = () => '?'
 
-const getWrappedComponentWithForwardRef = _.memoize(Comp =>
+const getWrappedComponentWithForwardRef = memoize((Comp) =>
   forwardRef((props, ref) => {
     return (
       <span ref={ref}>
@@ -33,9 +39,9 @@ function getWidget(widget) {
 
 function convertMeta(field) {
   const widget = getWidget(field.widget)
-  const item = _.find(
+  const item = find(
     Object.values(widgetMap),
-    entry => entry.widget === widget && entry.metaConvertor,
+    (entry) => entry.widget === widget && entry.metaConvertor,
   )
   if (item) {
     const newField = item.metaConvertor(field)
@@ -68,7 +74,7 @@ class FormBuilder extends Component {
   getMeta() {
     // To support single field form builder
     const { meta } = this.props
-    if (_.isArray(meta)) {
+    if (isArray(meta)) {
       return { fields: meta }
     } else if (meta.elements) {
       // Compatible with old version of form builder.
@@ -79,7 +85,7 @@ class FormBuilder extends Component {
     return meta
   }
 
-  renderField = field => {
+  renderField = (field) => {
     const meta = this.getMeta()
     field = convertMeta(field)
     // Handle form item props
@@ -96,8 +102,8 @@ class FormBuilder extends Component {
     )
 
     let formItemLayout =
-      field.formItemLayout || (field.label ? _.get(meta, 'formItemLayout') || [8, 16] : null)
-    if (_.isArray(formItemLayout) && formItemLayout.length >= 2) {
+      field.formItemLayout || (field.label ? get(meta, 'formItemLayout') || [8, 16] : null)
+    if (isArray(formItemLayout) && formItemLayout.length >= 2) {
       formItemLayout = {
         labelCol: { span: formItemLayout[0] },
         wrapperCol: { span: formItemLayout[1] },
@@ -109,7 +115,7 @@ class FormBuilder extends Component {
       colon: meta.colon,
       ...formItemLayout,
       label,
-      ..._.pick(field, [
+      ...pick(field, [
         'help',
         'extra',
         'labelCol',
@@ -120,9 +126,9 @@ class FormBuilder extends Component {
         'hasFeedback',
       ]),
       ...field.formItemProps,
-      className: `${this.props.viewMode || meta.viewMode ? 'ant-form-item-view-mode' : ''} ${(
-        field.formItemProps || {}
-      ).className || ''}`,
+      className: `${this.props.viewMode || meta.viewMode ? 'ant-form-item-view-mode' : ''} ${
+        (field.formItemProps || {}).className || ''
+      }`,
     }
     if (field.label && typeof field.label === 'string') {
       formItemProps['data-label'] = field.label
@@ -140,18 +146,18 @@ class FormBuilder extends Component {
       return field.render.call(this, {
         formItemProps,
         field,
-        ..._.pick(this.props, ['form', 'disabled', 'viewMode', 'initialValues']),
+        ...pick(this.props, ['form', 'disabled', 'viewMode', 'initialValues']),
       })
     }
 
     let initialValue
     const initialValues = meta.initialValues || this.props.initialValues || {}
-    if (_.has(field, 'initialValue')) {
+    if (has(field, 'initialValue')) {
       initialValue = field.initialValue
     } else if (field.getInitialValue) {
       initialValue = field.getInitialValue(field, initialValues, this.props.form)
     } else {
-      initialValue = _.get(initialValues, field.key) || undefined
+      initialValue = get(initialValues, field.key) || undefined
     }
 
     // Handle field props
@@ -165,7 +171,7 @@ class FormBuilder extends Component {
     const fieldProps = {
       initialValue,
       preserve: this.props.preserve,
-      ..._.pick(field, [
+      ...pick(field, [
         'getValueFromEvent',
         'getValueProps',
         'normalize',
@@ -181,7 +187,7 @@ class FormBuilder extends Component {
     if (isFieldViewMode) {
       let viewEle = null
       const formValues = this.props.form ? this.props.form.getFieldsValue() : {}
-      let viewValue = _.has(formValues, field.key) ? _.get(formValues, field.key) : initialValue
+      let viewValue = has(formValues, field.key) ? get(formValues, field.key) : initialValue
       if (field.renderView) {
         viewEle = field.renderView(viewValue, this.props.form)
       } else if (field.viewWidget) {
@@ -204,13 +210,13 @@ class FormBuilder extends Component {
         )
       } else if (field.options) {
         // a little hacky here, if a field is select/options like, auto use label for value
-        const found = _.find(field.options, opt => opt[0] === viewValue)
+        const found = find(field.options, (opt) => opt[0] === viewValue)
         if (found) {
           viewValue = found[1]
         }
       }
       if (!viewEle) {
-        if (typeof viewValue === 'boolean') viewEle = _.capitalize(String(viewValue))
+        if (typeof viewValue === 'boolean') viewEle = capitalize(String(viewValue))
         else if (viewValue === undefined) viewEle = 'N/A'
         else {
           viewEle = (
@@ -235,7 +241,7 @@ class FormBuilder extends Component {
     // Handle widget props
     const wp = field.widgetProps || {}
     const widgetProps = {
-      ..._.pick(field, ['placeholder', 'type', 'className', 'class', 'onChange']),
+      ...pick(field, ['placeholder', 'type', 'className', 'class', 'onChange']),
       disabled: field.disabled || meta.disabled || this.props.disabled,
       ...wp,
     }
@@ -270,7 +276,7 @@ class FormBuilder extends Component {
     }
 
     const meta = this.getMeta()
-    const gutter = _.has(meta, 'gutter') ? meta.gutter : 10
+    const gutter = has(meta, 'gutter') ? meta.gutter : 10
     const rows = []
     // for each column , how many grid cols
     const spanUnit = 24 / columns
