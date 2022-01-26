@@ -1,6 +1,6 @@
-import React from 'react'
-import _ from 'lodash'
 import { Col, Row } from 'antd'
+import has from 'lodash/has'
+import React from 'react'
 
 export default ({ elements, meta }) => {
   const columns = meta.columns || 1
@@ -10,7 +10,7 @@ export default ({ elements, meta }) => {
   }
 
   // const meta = this.getMeta()
-  const gutter = _.has(meta, 'gutter') ? meta.gutter : 10
+  const gutter = has(meta, 'gutter') ? meta.gutter : 10
   const rows = []
   // for each column , how many grid cols
   const spanUnit = 24 / columns
