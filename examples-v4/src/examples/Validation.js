@@ -58,7 +58,7 @@ export default () => {
     },
     {
       key: 'confirmPassword',
-      label: 'Confirm Passowrd',
+      label: 'Confirm Password',
       widget: 'password',
       required: true,
       rules: [
