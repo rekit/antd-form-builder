@@ -1,3 +1,5 @@
+## **NOTE: this project has been deprecated in favor of: https://github.com/eBay/nice-form-react**
+
 # antd-form-builder
 The FormBuilder is a small helper (< 500 lines of source code) for building forms with [React](https://reactjs.org) and [ant.design](https://ant.design) easily while not preventing you from using the original antd form API. It can not only be used as editable form but also to display readonly information with form layout. It supports both antd v3 and v4 versions.
 
